@@ -1,0 +1,10 @@
+# Hornets Buzz Tracker - Python Dependencies
+
+# NBA API for game data and stats
+nba_api>=1.4.1
+
+# Data processing
+pandas>=2.0.0
+
+# HTTP requests for The Odds API
+requests>=2.31.0

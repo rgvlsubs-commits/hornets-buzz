@@ -1,0 +1,71 @@
+{
+  "metrics": {
+    "total_games": 709,
+    "evaluated_games": 707,
+    "elo_mae": 11.433540731482845,
+    "nr_mae": 12.241359933911015,
+    "hybrid_mae": 11.52979722790675,
+    "elo_accuracy": 0.6322489391796322,
+    "nr_accuracy": 0.6181046676096181,
+    "hybrid_accuracy": 0.6223479490806223,
+    "elo_rmse": 14.526408620372123,
+    "nr_rmse": 15.380844328246809,
+    "hybrid_rmse": 14.537930136616746,
+    "top_elo_teams": [
+      [
+        "Thunder",
+        1696.2
+      ],
+      [
+        "Celtics",
+        1646.4
+      ],
+      [
+        "Pistons",
+        1644.3
+      ],
+      [
+        "Spurs",
+        1636.5
+      ],
+      [
+        "Cavaliers",
+        1607.9
+      ],
+      [
+        "Hornets",
+        1593.4
+      ],
+      [
+        "Timberwolves",
+        1590.0
+      ],
+      [
+        "Knicks",
+        1582.1
+      ],
+      [
+        "Rockets",
+        1578.2
+      ],
+      [
+        "Suns",
+        1572.9
+      ]
+    ]
+  },
+  "model_params": {
+    "elo_k_factor": 20,
+    "elo_home_advantage": 70,
+    "elo_fatigue_penalty": 46,
+    "nr_home_advantage": 2.5,
+    "nr_fatigue_penalty": 3.0,
+    "window_weights": {
+      "last4": 0.4,
+      "last7": 0.3,
+      "last10": 0.2,
+      "season": 0.1
+    }
+  },
+  "run_date": "2026-02-06T23:42:38.800272"
+}
