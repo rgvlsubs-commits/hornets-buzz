@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { PredictionMode } from '@/lib/model';
 
 interface FloatingControlsProps {
   selectedWindow: number;
@@ -9,6 +10,8 @@ interface FloatingControlsProps {
   healthyOnly: boolean;
   onHealthyToggle: (healthy: boolean) => void;
   totalGames: number;
+  predictionMode: PredictionMode;
+  onPredictionModeChange: (mode: PredictionMode) => void;
 }
 
 export default function FloatingControls({
@@ -18,9 +21,12 @@ export default function FloatingControls({
   healthyOnly,
   onHealthyToggle,
   totalGames,
+  predictionMode,
+  onPredictionModeChange,
 }: FloatingControlsProps) {
   // Calculate the actual max for the slider based on healthyOnly mode
   const sliderMax = healthyOnly ? maxGames : totalGames;
+  const isBuzzing = predictionMode === 'buzzing';
 
   return (
     <motion.div
@@ -82,6 +88,33 @@ export default function FloatingControls({
         <span className={`text-xs font-medium ${healthyOnly ? 'text-[#00A3B4]' : 'text-slate-500'}`}>
           {healthyOnly ? 'ON' : 'OFF'}
         </span>
+      </div>
+
+      {/* Divider */}
+      <div className="w-px h-6 bg-slate-700" />
+
+      {/* Prediction Mode Toggle */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => onPredictionModeChange('standard')}
+          className={`px-3 py-1.5 rounded-l-full text-xs font-medium transition-colors ${
+            !isBuzzing
+              ? 'bg-[#00788C] text-white'
+              : 'bg-slate-700 text-slate-400 hover:text-white'
+          }`}
+        >
+          Standard
+        </button>
+        <button
+          onClick={() => onPredictionModeChange('buzzing')}
+          className={`px-3 py-1.5 rounded-r-full text-xs font-medium transition-colors ${
+            isBuzzing
+              ? 'bg-[#F9A01B] text-slate-900'
+              : 'bg-slate-700 text-slate-400 hover:text-white'
+          }`}
+        >
+          🐝 Buzzing
+        </button>
       </div>
     </motion.div>
   );

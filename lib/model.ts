@@ -44,6 +44,24 @@ const WINDOW_WEIGHTS = {
 // Momentum multiplier
 const MOMENTUM_MULTIPLIER = 0.4;
 
+// Buzzing mode: window weights when using only healthy games
+const BUZZING_WINDOW_WEIGHTS = {
+  last4: 0.30,
+  last7: 0.30,
+  last10: 0.25,
+  season: 0.15, // "season" here means all healthy games (up to 15)
+};
+
+// Buzzing mode sample size
+const BUZZING_SAMPLE_SIZE = 15;
+
+/**
+ * Prediction mode for spread calculations
+ * - 'standard': Uses season-long data with weighted rolling windows
+ * - 'buzzing': Uses only the last 15 healthy games as the baseline
+ */
+export type PredictionMode = 'standard' | 'buzzing';
+
 export interface RollingMetrics {
   window: number;
   games: number;
@@ -72,6 +90,7 @@ export interface SpreadPrediction {
   confidenceScore: number; // 0-100
   eloComponent: number;
   netRatingComponent: number;
+  mode: PredictionMode;
   factors: {
     name: string;
     value: number;
@@ -295,6 +314,9 @@ export function analyzeTrend(games: Game[]): TrendAnalysis {
  * Predict spread coverage for an upcoming game
  *
  * Uses hybrid model: 55% Elo + 45% Net Rating (optimized from backtest)
+ *
+ * @param mode - 'standard' uses season data, 'buzzing' uses only last 15 healthy games
+ * @param buzzingMetrics - Required for 'buzzing' mode: metrics from last 15 healthy games
  */
 export function predictSpread(
   upcomingGame: UpcomingGame,
@@ -305,9 +327,12 @@ export function predictSpread(
     season: RollingMetrics;
   },
   trend: TrendAnalysis,
-  opponentStrength: number = 0 // Net rating of opponent, 0 = league average (fallback)
+  opponentStrength: number = 0, // Net rating of opponent, 0 = league average (fallback)
+  mode: PredictionMode = 'standard',
+  buzzingMetrics?: RollingMetrics // Metrics from last 15 healthy games for buzzing mode
 ): SpreadPrediction {
   const factors: SpreadPrediction['factors'] = [];
+  const isBuzzing = mode === 'buzzing';
 
   // Use opponent net rating from game data if available, otherwise use parameter
   const actualOpponentStrength = upcomingGame.opponentNetRating ?? opponentStrength;
@@ -324,13 +349,28 @@ export function predictSpread(
   }
 
   // === Elo Component ===
-  // Estimate team Elo from season metrics
-  const teamElo = estimateElo(
-    rollingMetrics.season.wins,
-    rollingMetrics.season.losses,
-    rollingMetrics.season.pointDiff * rollingMetrics.season.games,
-    rollingMetrics.season.games
-  );
+  // In buzzing mode: use only healthy games to estimate Elo
+  // In standard mode: use season-long data
+  let teamElo: number;
+
+  if (isBuzzing && buzzingMetrics) {
+    // Buzzing mode: Elo based only on healthy games (last 15)
+    // This represents the "true" Hornets when Core 5 is healthy
+    teamElo = estimateElo(
+      buzzingMetrics.wins,
+      buzzingMetrics.losses,
+      buzzingMetrics.pointDiff * buzzingMetrics.games,
+      buzzingMetrics.games
+    );
+  } else {
+    // Standard mode: use season-long metrics
+    teamElo = estimateElo(
+      rollingMetrics.season.wins,
+      rollingMetrics.season.losses,
+      rollingMetrics.season.pointDiff * rollingMetrics.season.games,
+      rollingMetrics.season.games
+    );
+  }
 
   // Opponent Elo based on their net rating
   // Net rating of +5 ≈ +50 Elo above average
@@ -349,17 +389,22 @@ export function predictSpread(
   const eloPrediction = eloToSpread(eloDiff);
 
   factors.push({
-    name: `Elo (${Math.round(teamElo)} vs ${Math.round(opponentElo)})`,
+    name: `Elo (${Math.round(teamElo)} vs ${Math.round(opponentElo)})${isBuzzing ? ' [Buzzing]' : ''}`,
     value: eloPrediction,
     impact: eloPrediction * ELO_WEIGHT,
   });
 
   // === Net Rating Component ===
+  // In buzzing mode: use different weights that emphasize healthy-only data
+  const weights = isBuzzing ? BUZZING_WINDOW_WEIGHTS : WINDOW_WEIGHTS;
+
+  // For buzzing mode, cap the windows to only healthy games
+  // The rolling metrics passed should already be filtered to healthy games
   const weightedNR =
-    (rollingMetrics.last4.netRating * WINDOW_WEIGHTS.last4) +
-    (rollingMetrics.last7.netRating * WINDOW_WEIGHTS.last7) +
-    (rollingMetrics.last10.netRating * WINDOW_WEIGHTS.last10) +
-    (rollingMetrics.season.netRating * WINDOW_WEIGHTS.season);
+    (rollingMetrics.last4.netRating * weights.last4) +
+    (rollingMetrics.last7.netRating * weights.last7) +
+    (rollingMetrics.last10.netRating * weights.last10) +
+    ((isBuzzing && buzzingMetrics ? buzzingMetrics.netRating : rollingMetrics.season.netRating) * weights.season);
 
   // Home court adjustment
   const homeAdj = upcomingGame.isHome ? NR_HOME_ADVANTAGE : -NR_HOME_ADVANTAGE;
@@ -373,7 +418,7 @@ export function predictSpread(
   const nrPrediction = weightedNR + homeAdj + momentumImpact + oppAdjustment + fatigueAdjustment;
 
   factors.push({
-    name: 'Weighted Net Rating',
+    name: isBuzzing ? 'Buzzing Net Rating' : 'Weighted Net Rating',
     value: weightedNR,
     impact: weightedNR * NR_WEIGHT,
   });
@@ -462,8 +507,19 @@ export function predictSpread(
     confidenceScore,
     eloComponent: Math.round(eloPrediction * 10) / 10,
     netRatingComponent: Math.round(nrPrediction * 10) / 10,
+    mode,
     factors,
   };
+}
+
+/**
+ * Calculate metrics for buzzing mode (last 15 healthy games)
+ */
+export function calculateBuzzingMetrics(
+  games: Game[],
+  spreads?: Map<string, number>
+): RollingMetrics {
+  return calculateRollingMetrics(games, BUZZING_SAMPLE_SIZE, spreads, true);
 }
 
 /**

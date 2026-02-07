@@ -4,12 +4,14 @@ import { useState, useEffect, useMemo } from 'react';
 import { BuzzData } from '@/lib/types';
 import {
   calculateRollingMetrics,
+  calculateBuzzingMetrics,
   analyzeTrend,
   predictSpread,
   getHistoricalSpreads,
   RollingMetrics,
   TrendAnalysis,
   SpreadPrediction,
+  PredictionMode,
 } from '@/lib/model';
 import BuzzMeter from './components/BuzzMeter';
 import RespectMeter from './components/RespectMeter';
@@ -29,6 +31,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'overview' | 'rolling' | 'ats' | 'predictions' | 'games'>('overview');
   const [selectedWindow, setSelectedWindow] = useState(10);
   const [healthyOnly, setHealthyOnly] = useState(true);
+  const [predictionMode, setPredictionMode] = useState<PredictionMode>('standard');
 
   useEffect(() => {
     async function fetchData() {
@@ -64,15 +67,25 @@ export default function Home() {
 
     const trend = analyzeTrend(data.games);
 
+    // Calculate buzzing metrics (last 15 healthy games)
+    const buzzingMetrics = calculateBuzzingMetrics(data.games, spreads);
+
     // Generate predictions for upcoming games
     const predictions = new Map<string, SpreadPrediction>();
     for (const game of data.upcomingGames) {
-      const prediction = predictSpread(game, rollingMetrics, trend, 0);
+      const prediction = predictSpread(
+        game,
+        rollingMetrics,
+        trend,
+        0,
+        predictionMode,
+        buzzingMetrics
+      );
       predictions.set(game.gameId, prediction);
     }
 
-    return { rollingMetrics, trend, predictions, spreads, maxGames };
-  }, [data, healthyOnly]);
+    return { rollingMetrics, trend, predictions, spreads, maxGames, buzzingMetrics };
+  }, [data, healthyOnly, predictionMode]);
 
   // Get currently selected window metrics
   const selectedMetrics = useMemo(() => {
@@ -337,6 +350,8 @@ export default function Home() {
         healthyOnly={healthyOnly}
         onHealthyToggle={handleHealthyToggle}
         totalGames={data.totalGames}
+        predictionMode={predictionMode}
+        onPredictionModeChange={setPredictionMode}
       />
     </div>
   );
