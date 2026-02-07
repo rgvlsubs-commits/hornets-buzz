@@ -303,9 +303,23 @@ export function predictSpread(
     season: RollingMetrics;
   },
   trend: TrendAnalysis,
-  opponentStrength: number = 0 // Net rating of opponent, 0 = league average
+  opponentStrength: number = 0 // Net rating of opponent, 0 = league average (fallback)
 ): SpreadPrediction {
   const factors: SpreadPrediction['factors'] = [];
+
+  // Use opponent net rating from game data if available, otherwise use parameter
+  const actualOpponentStrength = upcomingGame.opponentNetRating ?? opponentStrength;
+
+  // === Fatigue Factor ===
+  // Back-to-back games typically cost 2-3 points
+  let fatigueAdjustment = 0;
+  if (upcomingGame.isBackToBack) {
+    fatigueAdjustment = -NR_FATIGUE_PENALTY;
+  } else if (upcomingGame.restDays === 1) {
+    fatigueAdjustment = -1.0; // Minor penalty for 1 day rest
+  } else if (upcomingGame.restDays !== undefined && upcomingGame.restDays >= 3) {
+    fatigueAdjustment = 0.5; // Slight boost for extended rest
+  }
 
   // === Elo Component ===
   // Estimate team Elo from season metrics
@@ -316,16 +330,19 @@ export function predictSpread(
     rollingMetrics.season.games
   );
 
-  // Opponent Elo (assume average if not provided)
-  const opponentElo = ELO_INITIAL + opponentStrength * 10;
+  // Opponent Elo based on their net rating
+  // Net rating of +5 ≈ +50 Elo above average
+  const opponentElo = ELO_INITIAL + actualOpponentStrength * 10;
 
-  // Elo difference with home court
+  // Elo difference with home court and fatigue
   let eloDiff = teamElo - opponentElo;
   if (upcomingGame.isHome) {
     eloDiff += ELO_HOME_ADVANTAGE;
   } else {
     eloDiff -= ELO_HOME_ADVANTAGE;
   }
+  // Apply fatigue in Elo terms (~28 Elo = 1 point)
+  eloDiff += fatigueAdjustment * ELO_TO_SPREAD;
 
   const eloPrediction = eloToSpread(eloDiff);
 
@@ -348,10 +365,10 @@ export function predictSpread(
   // Momentum factor
   const momentumImpact = trend.momentum * MOMENTUM_MULTIPLIER;
 
-  // Opponent adjustment
-  const oppAdjustment = -opponentStrength;
+  // Opponent adjustment (subtract their net rating advantage)
+  const oppAdjustment = -actualOpponentStrength;
 
-  const nrPrediction = weightedNR + homeAdj + momentumImpact + oppAdjustment;
+  const nrPrediction = weightedNR + homeAdj + momentumImpact + oppAdjustment + fatigueAdjustment;
 
   factors.push({
     name: 'Weighted Net Rating',
@@ -370,6 +387,24 @@ export function predictSpread(
       name: `Momentum (${trend.direction})`,
       value: trend.momentum,
       impact: momentumImpact * NR_WEIGHT,
+    });
+  }
+
+  // Opponent strength factor
+  if (Math.abs(actualOpponentStrength) > 1) {
+    factors.push({
+      name: actualOpponentStrength > 0 ? 'Strong Opponent' : 'Weak Opponent',
+      value: actualOpponentStrength,
+      impact: oppAdjustment * NR_WEIGHT,
+    });
+  }
+
+  // Fatigue factor
+  if (fatigueAdjustment !== 0) {
+    factors.push({
+      name: upcomingGame.isBackToBack ? 'Back-to-Back' : (fatigueAdjustment > 0 ? 'Well Rested' : 'Short Rest'),
+      value: upcomingGame.restDays ?? 0,
+      impact: fatigueAdjustment * NR_WEIGHT,
     });
   }
 

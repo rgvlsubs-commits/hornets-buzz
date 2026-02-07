@@ -25,14 +25,98 @@ try:
         playergamelog,
         boxscoreadvancedv3,
         leaguestandings,
+        leaguedashteamstats,
     )
     from nba_api.stats.static import teams
     import pandas as pd
     import requests
+    import time
 except ImportError as e:
     print(f"Missing dependency: {e}")
     print("Install with: pip install nba_api pandas requests")
     sys.exit(1)
+
+
+# === Team Strength Data ===
+
+def get_all_team_stats():
+    """Fetch current season stats for all NBA teams."""
+    print("Fetching league-wide team stats...")
+    try:
+        time.sleep(0.6)
+        stats = leaguedashteamstats.LeagueDashTeamStats(
+            season=SEASON,
+            season_type_all_star="Regular Season",
+            per_mode_detailed="PerGame"
+        )
+        df = stats.get_data_frames()[0]
+
+        # Build team strength dictionary
+        team_stats = {}
+        for _, row in df.iterrows():
+            team_id = row["TEAM_ID"]
+            # Calculate net rating from offensive and defensive ratings
+            # Or use point differential as proxy
+            wins = row.get("W", 0)
+            losses = row.get("L", 0)
+            games = wins + losses
+            pts_for = row.get("PTS", 0)
+            pts_against = row.get("PTS", 0) - row.get("PLUS_MINUS", 0)
+
+            # Net rating proxy: plus/minus per game
+            net_rating = row.get("PLUS_MINUS", 0) if games > 0 else 0
+
+            team_stats[team_id] = {
+                "team_id": team_id,
+                "team_name": row.get("TEAM_NAME", "Unknown"),
+                "wins": wins,
+                "losses": losses,
+                "net_rating": round(net_rating, 1),
+                "win_pct": wins / games if games > 0 else 0.5,
+            }
+
+        print(f"  Fetched stats for {len(team_stats)} teams")
+        return team_stats
+    except Exception as e:
+        print(f"  Warning: Could not fetch team stats: {e}")
+        return {}
+
+
+def get_team_id_by_abbreviation(abbrev: str):
+    """Get team ID from abbreviation."""
+    team_abbrev_map = {
+        "ATL": 1610612737, "BOS": 1610612738, "BKN": 1610612751, "CHA": 1610612766,
+        "CHI": 1610612741, "CLE": 1610612739, "DAL": 1610612742, "DEN": 1610612743,
+        "DET": 1610612765, "GSW": 1610612744, "HOU": 1610612745, "IND": 1610612754,
+        "LAC": 1610612746, "LAL": 1610612747, "MEM": 1610612763, "MIA": 1610612748,
+        "MIL": 1610612749, "MIN": 1610612750, "NOP": 1610612740, "NYK": 1610612752,
+        "OKC": 1610612760, "ORL": 1610612753, "PHI": 1610612755, "PHX": 1610612756,
+        "POR": 1610612757, "SAC": 1610612758, "SAS": 1610612759, "TOR": 1610612761,
+        "UTA": 1610612762, "WAS": 1610612764,
+    }
+    return team_abbrev_map.get(abbrev.upper())
+
+
+def calculate_rest_days(games: list) -> list:
+    """Calculate days of rest before each game."""
+    # Games should be sorted by date descending (most recent first)
+    # We need to look at the NEXT game in the list (which is the previous game chronologically)
+
+    for i, game in enumerate(games):
+        game_date = datetime.strptime(game["date"], "%Y-%m-%d")
+
+        # Find the previous game (next in list since sorted descending)
+        if i + 1 < len(games):
+            prev_game_date = datetime.strptime(games[i + 1]["date"], "%Y-%m-%d")
+            rest_days = (game_date - prev_game_date).days - 1  # -1 because game day doesn't count
+            game["restDays"] = max(0, rest_days)
+            game["isBackToBack"] = rest_days == 0
+        else:
+            # First game of tracking period
+            game["restDays"] = 2  # Assume normal rest
+            game["isBackToBack"] = False
+
+    return games
 
 
 # === Configuration ===
@@ -271,6 +355,9 @@ def main(odds_api_key: Optional[str] = None):
     print("Hornets Buzz Tracker - Data Fetcher")
     print("=" * 50)
 
+    # Fetch league-wide team stats for opponent strength
+    team_stats = get_all_team_stats()
+
     # Get player game participation
     print("\nFetching player game logs...")
     player_games_map = {}
@@ -299,6 +386,11 @@ def main(odds_api_key: Optional[str] = None):
         matchup = row["MATCHUP"]
         is_home = "vs." in matchup
         opponent = matchup.split(" vs. " if is_home else " @ ")[-1]
+
+        # Get opponent team ID and strength
+        opp_team_id = get_team_id_by_abbreviation(opponent)
+        opp_stats = team_stats.get(opp_team_id, {})
+        opp_net_rating = opp_stats.get("net_rating", 0)
 
         # Check if all starters played
         missing_starters = check_starters_played(game_id, player_games_map)
@@ -350,6 +442,7 @@ def main(odds_api_key: Optional[str] = None):
             "spread": est_spread,
             "impliedWinPct": est_implied_win_pct,
             "coveredSpread": covered_spread,
+            "opponentNetRating": opp_net_rating,
             **advanced_stats,
         }
 
@@ -364,6 +457,9 @@ def main(odds_api_key: Optional[str] = None):
     # Sort games by date descending (most recent first)
     games.sort(key=lambda g: g["date"], reverse=True)
     qualified_games.sort(key=lambda g: g["date"], reverse=True)
+
+    # Calculate rest days for each game
+    games = calculate_rest_days(games)
 
     # Calculate aggregate metrics for qualified games
     print("\nCalculating aggregate metrics...")
@@ -427,6 +523,17 @@ def main(odds_api_key: Optional[str] = None):
                         opp_team = [t for t in nba_teams.get_teams() if t['id'] == opp_id]
                         opp_name = opp_team[0]['full_name'] if opp_team else 'Unknown'
 
+                        # Get opponent strength
+                        opp_stats = team_stats.get(opp_id, {})
+                        opp_net_rating = opp_stats.get("net_rating", 0)
+
+                        # Calculate rest days from last game
+                        if games:
+                            last_game_date = datetime.strptime(games[0]["date"], "%Y-%m-%d")
+                            rest_days = (game_date - last_game_date).days - 1
+                        else:
+                            rest_days = 2  # Default
+
                         # No spread until real odds come in
                         upcoming_games.append({
                             "gameId": str(g.get('GAME_ID', '')),
@@ -438,8 +545,11 @@ def main(odds_api_key: Optional[str] = None):
                             "impliedWinPct": None,
                             "overUnder": None,
                             "hasRealOdds": False,
+                            "opponentNetRating": opp_net_rating,
+                            "restDays": max(0, rest_days),
+                            "isBackToBack": rest_days == 0,
                         })
-                        print(f"  Found: {game_date.strftime('%b %d')} {'vs' if is_home else '@'} {opp_name}")
+                        print(f"  Found: {game_date.strftime('%b %d')} {'vs' if is_home else '@'} {opp_name} (opp NR: {opp_net_rating:+.1f})")
             except Exception as e:
                 continue
     except Exception as e:

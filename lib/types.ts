@@ -27,6 +27,10 @@ export interface Game {
   spread?: number;          // Spread at game time (negative = favorite)
   impliedWinPct?: number;   // Vegas implied win probability
   coveredSpread?: boolean;  // Did they cover?
+  // Opponent & rest data
+  opponentNetRating?: number;  // Opponent's net rating
+  restDays?: number;           // Days of rest before game
+  isBackToBack?: boolean;      // Back-to-back game?
 }
 
 // Aggregated team metrics
@@ -89,6 +93,10 @@ export interface UpcomingGame {
   impliedWinPct: number | null;
   overUnder: number | null;
   hasRealOdds?: boolean;
+  // Opponent & rest data for predictions
+  opponentNetRating?: number;  // Opponent's net rating
+  restDays?: number;           // Days of rest before game
+  isBackToBack?: boolean;      // Back-to-back game?
 }
 
 // Main data structure
