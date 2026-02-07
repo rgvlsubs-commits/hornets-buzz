@@ -16,10 +16,11 @@ import RespectMeter from './components/RespectMeter';
 import StatsTable from './components/StatsTable';
 import GameLog from './components/GameLog';
 import ComparisonChart from './components/ComparisonChart';
-import RollingWindowSelector from './components/RollingWindowSelector';
+import FloatingControls from './components/FloatingControls';
 import RollingComparison from './components/RollingComparison';
 import ATSPerformance from './components/ATSPerformance';
 import SpreadPredictionComponent from './components/SpreadPrediction';
+import LeagueRankings from './components/LeagueRankings';
 
 export default function Home() {
   const [data, setData] = useState<BuzzData | null>(null);
@@ -27,6 +28,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'rolling' | 'ats' | 'predictions' | 'games'>('overview');
   const [selectedWindow, setSelectedWindow] = useState(10);
+  const [healthyOnly, setHealthyOnly] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -50,11 +52,14 @@ export default function Home() {
 
     const spreads = getHistoricalSpreads(data.games);
 
+    // Calculate max games based on healthyOnly filter
+    const maxGames = healthyOnly ? data.qualifiedGames : data.totalGames;
+
     const rollingMetrics = {
-      last4: calculateRollingMetrics(data.games, 4, spreads),
-      last7: calculateRollingMetrics(data.games, 7, spreads),
-      last10: calculateRollingMetrics(data.games, 10, spreads),
-      season: calculateRollingMetrics(data.games, data.qualifiedGames, spreads),
+      last4: calculateRollingMetrics(data.games, 4, spreads, healthyOnly),
+      last7: calculateRollingMetrics(data.games, 7, spreads, healthyOnly),
+      last10: calculateRollingMetrics(data.games, 10, spreads, healthyOnly),
+      season: calculateRollingMetrics(data.games, maxGames, spreads, healthyOnly),
     };
 
     const trend = analyzeTrend(data.games);
@@ -66,13 +71,13 @@ export default function Home() {
       predictions.set(game.gameId, prediction);
     }
 
-    return { rollingMetrics, trend, predictions, spreads };
-  }, [data]);
+    return { rollingMetrics, trend, predictions, spreads, maxGames };
+  }, [data, healthyOnly]);
 
   // Get currently selected window metrics
   const selectedMetrics = useMemo(() => {
     if (!computedData) return null;
-    const { rollingMetrics } = computedData;
+    const { rollingMetrics, maxGames } = computedData;
 
     if (selectedWindow <= 4) return rollingMetrics.last4;
     if (selectedWindow <= 7) return rollingMetrics.last7;
@@ -80,11 +85,26 @@ export default function Home() {
     return rollingMetrics.season;
   }, [computedData, selectedWindow]);
 
+  // Handle window change - ensure it doesn't exceed max
+  const handleWindowChange = (window: number) => {
+    const maxGames = healthyOnly ? (data?.qualifiedGames ?? 10) : (data?.totalGames ?? 10);
+    setSelectedWindow(Math.min(window, maxGames));
+  };
+
+  // Handle healthy toggle - reset window if needed
+  const handleHealthyToggle = (healthy: boolean) => {
+    setHealthyOnly(healthy);
+    const newMax = healthy ? (data?.qualifiedGames ?? 10) : (data?.totalGames ?? 10);
+    if (selectedWindow > newMax) {
+      setSelectedWindow(newMax);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-teal-500 mx-auto mb-4" />
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#00788C] mx-auto mb-4" />
           <p className="text-slate-400">Loading buzz data...</p>
         </div>
       </div>
@@ -102,21 +122,22 @@ export default function Home() {
     );
   }
 
-  const { rollingMetrics, trend, predictions, spreads } = computedData;
+  const { rollingMetrics, trend, predictions, spreads, maxGames } = computedData;
 
   return (
-    <div className="min-h-screen pb-12">
+    <div className="min-h-screen pb-24">
       {/* Header */}
-      <header className="border-b border-slate-800 bg-gradient-to-r from-[#1D1160] to-[#00788C]">
+      <header className="border-b border-slate-800 bg-gradient-to-r from-[#005F6B] to-[#00788C]">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center gap-4">
             <div className="text-4xl">🐝</div>
-            <div>
+            <div className="flex-1">
               <h1 className="text-2xl md:text-3xl font-bold text-white">
-                HORNETS BUZZ TRACKER
+                HOW MUCH ARE WE BUZZING?
               </h1>
-              <p className="text-teal-200 text-sm">
-                Tracking the Core 5 since Dec 15, 2024
+              <div className="gold-accent-line w-48 md:w-64 my-2" />
+              <p className="text-[#00A3B4] text-sm">
+                Tracking the Core 5's buzz since Oct 22, 2025
               </p>
             </div>
           </div>
@@ -137,37 +158,28 @@ export default function Home() {
                 {player.name}
                 <span className="text-slate-400 ml-1">({player.position})</span>
                 {player.isRookie && (
-                  <span className="ml-1 text-xs text-amber-400">R</span>
+                  <span className="ml-1 text-xs text-[#F9A01B]">R</span>
                 )}
               </span>
             ))}
           </div>
         </div>
 
-        {/* Window selector */}
-        <div className="mb-6">
-          <RollingWindowSelector
-            selectedWindow={selectedWindow}
-            onWindowChange={setSelectedWindow}
-            maxGames={data.qualifiedGames}
-          />
-        </div>
-
         {/* Quick stats bar - updates with window */}
-        <div className="mb-8 p-4 bg-gradient-to-r from-teal-900/50 to-purple-900/50 rounded-xl border border-slate-700">
+        <div className="mb-8 p-4 bg-gradient-to-r from-[#005F6B]/30 to-[#00788C]/30 rounded-xl border border-[#00788C]/30">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-400">
-              Last {selectedWindow <= 10 ? selectedWindow : data.qualifiedGames} Qualified Games
+              {healthyOnly ? 'Healthy Games' : 'All Games'}: Last {selectedWindow >= maxGames ? maxGames : selectedWindow}
             </span>
             <div className="flex items-center gap-2">
               {trend.direction === 'up' && (
-                <span className="text-green-400 text-sm">↑ Trending Up</span>
+                <span className="text-[#00A3B4] text-sm">↑ Trending Up</span>
               )}
               {trend.direction === 'down' && (
                 <span className="text-red-400 text-sm">↓ Trending Down</span>
               )}
               {trend.streakLength >= 2 && (
-                <span className={`text-sm ${trend.streakType === 'W' ? 'text-green-400' : 'text-red-400'}`}>
+                <span className={`text-sm ${trend.streakType === 'W' ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                   ({trend.streakLength}{trend.streakType} streak)
                 </span>
               )}
@@ -181,19 +193,19 @@ export default function Home() {
               <p className="text-sm text-slate-400">Record</p>
             </div>
             <div>
-              <p className={`text-2xl font-bold ${(selectedMetrics?.netRating ?? 0) > 0 ? 'text-green-400' : 'text-red-400'}`}>
+              <p className={`text-2xl font-bold ${(selectedMetrics?.netRating ?? 0) > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                 {(selectedMetrics?.netRating ?? 0) > 0 ? '+' : ''}{selectedMetrics?.netRating.toFixed(1)}
               </p>
               <p className="text-sm text-slate-400">Net Rating</p>
             </div>
             <div>
-              <p className={`text-2xl font-bold ${(selectedMetrics?.pointDiff ?? 0) > 0 ? 'text-green-400' : 'text-red-400'}`}>
+              <p className={`text-2xl font-bold ${(selectedMetrics?.pointDiff ?? 0) > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                 {(selectedMetrics?.pointDiff ?? 0) > 0 ? '+' : ''}{selectedMetrics?.pointDiff.toFixed(1)}
               </p>
               <p className="text-sm text-slate-400">Point Diff</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-teal-400">
+              <p className="text-2xl font-bold text-[#F9A01B]">
                 {selectedMetrics?.ortg.toFixed(1)}
               </p>
               <p className="text-sm text-slate-400">ORTG</p>
@@ -238,14 +250,14 @@ export default function Home() {
               <BuzzMeter
                 metrics={data.metrics}
                 rollingMetrics={selectedMetrics ?? undefined}
-                windowLabel={selectedWindow <= 10 ? `Last ${selectedWindow} Games` : 'All Qualified Games'}
+                windowLabel={selectedWindow >= maxGames ? 'All Games' : `Last ${selectedWindow} Games`}
               />
               <RespectMeter
                 respectMetrics={data.respectMetrics}
                 rollingMetrics={selectedMetrics ?? undefined}
-                windowLabel={selectedWindow <= 10 ? `Last ${selectedWindow} Games` : 'All Qualified Games'}
+                windowLabel={selectedWindow >= maxGames ? 'All Games' : `Last ${selectedWindow} Games`}
                 games={data.games}
-                windowSize={selectedWindow <= 10 ? selectedWindow : 999}
+                windowSize={selectedWindow >= maxGames ? 999 : selectedWindow}
               />
             </div>
 
@@ -254,6 +266,16 @@ export default function Home() {
               metrics={data.metrics}
               leagueAverages={data.leagueAverages}
             />
+
+            {/* League Rankings */}
+            {data.leagueRankings && (
+              <LeagueRankings
+                rankings={data.leagueRankings}
+                rollingMetrics={selectedMetrics ?? undefined}
+                windowLabel={selectedWindow >= maxGames ? 'All Games' : `Last ${selectedWindow} Games`}
+                healthyOnly={healthyOnly}
+              />
+            )}
 
             {/* Odds chart with predictions */}
             <ComparisonChart
@@ -306,6 +328,16 @@ export default function Home() {
           </p>
         </footer>
       </main>
+
+      {/* Floating Controls */}
+      <FloatingControls
+        selectedWindow={selectedWindow}
+        onWindowChange={handleWindowChange}
+        maxGames={data.qualifiedGames}
+        healthyOnly={healthyOnly}
+        onHealthyToggle={handleHealthyToggle}
+        totalGames={data.totalGames}
+      />
     </div>
   );
 }

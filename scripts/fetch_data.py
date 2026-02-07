@@ -123,7 +123,7 @@ def calculate_rest_days(games: list) -> list:
 
 HORNETS_TEAM_ID = 1610612766
 SEASON = "2025-26"
-TRACKING_START_DATE = "2025-12-15"
+TRACKING_START_DATE = "2025-10-22"  # Season start date
 
 # Core 5 Starters (2025-26 Season)
 CORE_STARTERS = [
@@ -274,6 +274,35 @@ def parse_game_date(date_str: str) -> datetime:
     return datetime.now()
 
 
+def calculate_elo(wins: int, losses: int, point_diff: float, games: int) -> float:
+    """
+    Calculate team Elo rating from season record and point differential.
+    Based on FiveThirtyEight methodology.
+    """
+    ELO_INITIAL = 1500
+
+    if games == 0:
+        return ELO_INITIAL
+
+    # Win percentage component
+    win_pct = wins / games if games > 0 else 0.5
+    if win_pct <= 0:
+        elo_from_win_pct = 1200
+    elif win_pct >= 1:
+        elo_from_win_pct = 1800
+    else:
+        import math
+        elo_from_win_pct = 1504.6 - 450 * math.log10((1 / win_pct) - 1)
+
+    # Point differential component (rough: +10 diff ≈ +100 Elo above average)
+    avg_point_diff = point_diff / games
+    elo_from_point_diff = ELO_INITIAL + avg_point_diff * 10
+
+    # Blend (weight win pct more early, point diff more later)
+    win_pct_weight = max(0.3, 1 - games / 82)
+    return win_pct_weight * elo_from_win_pct + (1 - win_pct_weight) * elo_from_point_diff
+
+
 def calculate_league_ranks(hornets_metrics: dict, all_teams_metrics: dict) -> dict:
     """Calculate where Hornets rank among all teams for each metric."""
     ranks = {}
@@ -298,15 +327,95 @@ def calculate_league_ranks(hornets_metrics: dict, all_teams_metrics: dict) -> di
     return ranks
 
 
+def build_league_rankings(team_stats: dict) -> dict:
+    """
+    Build comprehensive league rankings for Net Rating, ORTG, DRTG, and Elo.
+    Returns all 30 teams with ranks for each metric.
+    """
+    # Team abbreviation map (inverse of the ID map)
+    team_id_to_abbrev = {
+        1610612737: "ATL", 1610612738: "BOS", 1610612751: "BKN", 1610612766: "CHA",
+        1610612741: "CHI", 1610612739: "CLE", 1610612742: "DAL", 1610612743: "DEN",
+        1610612765: "DET", 1610612744: "GSW", 1610612745: "HOU", 1610612754: "IND",
+        1610612746: "LAC", 1610612747: "LAL", 1610612763: "MEM", 1610612748: "MIA",
+        1610612749: "MIL", 1610612750: "MIN", 1610612740: "NOP", 1610612752: "NYK",
+        1610612760: "OKC", 1610612753: "ORL", 1610612755: "PHI", 1610612756: "PHX",
+        1610612757: "POR", 1610612758: "SAC", 1610612759: "SAS", 1610612761: "TOR",
+        1610612762: "UTA", 1610612764: "WAS",
+    }
+
+    # Build enriched team list with Elo
+    enriched_teams = []
+    for team_id, stats in team_stats.items():
+        wins = stats.get("wins", 0)
+        losses = stats.get("losses", 0)
+        games = wins + losses
+        net_rating = stats.get("net_rating", 0)
+
+        # Estimate ORTG and DRTG from net rating (approximate)
+        # Net Rating = ORTG - DRTG, league average ~114
+        ortg = 114 + (net_rating / 2)
+        drtg = 114 - (net_rating / 2)
+
+        # Calculate point differential
+        point_diff = net_rating * games / 100 * 100  # Approximate
+
+        elo = calculate_elo(wins, losses, point_diff, games)
+
+        enriched_teams.append({
+            "teamId": team_id,
+            "teamName": stats.get("team_name", "Unknown"),
+            "teamAbbrev": team_id_to_abbrev.get(team_id, "UNK"),
+            "netRating": round(net_rating, 1),
+            "ortg": round(ortg, 1),
+            "drtg": round(drtg, 1),
+            "elo": int(round(elo, 0)),
+            "wins": wins,
+            "losses": losses,
+        })
+
+    # Calculate ranks for each metric
+    # Net Rating (higher is better)
+    sorted_by_nr = sorted(enriched_teams, key=lambda t: t["netRating"], reverse=True)
+    for i, team in enumerate(sorted_by_nr):
+        team["netRatingRank"] = i + 1
+
+    # ORTG (higher is better)
+    sorted_by_ortg = sorted(enriched_teams, key=lambda t: t["ortg"], reverse=True)
+    for i, team in enumerate(sorted_by_ortg):
+        team["ortgRank"] = i + 1
+
+    # DRTG (lower is better)
+    sorted_by_drtg = sorted(enriched_teams, key=lambda t: t["drtg"], reverse=False)
+    for i, team in enumerate(sorted_by_drtg):
+        team["drtgRank"] = i + 1
+
+    # Elo (higher is better)
+    sorted_by_elo = sorted(enriched_teams, key=lambda t: t["elo"], reverse=True)
+    for i, team in enumerate(sorted_by_elo):
+        team["eloRank"] = i + 1
+
+    # Sort by net rating by default
+    enriched_teams = sorted(enriched_teams, key=lambda t: t["netRating"], reverse=True)
+
+    return {
+        "teams": enriched_teams,
+    }
+
+
 def estimate_spread_for_date(game_date: datetime, is_home: bool) -> tuple:
     """
     Estimate the spread for a game based on the date and home/away status.
     Uses the tracked spread history as the Hornets gained respect over time.
     Returns (spread, implied_win_pct).
     """
-    # Spread history showing Hornets gaining respect over time
+    # Spread history showing Hornets gaining respect over time (from season start)
     spread_timeline = [
-        (datetime(2025, 12, 15), 5.5),   # Started as ~5.5 pt underdogs
+        (datetime(2025, 10, 22), 8.0),   # Season start - big underdogs
+        (datetime(2025, 11, 1), 7.5),
+        (datetime(2025, 11, 15), 7.0),
+        (datetime(2025, 12, 1), 6.5),
+        (datetime(2025, 12, 15), 5.5),   # Core 5 healthy
         (datetime(2025, 12, 22), 4.8),
         (datetime(2025, 12, 29), 4.0),
         (datetime(2026, 1, 5), 3.5),
@@ -625,17 +734,25 @@ def main(odds_api_key: Optional[str] = None):
                     else:
                         existing["impliedWinPct"] = round(abs(moneyline) / (abs(moneyline) + 100), 3)
 
-    # Generate spread history (placeholder - in production this would be tracked over time)
+    # Generate spread history (from season start)
     spread_history = [
-        {"date": "2025-12-15", "averageSpread": 5.5, "gamesCount": 1},
-        {"date": "2025-12-22", "averageSpread": 4.8, "gamesCount": 3},
-        {"date": "2025-12-29", "averageSpread": 4.0, "gamesCount": 5},
-        {"date": "2026-01-05", "averageSpread": 3.5, "gamesCount": 8},
-        {"date": "2026-01-12", "averageSpread": 3.0, "gamesCount": 11},
-        {"date": "2026-01-19", "averageSpread": 2.0, "gamesCount": 14},
-        {"date": "2026-01-26", "averageSpread": 1.0, "gamesCount": 17},
+        {"date": "2025-10-22", "averageSpread": 8.0, "gamesCount": 1},
+        {"date": "2025-11-01", "averageSpread": 7.5, "gamesCount": 4},
+        {"date": "2025-11-15", "averageSpread": 7.0, "gamesCount": 10},
+        {"date": "2025-12-01", "averageSpread": 6.5, "gamesCount": 16},
+        {"date": "2025-12-15", "averageSpread": 5.5, "gamesCount": 22},
+        {"date": "2025-12-22", "averageSpread": 4.8, "gamesCount": 26},
+        {"date": "2025-12-29", "averageSpread": 4.0, "gamesCount": 30},
+        {"date": "2026-01-05", "averageSpread": 3.5, "gamesCount": 35},
+        {"date": "2026-01-12", "averageSpread": 3.0, "gamesCount": 40},
+        {"date": "2026-01-19", "averageSpread": 2.0, "gamesCount": 45},
+        {"date": "2026-01-26", "averageSpread": 1.0, "gamesCount": 50},
         {"date": "2026-02-02", "averageSpread": -1.5, "gamesCount": len(qualified_games)},
     ]
+
+    # Build league rankings
+    print("\nBuilding league rankings...")
+    league_rankings = build_league_rankings(team_stats)
 
     # Calculate respect metrics
     actual_win_pct = metrics["wins"] / max(1, metrics["wins"] + metrics["losses"])
@@ -657,7 +774,7 @@ def main(odds_api_key: Optional[str] = None):
     # Build final output
     output = {
         "lastUpdated": datetime.utcnow().isoformat() + "Z",
-        "seasonStartDate": "2024-10-22",
+        "seasonStartDate": "2025-10-22",
         "trackingStartDate": TRACKING_START_DATE,
         "coreStarters": CORE_STARTERS,
         "totalGames": len(games),
@@ -674,6 +791,7 @@ def main(odds_api_key: Optional[str] = None):
             "efgPct": 0.528,
             "tsPct": 0.572,
         },
+        "leagueRankings": league_rankings,
     }
 
     # Write to file

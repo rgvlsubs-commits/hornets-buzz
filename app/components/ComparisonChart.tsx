@@ -47,7 +47,7 @@ export default function ComparisonChart({
   return (
     <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700">
       <h2 className="text-lg font-semibold text-slate-300 mb-2">
-        Spread Trend Since Dec 15
+        Spread Trend Since Oct 22
       </h2>
       <p className="text-sm text-slate-500 mb-4">
         Lower spread = more respect from oddsmakers
@@ -82,9 +82,9 @@ export default function ComparisonChart({
             />
             <ReferenceLine
               y={0}
-              stroke="#22c55e"
+              stroke="#00788C"
               strokeDasharray="5 5"
-              label={{ value: 'Favorite', fill: '#22c55e', fontSize: 10 }}
+              label={{ value: 'Favorite', fill: '#00788C', fontSize: 10 }}
             />
             <Line
               type="monotone"
@@ -113,9 +113,9 @@ export default function ComparisonChart({
                 key={game.gameId}
                 className={`p-3 rounded-lg border ${
                   spreadEdge?.type === 'strong-cover'
-                    ? 'bg-green-900/20 border-green-700/50'
+                    ? 'bg-[#00788C]/20 border-[#00788C]/50'
                     : spreadEdge?.type === 'lean-cover'
-                    ? 'bg-green-900/10 border-green-800/30'
+                    ? 'bg-[#00788C]/10 border-[#00788C]/30'
                     : spreadEdge?.type === 'strong-fade'
                     ? 'bg-red-900/20 border-red-700/50'
                     : spreadEdge?.type === 'lean-fade'
@@ -138,7 +138,7 @@ export default function ComparisonChart({
                       <>
                         <p
                           className={`font-bold ${
-                            game.spread < 0 ? 'text-green-400' : 'text-amber-400'
+                            game.spread < 0 ? 'text-[#00A3B4]' : 'text-[#F9A01B]'
                           }`}
                         >
                           {game.spread > 0 ? '+' : ''}
@@ -177,12 +177,12 @@ export default function ComparisonChart({
                   <div className="mt-3 pt-3 border-t border-slate-700/50 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="text-xs text-slate-400">
-                        Model: <span className={`font-bold ${prediction.predictedMargin > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                        Model: <span className={`font-bold ${prediction.predictedMargin > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                           {prediction.predictedMargin > 0 ? '+' : ''}{prediction.predictedMargin}
                         </span> margin
                       </div>
                       <div className="text-xs text-slate-400">
-                        vs Spread: <span className={`font-bold ${prediction.predictedCover > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                        vs Spread: <span className={`font-bold ${prediction.predictedCover > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                           {prediction.predictedCover > 0 ? '+' : ''}{prediction.predictedCover}
                         </span>
                       </div>
@@ -191,9 +191,9 @@ export default function ComparisonChart({
                       <span
                         className={`text-xs px-2 py-1 rounded font-medium ${
                           spreadEdge.type === 'strong-cover'
-                            ? 'bg-green-500/30 text-green-300'
+                            ? 'bg-[#00788C]/30 text-[#00A3B4]'
                             : spreadEdge.type === 'lean-cover'
-                            ? 'bg-green-500/20 text-green-400'
+                            ? 'bg-[#00788C]/20 text-[#00A3B4]'
                             : spreadEdge.type === 'strong-fade'
                             ? 'bg-red-500/30 text-red-300'
                             : spreadEdge.type === 'lean-fade'

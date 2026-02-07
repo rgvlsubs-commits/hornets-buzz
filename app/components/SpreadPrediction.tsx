@@ -33,7 +33,7 @@ export default function SpreadPredictionComponent({
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs text-slate-500">
-          <div className="w-3 h-3 rounded-full bg-green-500" />
+          <div className="w-3 h-3 rounded-full bg-[#00788C]" />
           <span>Cover</span>
           <div className="w-3 h-3 rounded-full bg-red-500 ml-2" />
           <span>Miss</span>
@@ -70,7 +70,7 @@ export default function SpreadPredictionComponent({
                   {game.spread !== null ? (
                     <>
                       <p className="text-slate-400 text-sm">DraftKings</p>
-                      <p className={`text-xl font-bold ${game.spread < 0 ? 'text-green-400' : 'text-amber-400'}`}>
+                      <p className={`text-xl font-bold ${game.spread < 0 ? 'text-[#00A3B4]' : 'text-[#F9A01B]'}`}>
                         {game.spread > 0 ? '+' : ''}{game.spread}
                       </p>
                     </>
@@ -91,9 +91,9 @@ export default function SpreadPredictionComponent({
                     <span
                       className={`text-sm font-medium px-2 py-0.5 rounded ${
                         prediction.confidence === 'high'
-                          ? 'bg-green-500/20 text-green-400'
+                          ? 'bg-[#00788C]/20 text-[#00A3B4]'
                           : prediction.confidence === 'medium'
-                          ? 'bg-yellow-500/20 text-yellow-400'
+                          ? 'bg-[#F9A01B]/20 text-[#F9A01B]'
                           : 'bg-slate-700 text-slate-400'
                       }`}
                     >
@@ -106,13 +106,13 @@ export default function SpreadPredictionComponent({
                     {/* Zone labels */}
                     <div className="flex justify-between mb-1">
                       <span className="text-xs text-red-400 font-medium">MISS SPREAD</span>
-                      <span className="text-xs text-green-400 font-medium">COVER SPREAD</span>
+                      <span className="text-xs text-[#00A3B4] font-medium">COVER SPREAD</span>
                     </div>
 
                     {/* Track */}
                     <div className="relative h-14">
                       {/* Background gradient */}
-                      <div className="absolute inset-x-0 top-6 h-4 rounded-full bg-gradient-to-r from-red-600/40 via-slate-600 to-green-600/40" />
+                      <div className="absolute inset-x-0 top-6 h-4 rounded-full bg-gradient-to-r from-red-600/40 via-slate-600 to-[#00788C]/40" />
 
                       {/* Tick marks */}
                       {[-15, -10, -5, 0, 5, 10, 15].map((tick) => {
@@ -125,7 +125,7 @@ export default function SpreadPredictionComponent({
                             style={{ left: `${pct}%`, transform: 'translateX(-50%)' }}
                           >
                             <div
-                              className={`${isZero ? 'w-1 h-6 bg-amber-400' : 'w-0.5 h-4 bg-slate-400'}`}
+                              className={`${isZero ? 'w-1 h-6 bg-[#F9A01B]' : 'w-0.5 h-4 bg-slate-400'}`}
                             />
                           </div>
                         );
@@ -136,10 +136,10 @@ export default function SpreadPredictionComponent({
                         className="absolute top-0 flex flex-col items-center"
                         style={{ left: '50%', transform: 'translateX(-50%)' }}
                       >
-                        <div className="bg-amber-500 text-slate-900 text-xs font-bold px-2 py-0.5 rounded-t">
+                        <div className="bg-[#F9A01B] text-slate-900 text-xs font-bold px-2 py-0.5 rounded-t">
                           SPREAD: {game.spread! > 0 ? '+' : ''}{game.spread}
                         </div>
-                        <div className="w-0.5 h-2 bg-amber-500" />
+                        <div className="w-0.5 h-2 bg-[#F9A01B]" />
                       </div>
 
                       {/* Tick labels below */}
@@ -147,7 +147,7 @@ export default function SpreadPredictionComponent({
                         <span>-15</span>
                         <span>-10</span>
                         <span>-5</span>
-                        <span className="text-amber-400 font-bold">0</span>
+                        <span className="text-[#F9A01B] font-bold">0</span>
                         <span>+5</span>
                         <span>+10</span>
                         <span>+15</span>
@@ -165,7 +165,7 @@ export default function SpreadPredictionComponent({
                         <div
                           className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-lg border-2 ${
                             willCover
-                              ? 'bg-green-500 border-green-300 text-white'
+                              ? 'bg-[#00788C] border-[#00A3B4] text-white'
                               : 'bg-red-500 border-red-300 text-white'
                           }`}
                         >
@@ -183,7 +183,7 @@ export default function SpreadPredictionComponent({
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-slate-400">Predicted Margin</p>
-                      <p className={`text-xl font-bold ${prediction.predictedMargin > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      <p className={`text-xl font-bold ${prediction.predictedMargin > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                         {prediction.predictedMargin > 0 ? '+' : ''}{prediction.predictedMargin}
                       </p>
                     </div>
@@ -200,13 +200,13 @@ export default function SpreadPredictionComponent({
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="bg-slate-900/50 rounded-lg p-3">
                     <p className="text-xs text-slate-500 mb-1">Predicted Margin</p>
-                    <p className={`text-lg font-bold ${prediction.predictedMargin > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    <p className={`text-lg font-bold ${prediction.predictedMargin > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                       {prediction.predictedMargin > 0 ? '+' : ''}{prediction.predictedMargin}
                     </p>
                   </div>
                   <div className="bg-slate-900/50 rounded-lg p-3">
                     <p className="text-xs text-slate-500 mb-1">Expected Cover</p>
-                    <p className={`text-lg font-bold ${willCover ? 'text-green-400' : 'text-red-400'}`}>
+                    <p className={`text-lg font-bold ${willCover ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                       {willCover ? 'COVER' : 'MISS'} by {coverStrength.toFixed(1)}
                     </p>
                   </div>
@@ -222,7 +222,7 @@ export default function SpreadPredictionComponent({
                       key={idx}
                       className={`text-xs px-2 py-1 rounded ${
                         factor.impact > 0
-                          ? 'bg-green-500/20 text-green-400'
+                          ? 'bg-[#00788C]/20 text-[#00A3B4]'
                           : factor.impact < 0
                           ? 'bg-red-500/20 text-red-400'
                           : 'bg-slate-700 text-slate-400'
@@ -242,11 +242,11 @@ export default function SpreadPredictionComponent({
       <div className="mt-6 p-4 bg-slate-800/30 rounded-xl border border-slate-700">
         <h3 className="text-sm font-medium text-slate-300 mb-2">Hybrid Prediction Model</h3>
         <p className="text-xs text-slate-400 mb-3">
-          Backtested on 709 NBA games (2025-26 season): <span className="text-green-400">63.2% accuracy</span>, 11.4 MAE
+          Backtested on 709 NBA games (2025-26 season): <span className="text-[#00A3B4]">63.2% accuracy</span>, 11.4 MAE
         </p>
         <div className="grid md:grid-cols-2 gap-4 text-xs text-slate-500">
           <div>
-            <p className="text-teal-400 font-medium mb-1">Elo Component (55%)</p>
+            <p className="text-[#00A3B4] font-medium mb-1">Elo Component (55%)</p>
             <ul className="space-y-0.5">
               <li>• FiveThirtyEight methodology</li>
               <li>• K-factor: 20, Home: +70 Elo</li>
@@ -255,7 +255,7 @@ export default function SpreadPredictionComponent({
             </ul>
           </div>
           <div>
-            <p className="text-purple-400 font-medium mb-1">Net Rating Component (45%)</p>
+            <p className="text-[#F9A01B] font-medium mb-1">Net Rating Component (45%)</p>
             <ul className="space-y-0.5">
               <li>• Rolling windows (40/30/20/10%)</li>
               <li>• Home court: +2.5 points</li>

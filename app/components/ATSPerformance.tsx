@@ -56,13 +56,13 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
           <p className="text-sm text-slate-400">ATS Record</p>
         </div>
         <div className="bg-slate-800/50 rounded-xl p-4 text-center">
-          <p className={`text-3xl font-bold ${avgCoverMargin > 0 ? 'text-green-400' : 'text-red-400'}`}>
+          <p className={`text-3xl font-bold ${avgCoverMargin > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
             {formatPlusMinus(avgCoverMargin)}
           </p>
           <p className="text-sm text-slate-400">Avg Cover Margin</p>
         </div>
         <div className="bg-slate-800/50 rounded-xl p-4 text-center">
-          <p className="text-3xl font-bold text-amber-400">
+          <p className="text-3xl font-bold text-[#F9A01B]">
             {((atsRecord.wins / Math.max(1, atsRecord.wins + atsRecord.losses)) * 100).toFixed(0)}%
           </p>
           <p className="text-sm text-slate-400">Cover Rate</p>
@@ -99,7 +99,7 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
                   <span
                     className={`inline-flex items-center justify-center w-6 h-6 rounded text-xs font-bold ${
                       game.result === 'W'
-                        ? 'bg-green-500/20 text-green-400'
+                        ? 'bg-[#00788C]/20 text-[#00A3B4]'
                         : 'bg-red-500/20 text-red-400'
                     }`}
                   >
@@ -113,13 +113,13 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
                   {game.spread > 0 ? '+' : ''}{game.spread}
                 </td>
                 <td className={`py-2 text-right font-medium ${
-                  game.hornetsScore - game.opponentScore > 0 ? 'text-green-400' : 'text-red-400'
+                  game.hornetsScore - game.opponentScore > 0 ? 'text-[#00A3B4]' : 'text-red-400'
                 }`}>
                   {formatPlusMinus(game.hornetsScore - game.opponentScore)}
                 </td>
                 <td className="py-2 text-center">
                   {game.covered === true && (
-                    <span className="inline-flex items-center justify-center w-16 px-2 py-1 rounded bg-green-500/20 text-green-400 text-xs font-bold">
+                    <span className="inline-flex items-center justify-center w-16 px-2 py-1 rounded bg-[#00788C]/20 text-[#00A3B4] text-xs font-bold">
                       COVER {formatPlusMinus(game.coverMargin)}
                     </span>
                   )}

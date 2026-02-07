@@ -164,14 +164,16 @@ export function estimateElo(
 
 /**
  * Calculate metrics for a rolling window of games
+ * @param healthyOnly - If true, only include games where all core starters played (isQualified)
  */
 export function calculateRollingMetrics(
   games: Game[],
   windowSize: number,
-  spreads?: Map<string, number>
+  spreads?: Map<string, number>,
+  healthyOnly: boolean = true
 ): RollingMetrics {
-  const qualifiedGames = games.filter(g => g.isQualified);
-  const windowGames = qualifiedGames.slice(0, windowSize);
+  const filteredGames = healthyOnly ? games.filter(g => g.isQualified) : games;
+  const windowGames = filteredGames.slice(0, windowSize);
 
   if (windowGames.length === 0) {
     return {

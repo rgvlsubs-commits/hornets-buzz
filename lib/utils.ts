@@ -29,9 +29,9 @@ export function formatRank(rank: number): string {
 
 // Get color based on rank (1 = best, 30 = worst)
 export function getRankColor(rank: number): string {
-  if (rank <= 5) return 'text-green-400';
-  if (rank <= 10) return 'text-teal-400';
-  if (rank <= 15) return 'text-yellow-400';
+  if (rank <= 5) return 'text-[#00788C]';
+  if (rank <= 10) return 'text-[#00A3B4]';
+  if (rank <= 15) return 'text-[#F9A01B]';
   if (rank <= 20) return 'text-orange-400';
   return 'text-red-400';
 }

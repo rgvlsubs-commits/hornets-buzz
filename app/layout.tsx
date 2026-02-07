@@ -8,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Hornets Buzz Tracker',
-  description: 'Track the Charlotte Hornets performance with their core 5 starters healthy',
+  title: 'How Much Are We Buzzing? | Hornets Tracker',
+  description: "Tracking the Core 5's buzz since Day 1 - Charlotte Hornets performance tracker",
   icons: {
     icon: '/favicon.ico',
   },

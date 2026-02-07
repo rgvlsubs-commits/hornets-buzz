@@ -1,9 +1,25 @@
 @import "tailwindcss";
 
 :root {
+  /* Primary: Hornets Teal */
+  --teal-primary: #00788C;
+  --teal-dark: #005F6B;
+  --teal-light: #00A3B4;
+
+  /* Accent: Gold (new jersey trim) */
+  --gold-accent: #F9A01B;
+  --gold-light: #FDB927;
+  --gold-dark: #D4860F;
+
+  /* Legacy colors (kept for compatibility) */
   --hornets-teal: #00788C;
   --hornets-purple: #1D1160;
   --hornets-yellow: #F9A01B;
+
+  /* Background: Dark slate */
+  --bg-dark: #0a0a0a;
+  --bg-card: #1a1a2e;
+
   --background: #0a0a0a;
   --foreground: #ededed;
 }
@@ -38,4 +54,75 @@ body {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* Range slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: linear-gradient(to right, var(--teal-primary), var(--teal-light));
+  border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--gold-accent);
+  border-radius: 50%;
+  margin-top: -6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--gold-light);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--gold-light);
+  transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: linear-gradient(to right, var(--teal-primary), var(--teal-light));
+  border-radius: 3px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--gold-accent);
+  border-radius: 50%;
+  border: 2px solid var(--gold-light);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Gold accent text */
+.text-gold {
+  color: var(--gold-accent);
+}
+
+.text-gold-light {
+  color: var(--gold-light);
+}
+
+/* Teal accent text */
+.text-teal {
+  color: var(--teal-primary);
+}
+
+.text-teal-light {
+  color: var(--teal-light);
+}
+
+/* Gold accent line */
+.gold-accent-line {
+  height: 3px;
+  background: linear-gradient(to right, var(--gold-accent), var(--gold-light), var(--gold-accent));
+  border-radius: 2px;
 }

@@ -32,9 +32,9 @@ export default function RollingComparison({
   };
 
   const getNetRatingColor = (nr: number) => {
-    if (nr >= 8) return 'bg-green-500';
-    if (nr >= 4) return 'bg-teal-500';
-    if (nr >= 0) return 'bg-yellow-500';
+    if (nr >= 8) return 'bg-[#00788C]';
+    if (nr >= 4) return 'bg-[#00A3B4]';
+    if (nr >= 0) return 'bg-[#F9A01B]';
     if (nr >= -4) return 'bg-orange-500';
     return 'bg-red-500';
   };
@@ -49,7 +49,7 @@ export default function RollingComparison({
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium ${
               trend.direction === 'up'
-                ? 'bg-green-500/20 text-green-400'
+                ? 'bg-[#00788C]/20 text-[#00A3B4]'
                 : trend.direction === 'down'
                 ? 'bg-red-500/20 text-red-400'
                 : 'bg-slate-700 text-slate-300'
@@ -63,7 +63,7 @@ export default function RollingComparison({
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium ${
                 trend.streakType === 'W'
-                  ? 'bg-green-500/20 text-green-400'
+                  ? 'bg-[#00788C]/20 text-[#00A3B4]'
                   : 'bg-red-500/20 text-red-400'
               }`}
             >
@@ -99,7 +99,7 @@ export default function RollingComparison({
               </div>
               <span
                 className={`w-16 text-right font-mono font-bold ${
-                  data.netRating > 0 ? 'text-green-400' : 'text-red-400'
+                  data.netRating > 0 ? 'text-[#00A3B4]' : 'text-red-400'
                 }`}
               >
                 {formatPlusMinus(data.netRating)}
@@ -126,12 +126,12 @@ export default function RollingComparison({
               key={key}
               className={`p-4 rounded-xl transition-colors ${
                 isSelected
-                  ? 'bg-teal-600/20 border border-teal-500/50'
+                  ? 'bg-[#00788C]/20 border border-[#00788C]/50'
                   : 'bg-slate-800/50'
               }`}
             >
               <p className="text-xs text-slate-400 mb-2">{label}</p>
-              <p className={`text-xl font-bold ${data.netRating > 0 ? 'text-green-400' : 'text-red-400'}`}>
+              <p className={`text-xl font-bold ${data.netRating > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                 {formatPlusMinus(data.netRating)}
               </p>
               <p className="text-sm text-slate-300 mt-1">
@@ -170,7 +170,7 @@ export default function RollingComparison({
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${50 + (trend.momentum / 10) * 50}%` }}
-                className={`h-full ${trend.momentum > 0 ? 'bg-green-500' : 'bg-red-500'}`}
+                className={`h-full ${trend.momentum > 0 ? 'bg-[#00788C]' : 'bg-red-500'}`}
               />
             </div>
             <div className="flex justify-between text-xs text-slate-500 mt-1">

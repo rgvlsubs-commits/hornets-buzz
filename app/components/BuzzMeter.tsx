@@ -55,8 +55,8 @@ function estimateRankFromNetRating(nr: number): number {
               <stop offset="0%" stopColor="#ef4444" />
               <stop offset="25%" stopColor="#f97316" />
               <stop offset="50%" stopColor="#eab308" />
-              <stop offset="75%" stopColor="#22d3ee" />
-              <stop offset="100%" stopColor="#22c55e" />
+              <stop offset="75%" stopColor="#00A3B4" />
+              <stop offset="100%" stopColor="#00788C" />
             </linearGradient>
           </defs>
 
@@ -118,17 +118,17 @@ function estimateRankFromNetRating(nr: number): number {
           transition={{ type: 'spring', stiffness: 60, damping: 15 }}
           style={{ width: '4px', height: '70px', marginLeft: '-2px' }}
         >
-          <div className="w-full h-full bg-gradient-to-t from-amber-400 to-amber-200 rounded-full shadow-lg shadow-amber-400/50" />
+          <div className="w-full h-full bg-gradient-to-t from-[#F9A01B] to-[#FDB927] rounded-full shadow-lg shadow-[#F9A01B]/50" />
         </motion.div>
 
         {/* Center dot */}
-        <div className="absolute bottom-0 left-1/2 w-4 h-4 -ml-2 bg-slate-700 rounded-full border-2 border-amber-400" />
+        <div className="absolute bottom-0 left-1/2 w-4 h-4 -ml-2 bg-slate-700 rounded-full border-2 border-[#F9A01B]" />
       </div>
 
       {/* Stats display */}
       <div className="text-center">
         {windowLabel && (
-          <p className="text-xs text-teal-400 mb-2 font-medium">{windowLabel}</p>
+          <p className="text-xs text-[#00A3B4] mb-2 font-medium">{windowLabel}</p>
         )}
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="text-3xl font-bold text-white">
@@ -147,7 +147,7 @@ function estimateRankFromNetRating(nr: number): number {
         )}
 
         <div className="mt-4 py-2 px-4 bg-slate-800/50 rounded-lg inline-block">
-          <span className="text-lg font-bold text-teal-400">{level}</span>
+          <span className="text-lg font-bold text-[#F9A01B]">{level}</span>
           <p className="text-slate-400 text-xs">{description}</p>
         </div>
       </div>

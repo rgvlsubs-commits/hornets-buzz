@@ -58,13 +58,13 @@ export default function RespectMeter({
         Do People Respect the Buzz?
       </h2>
       {windowLabel && (
-        <p className="text-xs text-purple-400 mb-2 font-medium text-center">{windowLabel}</p>
+        <p className="text-xs text-[#F9A01B] mb-2 font-medium text-center">{windowLabel}</p>
       )}
 
       {/* Respect bar visualization */}
       <div className="relative h-12 mx-auto mb-6">
         {/* Background bar */}
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-4 bg-gradient-to-r from-red-500 via-yellow-400 to-green-500 rounded-full opacity-30" />
+        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-4 bg-gradient-to-r from-red-500 via-[#F9A01B] to-[#00788C] rounded-full opacity-30" />
 
         {/* Labels */}
         <div className="absolute -bottom-5 left-0 text-xs text-slate-500">Overrated</div>
@@ -82,7 +82,7 @@ export default function RespectMeter({
           transition={{ type: 'spring', stiffness: 60, damping: 15 }}
           style={{ marginLeft: '-16px' }}
         >
-          <div className="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center shadow-lg shadow-amber-400/50">
+          <div className="w-8 h-8 bg-[#F9A01B] rounded-full flex items-center justify-center shadow-lg shadow-[#F9A01B]/50">
             <span className="text-slate-900 font-bold text-xs">
               {respectGap > 0 ? '+' : ''}{Math.round(respectGap)}
             </span>
@@ -93,7 +93,7 @@ export default function RespectMeter({
       {/* Status */}
       <div className="text-center mt-8 mb-4">
         <div className="py-2 px-4 bg-slate-800/50 rounded-lg inline-block">
-          <span className="text-lg font-bold text-purple-400">{level}</span>
+          <span className="text-lg font-bold text-[#00A3B4]">{level}</span>
           <p className="text-slate-400 text-xs">{description}</p>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function RespectMeter({
           </p>
         </div>
         <div className="bg-slate-800/50 rounded-lg p-3">
-          <p className={`text-2xl font-bold ${atsWins > atsLosses ? 'text-green-400' : atsWins < atsLosses ? 'text-red-400' : 'text-white'}`}>
+          <p className={`text-2xl font-bold ${atsWins > atsLosses ? 'text-[#00A3B4]' : atsWins < atsLosses ? 'text-red-400' : 'text-white'}`}>
             {atsWins}-{atsLosses}
           </p>
           <p className="text-xs text-slate-400">vs Spread</p>
@@ -130,11 +130,11 @@ export default function RespectMeter({
       {/* Trend indicator */}
       <div className="mt-4 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-lg">
-          <span className={spreadImprovement > 0 ? 'text-green-400' : 'text-red-400'}>
+          <span className={spreadImprovement > 0 ? 'text-[#00A3B4]' : 'text-red-400'}>
             {spreadImprovement > 0 ? '↑' : '↓'}
           </span>
           <span className="text-sm text-slate-300">
-            Spread improved {Math.abs(spreadImprovement).toFixed(1)} pts since Dec 15
+            Spread improved {Math.abs(spreadImprovement).toFixed(1)} pts since Oct 22
           </span>
         </div>
       </div>

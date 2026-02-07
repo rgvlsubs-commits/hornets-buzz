@@ -99,6 +99,28 @@ export interface UpcomingGame {
   isBackToBack?: boolean;      // Back-to-back game?
 }
 
+// League team with all metrics and ranks
+export interface LeagueTeam {
+  teamId: number;
+  teamName: string;
+  teamAbbrev: string;
+  netRating: number;
+  ortg: number;
+  drtg: number;
+  elo: number;
+  wins: number;
+  losses: number;
+  netRatingRank: number;
+  ortgRank: number;
+  drtgRank: number;
+  eloRank: number;
+}
+
+// League rankings data
+export interface LeagueRankings {
+  teams: LeagueTeam[];
+}
+
 // Main data structure
 export interface BuzzData {
   lastUpdated: string;
@@ -127,4 +149,7 @@ export interface BuzzData {
     efgPct: number;
     tsPct: number;
   };
+
+  // League rankings (top 15 + Hornets for each metric)
+  leagueRankings?: LeagueRankings;
 }

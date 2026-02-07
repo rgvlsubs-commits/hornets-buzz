@@ -31,7 +31,7 @@ export default function GameLog({ games, totalGames, qualifiedGames }: GameLogPr
           onClick={() => setShowExcluded(!showExcluded)}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
             showExcluded
-              ? 'bg-purple-600 text-white'
+              ? 'bg-[#00788C] text-white'
               : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
           }`}
         >
@@ -75,7 +75,7 @@ export default function GameLog({ games, totalGames, qualifiedGames }: GameLogPr
                   <span
                     className={`inline-flex items-center justify-center w-8 h-8 rounded-lg font-bold ${
                       game.result === 'W'
-                        ? 'bg-green-500/20 text-green-400'
+                        ? 'bg-[#00788C]/20 text-[#00A3B4]'
                         : 'bg-red-500/20 text-red-400'
                     }`}
                   >
@@ -93,7 +93,7 @@ export default function GameLog({ games, totalGames, qualifiedGames }: GameLogPr
                 </td>
                 <td
                   className={`py-3 text-right font-semibold ${
-                    game.netRating > 0 ? 'text-green-400' : 'text-red-400'
+                    game.netRating > 0 ? 'text-[#00A3B4]' : 'text-red-400'
                   }`}
                 >
                   {formatPlusMinus(game.netRating)}
@@ -101,10 +101,10 @@ export default function GameLog({ games, totalGames, qualifiedGames }: GameLogPr
                 {showExcluded && (
                   <td className="py-3 pl-4">
                     {game.isQualified ? (
-                      <span className="text-green-400 text-sm">Qualified</span>
+                      <span className="text-[#00A3B4] text-sm">Qualified</span>
                     ) : (
                       <div>
-                        <span className="text-amber-400 text-sm">Excluded</span>
+                        <span className="text-[#F9A01B] text-sm">Excluded</span>
                         <p className="text-xs text-slate-500">
                           Missing: {game.missingStarters.join(', ')}
                         </p>
@@ -121,7 +121,7 @@ export default function GameLog({ games, totalGames, qualifiedGames }: GameLogPr
       {!showExcluded && excludedGamesList.length > 0 && (
         <div className="mt-4 p-3 bg-slate-800/50 rounded-lg">
           <p className="text-sm text-slate-400">
-            <span className="text-amber-400 font-medium">
+            <span className="text-[#F9A01B] font-medium">
               {excludedGamesList.length} games excluded
             </span>{' '}
             due to missing core starters. Click &quot;Show Excluded&quot; to see all games.

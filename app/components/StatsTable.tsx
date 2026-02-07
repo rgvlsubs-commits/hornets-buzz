@@ -92,7 +92,7 @@ export default function StatsTable({ metrics, leagueAverages }: StatsTableProps)
               >
                 <td className="py-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-teal-400 font-mono text-sm w-12">
+                    <span className="text-[#F9A01B] font-mono text-sm w-12">
                       {stat.abbr}
                     </span>
                     <span className="text-white">{stat.name}</span>
@@ -111,7 +111,7 @@ export default function StatsTable({ metrics, leagueAverages }: StatsTableProps)
                   {!stat.neutral ? (
                     <span
                       className={`font-medium ${
-                        stat.vsAvg > 0 ? 'text-green-400' : 'text-red-400'
+                        stat.vsAvg > 0 ? 'text-[#00A3B4]' : 'text-red-400'
                       }`}
                     >
                       {stat.vsAvg > 0 ? '+' : ''}
@@ -140,14 +140,14 @@ export default function StatsTable({ metrics, leagueAverages }: StatsTableProps)
         </div>
         <div className="w-px h-12 bg-slate-700" />
         <div className="text-center">
-          <p className={`text-3xl font-bold ${metrics.pointDifferential > 0 ? 'text-green-400' : 'text-red-400'}`}>
+          <p className={`text-3xl font-bold ${metrics.pointDifferential > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
             {formatPlusMinus(metrics.pointDifferential)}
           </p>
           <p className="text-sm text-slate-400">Avg Margin</p>
         </div>
         <div className="w-px h-12 bg-slate-700" />
         <div className="text-center">
-          <p className="text-3xl font-bold text-teal-400">
+          <p className="text-3xl font-bold text-[#F9A01B]">
             {((metrics.wins / (metrics.wins + metrics.losses)) * 100).toFixed(0)}%
           </p>
           <p className="text-sm text-slate-400">Win Rate</p>
