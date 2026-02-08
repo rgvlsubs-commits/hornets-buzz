@@ -87,16 +87,14 @@ export default function Home() {
     return { rollingMetrics, trend, predictions, spreads, maxGames, buzzingMetrics };
   }, [data, healthyOnly, predictionMode]);
 
-  // Get currently selected window metrics
+  // Get currently selected window metrics - calculate for exact window size
   const selectedMetrics = useMemo(() => {
-    if (!computedData) return null;
-    const { rollingMetrics, maxGames } = computedData;
+    if (!data || !computedData) return null;
+    const { spreads } = computedData;
 
-    if (selectedWindow <= 4) return rollingMetrics.last4;
-    if (selectedWindow <= 7) return rollingMetrics.last7;
-    if (selectedWindow <= 10) return rollingMetrics.last10;
-    return rollingMetrics.season;
-  }, [computedData, selectedWindow]);
+    // Calculate metrics for the exact selected window size
+    return calculateRollingMetrics(data.games, selectedWindow, spreads, healthyOnly);
+  }, [data, computedData, selectedWindow, healthyOnly]);
 
   // Handle window change - ensure it doesn't exceed max
   const handleWindowChange = (window: number) => {
