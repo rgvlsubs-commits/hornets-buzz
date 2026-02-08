@@ -69,9 +69,15 @@ export default function SpreadPredictionComponent({
                 <div className="text-right">
                   {game.spread !== null ? (
                     <>
-                      <p className="text-slate-400 text-sm">DraftKings</p>
-                      <p className={`text-xl font-bold ${game.spread < 0 ? 'text-[#00A3B4]' : 'text-[#F9A01B]'}`}>
-                        {game.spread > 0 ? '+' : ''}{game.spread}
+                      <p className={`text-sm font-medium px-2 py-0.5 rounded inline-block ${
+                        game.spread < 0
+                          ? 'bg-[#00788C]/20 text-[#00A3B4]'
+                          : 'bg-[#F9A01B]/20 text-[#F9A01B]'
+                      }`}>
+                        {game.spread < 0 ? `FAV ${Math.abs(game.spread)}` : `DOG ${game.spread}`}
+                      </p>
+                      <p className="text-xs text-slate-500 mt-1">
+                        {game.spread < 0 ? `Must win by ${Math.abs(game.spread) + 0.5}+` : `Can lose by ${game.spread - 0.5}`}
                       </p>
                     </>
                   ) : (
@@ -137,7 +143,7 @@ export default function SpreadPredictionComponent({
                         style={{ left: '50%', transform: 'translateX(-50%)' }}
                       >
                         <div className="bg-[#F9A01B] text-slate-900 text-xs font-bold px-2 py-0.5 rounded-t">
-                          SPREAD: {game.spread! > 0 ? '+' : ''}{game.spread}
+                          {game.spread! < 0 ? `FAV ${Math.abs(game.spread!)}` : `DOG ${game.spread}`}
                         </div>
                         <div className="w-0.5 h-2 bg-[#F9A01B]" />
                       </div>
@@ -199,13 +205,13 @@ export default function SpreadPredictionComponent({
               {hasLine ? (
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="bg-slate-900/50 rounded-lg p-3">
-                    <p className="text-xs text-slate-500 mb-1">Predicted Margin</p>
+                    <p className="text-xs text-slate-500 mb-1">Model Predicts Hornets Win By</p>
                     <p className={`text-lg font-bold ${prediction.predictedMargin > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
-                      {prediction.predictedMargin > 0 ? '+' : ''}{prediction.predictedMargin}
+                      {prediction.predictedMargin > 0 ? '+' : ''}{prediction.predictedMargin} pts
                     </p>
                   </div>
                   <div className="bg-slate-900/50 rounded-lg p-3">
-                    <p className="text-xs text-slate-500 mb-1">Expected Cover</p>
+                    <p className="text-xs text-slate-500 mb-1">vs the Line</p>
                     <p className={`text-lg font-bold ${willCover ? 'text-[#00A3B4]' : 'text-red-400'}`}>
                       {willCover ? 'COVER' : 'MISS'} by {coverStrength.toFixed(1)}
                     </p>

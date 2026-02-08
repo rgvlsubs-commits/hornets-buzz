@@ -19,7 +19,6 @@ import StatsTable from './components/StatsTable';
 import GameLog from './components/GameLog';
 import ComparisonChart from './components/ComparisonChart';
 import FloatingControls from './components/FloatingControls';
-import RollingComparison from './components/RollingComparison';
 import ATSPerformance from './components/ATSPerformance';
 import SpreadPredictionComponent from './components/SpreadPrediction';
 import LeagueRankings from './components/LeagueRankings';
@@ -28,7 +27,7 @@ export default function Home() {
   const [data, setData] = useState<BuzzData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'overview' | 'rolling' | 'ats' | 'predictions' | 'games'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'ats' | 'predictions' | 'games'>('overview');
   const [selectedWindow, setSelectedWindow] = useState(10);
   const [healthyOnly, setHealthyOnly] = useState(true);
   const [predictionMode, setPredictionMode] = useState<PredictionMode>('standard');
@@ -238,7 +237,6 @@ export default function Home() {
         <div className="flex flex-wrap gap-1.5 md:gap-2 mb-6 border-b border-slate-700 pb-2 overflow-x-auto">
           {[
             { id: 'overview', label: 'Overview', mobileLabel: 'Overview' },
-            { id: 'rolling', label: 'Rolling Trends', mobileLabel: 'Rolling' },
             { id: 'ats', label: 'vs Spread', mobileLabel: 'ATS' },
             { id: 'predictions', label: 'Predictions', mobileLabel: 'Predict' },
             { id: 'games', label: 'Game Log', mobileLabel: 'Games' },
@@ -300,14 +298,6 @@ export default function Home() {
               predictions={predictions}
             />
           </div>
-        )}
-
-        {activeTab === 'rolling' && (
-          <RollingComparison
-            metrics={rollingMetrics}
-            trend={trend}
-            selectedWindow={selectedWindow}
-          />
         )}
 
         {activeTab === 'ats' && (

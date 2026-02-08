@@ -136,16 +136,15 @@ export default function ComparisonChart({
                   <div className="text-right">
                     {game.spread !== null ? (
                       <>
-                        <p
-                          className={`font-bold ${
-                            game.spread < 0 ? 'text-[#00A3B4]' : 'text-[#F9A01B]'
-                          }`}
-                        >
-                          {game.spread > 0 ? '+' : ''}
-                          {game.spread}
+                        <p className={`text-xs font-medium px-2 py-0.5 rounded inline-block ${
+                          game.spread < 0
+                            ? 'bg-[#00788C]/20 text-[#00A3B4]'
+                            : 'bg-[#F9A01B]/20 text-[#F9A01B]'
+                        }`}>
+                          {game.spread < 0 ? `FAV ${Math.abs(game.spread)}` : `DOG ${game.spread}`}
                         </p>
-                        <p className="text-sm text-slate-500">
-                          {game.spread < 0 ? 'Favored' : 'Underdog'}
+                        <p className="text-xs text-slate-500 mt-1">
+                          {game.spread < 0 ? `Win by ${Math.abs(game.spread) + 0.5}+` : `Lose by ${game.spread - 0.5} OK`}
                         </p>
                       </>
                     ) : (

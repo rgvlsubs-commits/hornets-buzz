@@ -14,6 +14,20 @@ interface GameWithATS extends Game {
   covered: boolean | null; // null = push
 }
 
+/**
+ * Format spread for display
+ * -3.5 → "FAV 3.5" (Hornets favored by 3.5, need to win by 4+)
+ * +3.5 → "DOG 3.5" (Hornets underdog by 3.5, can lose by 3 and cover)
+ */
+function formatSpreadLabel(spread: number): { label: string; isFavorite: boolean } {
+  if (spread < 0) {
+    return { label: `FAV ${Math.abs(spread)}`, isFavorite: true };
+  } else if (spread > 0) {
+    return { label: `DOG ${spread}`, isFavorite: false };
+  }
+  return { label: 'PICK', isFavorite: false };
+}
+
 export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) {
   const qualifiedGames = games.filter(g => g.isQualified);
 
@@ -42,9 +56,15 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
 
   return (
     <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700">
-      <h2 className="text-lg font-semibold text-slate-300 mb-4">
-        Against The Spread (Last 10)
-      </h2>
+      <div className="flex items-start justify-between mb-4">
+        <h2 className="text-lg font-semibold text-slate-300">
+          Against The Spread (Last 10)
+        </h2>
+        <div className="text-xs text-slate-500 text-right">
+          <p><span className="text-[#00A3B4]">FAV</span> = Hornets favored (must win by X+1)</p>
+          <p><span className="text-[#F9A01B]">DOG</span> = Hornets underdog (can lose by X-1)</p>
+        </div>
+      </div>
 
       {/* ATS Summary */}
       <div className="grid grid-cols-3 gap-4 mb-6">
@@ -77,8 +97,8 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
               <th className="text-left py-2 font-medium">Date</th>
               <th className="text-left py-2 font-medium">Opponent</th>
               <th className="text-center py-2 font-medium">Result</th>
-              <th className="text-right py-2 font-medium">Spread</th>
-              <th className="text-right py-2 font-medium">Margin</th>
+              <th className="text-center py-2 font-medium">Line</th>
+              <th className="text-center py-2 font-medium">Margin</th>
               <th className="text-center py-2 font-medium">ATS</th>
             </tr>
           </thead>
@@ -109,10 +129,21 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
                     {game.hornetsScore}-{game.opponentScore}
                   </span>
                 </td>
-                <td className="py-2 text-right text-slate-300">
-                  {game.spread > 0 ? '+' : ''}{game.spread}
+                <td className="py-2 text-center">
+                  {(() => {
+                    const { label, isFavorite } = formatSpreadLabel(game.spread);
+                    return (
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded ${
+                        isFavorite
+                          ? 'bg-[#00788C]/20 text-[#00A3B4]'
+                          : 'bg-[#F9A01B]/20 text-[#F9A01B]'
+                      }`}>
+                        {label}
+                      </span>
+                    );
+                  })()}
                 </td>
-                <td className={`py-2 text-right font-medium ${
+                <td className={`py-2 text-center font-medium ${
                   game.hornetsScore - game.opponentScore > 0 ? 'text-[#00A3B4]' : 'text-red-400'
                 }`}>
                   {formatPlusMinus(game.hornetsScore - game.opponentScore)}
