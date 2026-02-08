@@ -30,7 +30,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'overview' | 'ats' | 'predictions' | 'games'>('overview');
   const [selectedWindow, setSelectedWindow] = useState(10);
   const [healthyOnly, setHealthyOnly] = useState(true);
-  const [predictionMode, setPredictionMode] = useState<PredictionMode>('standard');
+  const [predictionMode, setPredictionMode] = useState<PredictionMode>('bayesian'); // Bayesian recommended for betting
 
   useEffect(() => {
     async function fetchData() {

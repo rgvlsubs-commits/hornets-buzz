@@ -77,12 +77,27 @@ const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string }> =
  * - 'standard': Uses full season data (all games, conservative baseline)
  * - 'bayesian': Blends standard prior with Core 5 evidence (mathematically principled)
  * - 'buzzing': Uses only Core 5 healthy games (aggressive, high conviction)
+ *
+ * IMPORTANT: Bayesian should be the default betting mode.
+ * Standard & Buzzing are diagnostics/confidence bands only.
  */
 export type PredictionMode = 'standard' | 'bayesian' | 'buzzing';
 
-// Bayesian prior strength - how many "games worth" of prior belief
-// Higher = more conservative, slower to update toward Core 5 data
-const BAYESIAN_PRIOR_STRENGTH = 20;
+/**
+ * Adaptive Bayesian prior strength based on sample size
+ * - Early Core 5 data → more conservative (higher prior)
+ * - More Core 5 games → allow data to dominate (lower prior)
+ *
+ * Per Gemini review: Prior of 20-30 is too volatile for NBA.
+ * Minimum 40 recommended; 50 is safer.
+ * Formula: clamp(40, 60 - 0.5 * sampleSize, 60)
+ */
+function getBayesianPriorStrength(sampleSize: number): number {
+  return Math.max(40, Math.min(60, 60 - 0.5 * sampleSize));
+  // At 28 games: 60 - 14 = 46
+  // At 40 games: 60 - 20 = 40
+  // At 10 games: 60 - 5 = 55
+}
 
 export interface RollingMetrics {
   window: number;
@@ -181,6 +196,10 @@ export function updateElo(
 
 /**
  * Estimate team Elo from season record and point differential
+ *
+ * Analytics research (Morey, Oliver) shows point differential is a
+ * better predictor of future performance than win% throughout the season.
+ * Point diff has less variance and regresses to the mean more reliably.
  */
 export function estimateElo(
   wins: number,
@@ -198,9 +217,11 @@ export function estimateElo(
   const avgPointDiff = pointDiff / gamesPlayed;
   const eloFromPointDiff = ELO_INITIAL + avgPointDiff * 10;
 
-  // Blend (weight win pct more early, point diff more later)
-  const winPctWeight = Math.max(0.3, 1 - gamesPlayed / 82);
-  return winPctWeight * eloFromWinPct + (1 - winPctWeight) * eloFromPointDiff;
+  // Blend: Weight point diff higher throughout (better predictor per analytics research)
+  // Early season: 75% point diff (less noisy than small-sample win%)
+  // Mid/late season: 60% point diff (win% stabilizes but point diff remains informative)
+  const pointDiffWeight = Math.max(0.6, 0.8 - gamesPlayed / 200);
+  return (1 - pointDiffWeight) * eloFromWinPct + pointDiffWeight * eloFromPointDiff;
 }
 
 /**
@@ -335,11 +356,13 @@ export function analyzeTrend(games: Game[]): TrendAnalysis {
 /**
  * Predict spread coverage for an upcoming game
  *
- * Uses hybrid model: 55% Elo + 45% Net Rating (optimized from backtest)
+ * REFACTORED: Now uses margin-level Bayesian blending to avoid correlation leakage.
+ * Instead of blending Elo and NR separately, we:
+ * 1. Calculate complete Standard margin (Elo + NR blended)
+ * 2. Calculate complete Buzzing margin (Elo + NR blended)
+ * 3. Bayesian blend the final margins
  *
- * @param mode - 'standard' uses full season data, 'buzzing' uses only healthy games
- * @param buzzingMetrics - Required for 'buzzing' mode: metrics from healthy games only
- * @param allGamesMetrics - Full season metrics (for standard mode)
+ * @param mode - 'bayesian' (default for betting), 'standard', or 'buzzing' (diagnostics)
  */
 export function predictSpread(
   upcomingGame: UpcomingGame,
@@ -350,156 +373,156 @@ export function predictSpread(
     season: RollingMetrics;
   },
   trend: TrendAnalysis,
-  opponentStrength: number = 0, // Net rating of opponent, 0 = league average (fallback)
-  mode: PredictionMode = 'standard',
-  buzzingMetrics?: RollingMetrics, // Metrics from healthy games only (for buzzing mode)
-  allGamesMetrics?: RollingMetrics // Full season metrics (for standard mode)
+  opponentStrength: number = 0,
+  mode: PredictionMode = 'bayesian', // Changed default to bayesian
+  buzzingMetrics?: RollingMetrics,
+  allGamesMetrics?: RollingMetrics
 ): SpreadPrediction {
   const factors: SpreadPrediction['factors'] = [];
   const isBuzzing = mode === 'buzzing';
   const isBayesian = mode === 'bayesian';
 
-  // Use opponent net rating from game data if available, otherwise use parameter
+  // Use opponent net rating from game data if available
   const actualOpponentStrength = upcomingGame.opponentNetRating ?? opponentStrength;
 
   // Check for roster adjustments (trades, injuries, etc.)
   const rosterAdj = ROSTER_ADJUSTMENTS[upcomingGame.opponent];
   const rosterAdjustment = rosterAdj?.adjustment ?? 0;
 
-  // === Fatigue Factor ===
-  // Back-to-back games typically cost 2-3 points
+  // === Fatigue Factor (Hornets) ===
   let fatigueAdjustment = 0;
   if (upcomingGame.isBackToBack) {
     fatigueAdjustment = -NR_FATIGUE_PENALTY;
   } else if (upcomingGame.restDays === 1) {
-    fatigueAdjustment = -1.0; // Minor penalty for 1 day rest
+    fatigueAdjustment = -1.0;
   } else if (upcomingGame.restDays !== undefined && upcomingGame.restDays >= 3) {
-    fatigueAdjustment = 0.5; // Slight boost for extended rest
+    fatigueAdjustment = 0.5;
   }
 
-  // === Elo Component ===
-  // Standard: Full season data (conservative)
-  // Bayesian: Blend standard prior with Core 5 evidence
-  // Buzzing: Pure Core 5 data (aggressive)
+  // === Opponent Rest Differential ===
+  // If opponent is on B2B and we're not, that's an advantage
+  let restDifferentialAdj = 0;
+  if (upcomingGame.opponentIsBackToBack && !upcomingGame.isBackToBack) {
+    restDifferentialAdj = 1.5; // Opponent fatigued, we're fresh
+  } else if (!upcomingGame.opponentIsBackToBack && upcomingGame.isBackToBack) {
+    restDifferentialAdj = -0.5; // Already penalized via fatigueAdjustment, small extra
+  }
 
-  // Calculate standard Elo (full season baseline)
+  // === Common adjustments (applied to both Standard and Buzzing margins) ===
+  const homeAdj = upcomingGame.isHome ? NR_HOME_ADVANTAGE : -NR_HOME_ADVANTAGE;
+  const momentumImpact = trend.momentum * MOMENTUM_MULTIPLIER;
+  const oppAdjustment = -actualOpponentStrength;
+  const isEliteOpponent = actualOpponentStrength >= ELITE_OPPONENT_THRESHOLD;
+  const eliteOpponentPenalty = isEliteOpponent ? ELITE_OPPONENT_PENALTY : 0;
+
+  // === Calculate STANDARD margin (full season data) ===
   let standardElo: number;
   if (allGamesMetrics) {
     standardElo = estimateElo(
-      allGamesMetrics.wins,
-      allGamesMetrics.losses,
-      allGamesMetrics.pointDiff * allGamesMetrics.games,
-      allGamesMetrics.games
+      allGamesMetrics.wins, allGamesMetrics.losses,
+      allGamesMetrics.pointDiff * allGamesMetrics.games, allGamesMetrics.games
     );
   } else {
     standardElo = estimateElo(
-      rollingMetrics.season.wins,
-      rollingMetrics.season.losses,
+      rollingMetrics.season.wins, rollingMetrics.season.losses,
       rollingMetrics.season.pointDiff * rollingMetrics.season.games,
       rollingMetrics.season.games
     );
   }
 
-  // Calculate buzzing Elo (Core 5 only)
-  let buzzingElo: number = standardElo; // Default to standard
-  if (buzzingMetrics && buzzingMetrics.games > 0) {
-    buzzingElo = estimateElo(
-      buzzingMetrics.wins,
-      buzzingMetrics.losses,
-      buzzingMetrics.pointDiff * buzzingMetrics.games,
-      buzzingMetrics.games
-    );
-  }
-
-  // Select team Elo based on mode
-  let teamElo: number;
-  if (isBuzzing) {
-    // Full Buzz: Use only Core 5 data
-    teamElo = buzzingElo;
-  } else if (isBayesian && buzzingMetrics && buzzingMetrics.games > 0) {
-    // Bayesian: Blend standard prior with Core 5 evidence
-    // Formula: (prior_weight * prior + sample_weight * sample) / (prior_weight + sample_weight)
-    const priorWeight = BAYESIAN_PRIOR_STRENGTH;
-    const sampleWeight = buzzingMetrics.games;
-    teamElo = (priorWeight * standardElo + sampleWeight * buzzingElo) / (priorWeight + sampleWeight);
-  } else {
-    // Standard: Use full season data
-    teamElo = standardElo;
-  }
-
-  // Opponent Elo based on their net rating
-  // Net rating of +5 ≈ +50 Elo above average
   const opponentElo = ELO_INITIAL + actualOpponentStrength * 10;
+  let standardEloDiff = standardElo - opponentElo;
+  standardEloDiff += upcomingGame.isHome ? ELO_HOME_ADVANTAGE : -ELO_HOME_ADVANTAGE;
+  standardEloDiff += fatigueAdjustment * ELO_TO_SPREAD;
+  const standardEloPrediction = eloToSpread(standardEloDiff);
 
-  // Elo difference with home court and fatigue
-  let eloDiff = teamElo - opponentElo;
-  if (upcomingGame.isHome) {
-    eloDiff += ELO_HOME_ADVANTAGE;
-  } else {
-    eloDiff -= ELO_HOME_ADVANTAGE;
-  }
-  // Apply fatigue in Elo terms (~28 Elo = 1 point)
-  eloDiff += fatigueAdjustment * ELO_TO_SPREAD;
-
-  const eloPrediction = eloToSpread(eloDiff);
-
-  const modeLabel = isBuzzing ? ' [Buzz]' : isBayesian ? ' [Bayes]' : '';
-  factors.push({
-    name: `Elo (${Math.round(teamElo)} vs ${Math.round(opponentElo)})${modeLabel}`,
-    value: eloPrediction,
-    impact: eloPrediction * ELO_WEIGHT,
-  });
-
-  // === Net Rating Component ===
-  // In buzzing mode: use different weights that emphasize healthy-only data
-  // Calculate standard weighted NR (full season baseline)
   const standardWeightedNR =
     (rollingMetrics.last4.netRating * WINDOW_WEIGHTS.last4) +
     (rollingMetrics.last7.netRating * WINDOW_WEIGHTS.last7) +
     (rollingMetrics.last10.netRating * WINDOW_WEIGHTS.last10) +
     (rollingMetrics.season.netRating * WINDOW_WEIGHTS.season);
 
-  // Calculate buzzing weighted NR (Core 5 only)
-  const buzzingWeightedNR = buzzingMetrics
-    ? (rollingMetrics.last4.netRating * BUZZING_WINDOW_WEIGHTS.last4) +
+  const standardNrPrediction = standardWeightedNR + homeAdj + momentumImpact +
+    oppAdjustment + fatigueAdjustment + eliteOpponentPenalty - rosterAdjustment + restDifferentialAdj;
+
+  // Complete Standard margin
+  const standardMargin = (standardEloPrediction * ELO_WEIGHT) + (standardNrPrediction * NR_WEIGHT);
+
+  // === Calculate BUZZING margin (Core 5 only) ===
+  let buzzingMargin = standardMargin; // Default fallback
+  let buzzingElo = standardElo;
+
+  if (buzzingMetrics && buzzingMetrics.games > 0) {
+    buzzingElo = estimateElo(
+      buzzingMetrics.wins, buzzingMetrics.losses,
+      buzzingMetrics.pointDiff * buzzingMetrics.games, buzzingMetrics.games
+    );
+
+    let buzzingEloDiff = buzzingElo - opponentElo;
+    buzzingEloDiff += upcomingGame.isHome ? ELO_HOME_ADVANTAGE : -ELO_HOME_ADVANTAGE;
+    buzzingEloDiff += fatigueAdjustment * ELO_TO_SPREAD;
+    const buzzingEloPrediction = eloToSpread(buzzingEloDiff);
+
+    const buzzingWeightedNR =
+      (rollingMetrics.last4.netRating * BUZZING_WINDOW_WEIGHTS.last4) +
       (rollingMetrics.last7.netRating * BUZZING_WINDOW_WEIGHTS.last7) +
       (rollingMetrics.last10.netRating * BUZZING_WINDOW_WEIGHTS.last10) +
-      (buzzingMetrics.netRating * BUZZING_WINDOW_WEIGHTS.season)
-    : standardWeightedNR;
+      (buzzingMetrics.netRating * BUZZING_WINDOW_WEIGHTS.season);
 
-  // Select weighted NR based on mode
-  let weightedNR: number;
-  if (isBuzzing) {
-    weightedNR = buzzingWeightedNR;
-  } else if (isBayesian && buzzingMetrics && buzzingMetrics.games > 0) {
-    // Bayesian blend of standard and buzzing NR
-    const priorWeight = BAYESIAN_PRIOR_STRENGTH;
-    const sampleWeight = buzzingMetrics.games;
-    weightedNR = (priorWeight * standardWeightedNR + sampleWeight * buzzingWeightedNR) / (priorWeight + sampleWeight);
-  } else {
-    weightedNR = standardWeightedNR;
+    const buzzingNrPrediction = buzzingWeightedNR + homeAdj + momentumImpact +
+      oppAdjustment + fatigueAdjustment + eliteOpponentPenalty - rosterAdjustment + restDifferentialAdj;
+
+    // Complete Buzzing margin
+    buzzingMargin = (buzzingEloPrediction * ELO_WEIGHT) + (buzzingNrPrediction * NR_WEIGHT);
   }
 
-  // Home court adjustment
-  const homeAdj = upcomingGame.isHome ? NR_HOME_ADVANTAGE : -NR_HOME_ADVANTAGE;
+  // === Select final margin based on mode ===
+  let predictedMargin: number;
+  let displayElo: number;
+  let displayNR: number;
 
-  // Momentum factor
-  const momentumImpact = trend.momentum * MOMENTUM_MULTIPLIER;
+  if (isBuzzing) {
+    // Full Buzz: Pure Core 5 data (diagnostic only)
+    predictedMargin = buzzingMargin;
+    displayElo = buzzingElo;
+    displayNR = buzzingMetrics?.netRating ?? standardWeightedNR;
+  } else if (isBayesian && buzzingMetrics && buzzingMetrics.games > 0) {
+    // Bayesian: Blend margins with adaptive prior strength
+    // KEY FIX: Blend at margin level, not component level
+    const priorStrength = getBayesianPriorStrength(buzzingMetrics.games);
+    const sampleWeight = buzzingMetrics.games;
+    predictedMargin = (priorStrength * standardMargin + sampleWeight * buzzingMargin) /
+                      (priorStrength + sampleWeight);
+    displayElo = (priorStrength * standardElo + sampleWeight * buzzingElo) /
+                 (priorStrength + sampleWeight);
+    displayNR = (priorStrength * standardWeightedNR +
+                 sampleWeight * (buzzingMetrics?.netRating ?? standardWeightedNR)) /
+                (priorStrength + sampleWeight);
 
-  // Opponent adjustment (subtract their net rating advantage)
-  const oppAdjustment = -actualOpponentStrength;
+    factors.push({
+      name: 'Bayesian Blend',
+      value: priorStrength,
+      impact: 0, // Informational
+    });
+  } else {
+    // Standard: Full season data (diagnostic only)
+    predictedMargin = standardMargin;
+    displayElo = standardElo;
+    displayNR = standardWeightedNR;
+  }
 
-  // Elite opponent penalty - extra caution vs top-tier teams
-  const isEliteOpponent = actualOpponentStrength >= ELITE_OPPONENT_THRESHOLD;
-  const eliteOpponentPenalty = isEliteOpponent ? ELITE_OPPONENT_PENALTY : 0;
-
-  const nrPrediction = weightedNR + homeAdj + momentumImpact + oppAdjustment + fatigueAdjustment + eliteOpponentPenalty - rosterAdjustment;
-
-  const nrModeLabel = isBuzzing ? 'Buzz NR' : isBayesian ? 'Bayes NR' : 'Weighted NR';
+  // === Build factors for display ===
+  const modeLabel = isBuzzing ? ' [Buzz]' : isBayesian ? ' [Bayes]' : ' [Std]';
   factors.push({
-    name: nrModeLabel,
-    value: weightedNR,
-    impact: weightedNR * NR_WEIGHT,
+    name: `Elo${modeLabel}`,
+    value: displayElo,
+    impact: eloToSpread(displayElo - opponentElo) * ELO_WEIGHT,
+  });
+
+  factors.push({
+    name: `Net Rating${modeLabel}`,
+    value: displayNR,
+    impact: displayNR * NR_WEIGHT,
   });
 
   factors.push({
@@ -552,6 +575,15 @@ export function predictSpread(
     });
   }
 
+  // Rest differential (opponent fatigue)
+  if (restDifferentialAdj !== 0) {
+    factors.push({
+      name: restDifferentialAdj > 0 ? 'Opp B2B Advantage' : 'Opp Rest Advantage',
+      value: restDifferentialAdj,
+      impact: restDifferentialAdj * NR_WEIGHT,
+    });
+  }
+
   // Streak bonus
   let streakImpact = 0;
   if (trend.streakLength >= 3) {
@@ -563,8 +595,7 @@ export function predictSpread(
     });
   }
 
-  // === Combine with optimized weights ===
-  const predictedMargin = (eloPrediction * ELO_WEIGHT) + (nrPrediction * NR_WEIGHT);
+  // predictedMargin already calculated above via margin-level blending
 
   // Predicted cover (positive = expect to cover)
   // If spread is -2.5 (favorite by 2.5) and we predict +4.7 margin:

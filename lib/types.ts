@@ -24,9 +24,12 @@ export interface Game {
   efgPct: number;
   tsPct: number;
   // Betting data (from historical odds or estimated)
-  spread?: number;          // Spread at game time (negative = favorite)
+  spread?: number;          // Spread at game time (closing line)
+  openingSpread?: number;   // Opening spread when first posted
+  closingSpread?: number;   // Closing spread right before tipoff
   impliedWinPct?: number;   // Vegas implied win probability
   coveredSpread?: boolean;  // Did they cover?
+  clv?: number;             // Closing Line Value (closing - opening, positive = got better number)
   // Opponent & rest data
   opponentNetRating?: number;  // Opponent's net rating
   restDays?: number;           // Days of rest before game
@@ -82,21 +85,50 @@ export interface RespectMetrics {
   spreadHistory: SpreadHistory[];
 }
 
+// Individual player injury
+export interface PlayerInjury {
+  name: string;
+  position?: string;
+  status: 'OUT' | 'DOUBTFUL' | 'QUESTIONABLE' | 'PROBABLE' | 'DAY-TO-DAY' | 'AVAILABLE';
+  injury: string;           // e.g., "right knee soreness"
+  isKeyStar?: boolean;      // Is this a key player for the team?
+  impactRating?: number;    // 1-5 scale of how much this affects the game
+}
+
+// Injury report for a game
+export interface GameInjuryReport {
+  hornetsInjuries: PlayerInjury[];
+  opponentInjuries: PlayerInjury[];
+  hornetsCore5Status: 'ALL_HEALTHY' | 'SOME_QUESTIONABLE' | 'KEY_PLAYER_OUT';
+  opponentKeyPlayersStatus: string;  // e.g., "2 starters questionable"
+  injuryImpact: string;              // Plain English summary
+  spreadAdjustment?: number;         // Suggested adjustment based on injuries
+  lastUpdated: string;
+}
+
 // Upcoming game with odds
 export interface UpcomingGame {
   gameId: string;
   date: string;
   opponent: string;
   isHome: boolean;
-  spread: number | null;  // null if no line yet
+  spread: number | null;        // Current spread (null if no line yet)
+  openingSpread?: number | null; // Opening spread when first posted
+  spreadMovement?: number;       // Current - Opening (negative = line moved toward Hornets)
   moneyline: number | null;
   impliedWinPct: number | null;
   overUnder: number | null;
   hasRealOdds?: boolean;
+  openingTimestamp?: string;    // When opening line was captured
+  lastUpdated?: string;         // When current line was last updated
   // Opponent & rest data for predictions
-  opponentNetRating?: number;  // Opponent's net rating
-  restDays?: number;           // Days of rest before game
-  isBackToBack?: boolean;      // Back-to-back game?
+  opponentNetRating?: number;    // Opponent's net rating
+  restDays?: number;             // Days of rest before game
+  isBackToBack?: boolean;        // Back-to-back game?
+  opponentRestDays?: number;     // Opponent's days of rest
+  opponentIsBackToBack?: boolean; // Is opponent on back-to-back?
+  // Injury report
+  injuryReport?: GameInjuryReport;
 }
 
 // League team with all metrics and ranks

@@ -1412,13 +1412,34 @@
       "opponent": "Detroit Pistons",
       "isHome": true,
       "spread": null,
+      "openingSpread": null,
+      "spreadMovement": null,
       "moneyline": null,
       "impliedWinPct": null,
       "overUnder": null,
       "hasRealOdds": false,
       "opponentNetRating": 7.8,
       "restDays": 1,
-      "isBackToBack": false
+      "isBackToBack": false,
+      "opponentRestDays": 1,
+      "opponentIsBackToBack": true,
+      "injuryReport": {
+        "hornetsInjuries": [
+          {"name": "Tidjane Salaun", "position": "F", "status": "PROBABLE", "injury": "illness", "isKeyStar": false, "impactRating": 1},
+          {"name": "Malaki Branham", "position": "G", "status": "AVAILABLE", "injury": "recently traded - joining team", "isKeyStar": false, "impactRating": 1},
+          {"name": "Josh Green", "position": "G", "status": "PROBABLE", "injury": "Achilles management", "isKeyStar": false, "impactRating": 2}
+        ],
+        "opponentInjuries": [
+          {"name": "Cade Cunningham", "position": "PG", "status": "DAY-TO-DAY", "injury": "right wrist management", "isKeyStar": true, "impactRating": 5},
+          {"name": "Jalen Duren", "position": "C", "status": "QUESTIONABLE", "injury": "right knee soreness", "isKeyStar": true, "impactRating": 5},
+          {"name": "Tobias Harris", "position": "PF", "status": "OUT", "injury": "left hip soreness", "isKeyStar": true, "impactRating": 4}
+        ],
+        "hornetsCore5Status": "ALL_HEALTHY",
+        "opponentKeyPlayersStatus": "2 starters questionable, 1 out",
+        "injuryImpact": "All Core 5 starters are healthy and available. ADVANTAGE: Detroit Pistons will be without Tobias Harris. This weakens their rotation significantly. Detroit's Cade Cunningham and Jalen Duren are questionable - monitor for updates. Cunningham has been managing a wrist injury and played 38 minutes Thursday. Duren left Thursday's game early with knee soreness. If both are limited or out, expect the line to move 3-5 points toward Charlotte. Net injury edge: +4.5 pts in Hornets' favor.",
+        "spreadAdjustment": 4.5,
+        "lastUpdated": "2026-02-08T16:00:00Z"
+      }
     },
     {
       "gameId": "0022500775",

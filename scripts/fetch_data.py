@@ -458,11 +458,40 @@ def estimate_spread_for_date(game_date: datetime, is_home: bool) -> tuple:
     return round(spread, 1), round(implied_win_pct, 3)
 
 
+def load_existing_data() -> dict:
+    """Load existing data file to preserve opening spreads."""
+    output_path = Path(__file__).parent.parent / "data" / "hornets_buzz.json"
+    if output_path.exists():
+        try:
+            with open(output_path) as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+
+def load_injury_reports() -> dict:
+    """Load injury reports from JSON file."""
+    injury_path = Path(__file__).parent.parent / "data" / "injury_reports.json"
+    if injury_path.exists():
+        try:
+            with open(injury_path) as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+
 def main(odds_api_key: Optional[str] = None):
     """Main data fetching and processing pipeline."""
     print("=" * 50)
     print("Hornets Buzz Tracker - Data Fetcher")
     print("=" * 50)
+
+    # Load existing data to preserve opening spreads
+    existing_data = load_existing_data()
+    existing_upcoming = {g["gameId"]: g for g in existing_data.get("upcomingGames", [])}
+    existing_games = {g["gameId"]: g for g in existing_data.get("games", [])}
 
     # Fetch league-wide team stats for opponent strength
     team_stats = get_all_team_stats()
@@ -643,20 +672,36 @@ def main(odds_api_key: Optional[str] = None):
                         else:
                             rest_days = 2  # Default
 
-                        # No spread until real odds come in
+                        # Check if we have existing opening spread for this game
+                        game_id = str(g.get('GAME_ID', ''))
+                        existing_game = existing_upcoming.get(game_id, {})
+                        opening_spread = existing_game.get("openingSpread")
+                        opening_timestamp = existing_game.get("openingTimestamp")
+
+                        # TODO: Check opponent's schedule to determine their rest
+                        # For now, preserve from existing data or default to None
+                        opp_rest_days = existing_game.get("opponentRestDays")
+                        opp_is_b2b = existing_game.get("opponentIsBackToBack")
+
                         upcoming_games.append({
-                            "gameId": str(g.get('GAME_ID', '')),
+                            "gameId": game_id,
                             "date": game_date.strftime('%Y-%m-%d'),
                             "opponent": opp_name,
                             "isHome": is_home,
                             "spread": None,  # No line yet
+                            "openingSpread": opening_spread,  # Preserve from previous run
+                            "spreadMovement": None,
                             "moneyline": None,
                             "impliedWinPct": None,
                             "overUnder": None,
                             "hasRealOdds": False,
+                            "openingTimestamp": opening_timestamp,
+                            "lastUpdated": None,
                             "opponentNetRating": opp_net_rating,
                             "restDays": max(0, rest_days),
                             "isBackToBack": rest_days == 0,
+                            "opponentRestDays": opp_rest_days,
+                            "opponentIsBackToBack": opp_is_b2b,
                         })
                         print(f"  Found: {game_date.strftime('%b %d')} {'vs' if is_home else '@'} {opp_name} (opp NR: {opp_net_rating:+.1f})")
             except Exception as e:
@@ -725,7 +770,25 @@ def main(odds_api_key: Optional[str] = None):
 
                 if existing:
                     print(f"    Matched: {existing['opponent']} on {existing['date']}")
+
+                    # Track opening spread (first time we see a real line)
+                    now_iso = datetime.utcnow().isoformat() + "Z"
+                    if existing.get("openingSpread") is None and spread is not None:
+                        # First time seeing this line - this is the opening spread
+                        existing["openingSpread"] = spread
+                        existing["openingTimestamp"] = now_iso
+                        print(f"      Opening spread captured: {spread}")
+
+                    # Update current spread
                     existing["spread"] = spread
+                    existing["lastUpdated"] = now_iso
+
+                    # Calculate spread movement (negative = line moved toward Hornets)
+                    if existing.get("openingSpread") is not None and spread is not None:
+                        existing["spreadMovement"] = round(spread - existing["openingSpread"], 1)
+                        if existing["spreadMovement"] != 0:
+                            print(f"      Line movement: {existing['spreadMovement']:+.1f} pts")
+
                     existing["moneyline"] = moneyline
                     existing["overUnder"] = over_under
                     existing["hasRealOdds"] = True  # Mark as real odds from API
@@ -749,6 +812,16 @@ def main(odds_api_key: Optional[str] = None):
         {"date": "2026-01-26", "averageSpread": 1.0, "gamesCount": 50},
         {"date": "2026-02-02", "averageSpread": -1.5, "gamesCount": len(qualified_games)},
     ]
+
+    # Load and attach injury reports
+    print("\nLoading injury reports...")
+    injury_reports = load_injury_reports()
+    for game in upcoming_games:
+        # Try to find injury report by game ID or opponent name
+        injury_report = injury_reports.get(game["gameId"]) or injury_reports.get(game["opponent"])
+        if injury_report:
+            game["injuryReport"] = injury_report
+            print(f"  Attached injury report for {game['opponent']}: {injury_report.get('hornetsCore5Status', 'unknown')}")
 
     # Build league rankings
     print("\nBuilding league rankings...")

@@ -12,6 +12,7 @@ interface GameWithATS extends Game {
   spread: number;
   coverMargin: number;
   covered: boolean | null; // null = push
+  clvDisplay?: number; // Closing Line Value (if available)
 }
 
 /**
@@ -41,8 +42,21 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
       covered = coverMargin > 0;
     }
 
-    return { ...game, spread, coverMargin, covered };
+    // Calculate CLV if opening/closing spreads available
+    const clvDisplay = game.clv ?? (
+      game.openingSpread !== undefined && game.closingSpread !== undefined
+        ? game.closingSpread - game.openingSpread
+        : undefined
+    );
+
+    return { ...game, spread, coverMargin, covered, clvDisplay };
   });
+
+  // Calculate total CLV if any games have CLV data
+  const gamesWithCLV = gamesWithATS.filter(g => g.clvDisplay !== undefined);
+  const totalCLV = gamesWithCLV.length > 0
+    ? gamesWithCLV.reduce((sum, g) => sum + (g.clvDisplay || 0), 0)
+    : null;
 
   const atsRecord = {
     wins: gamesWithATS.filter(g => g.covered === true).length,
@@ -67,7 +81,7 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
       </div>
 
       {/* ATS Summary */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className={`grid ${totalCLV !== null ? 'grid-cols-4' : 'grid-cols-3'} gap-4 mb-6`}>
         <div className="bg-slate-800/50 rounded-xl p-4 text-center">
           <p className="text-3xl font-bold text-white">
             {atsRecord.wins}-{atsRecord.losses}
@@ -87,6 +101,14 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
           </p>
           <p className="text-sm text-slate-400">Cover Rate</p>
         </div>
+        {totalCLV !== null && (
+          <div className="bg-slate-800/50 rounded-xl p-4 text-center">
+            <p className={`text-3xl font-bold ${totalCLV >= 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
+              {formatPlusMinus(totalCLV)}
+            </p>
+            <p className="text-sm text-slate-400">Total CLV</p>
+          </div>
+        )}
       </div>
 
       {/* Game-by-game breakdown */}
@@ -100,6 +122,9 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
               <th className="text-center py-2 font-medium">Line</th>
               <th className="text-center py-2 font-medium">Margin</th>
               <th className="text-center py-2 font-medium">ATS</th>
+              {totalCLV !== null && (
+                <th className="text-center py-2 font-medium" title="Closing Line Value: positive = got better number than market">CLV</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -165,6 +190,19 @@ export default function ATSPerformance({ games, spreads }: ATSPerformanceProps) 
                     </span>
                   )}
                 </td>
+                {totalCLV !== null && (
+                  <td className="py-2 text-center">
+                    {game.clvDisplay !== undefined ? (
+                      <span className={`text-xs font-medium ${
+                        game.clvDisplay > 0 ? 'text-[#00A3B4]' : game.clvDisplay < 0 ? 'text-red-400' : 'text-slate-400'
+                      }`}>
+                        {game.clvDisplay > 0 ? '+' : ''}{game.clvDisplay.toFixed(1)}
+                      </span>
+                    ) : (
+                      <span className="text-slate-600">—</span>
+                    )}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

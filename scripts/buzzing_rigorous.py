@@ -52,6 +52,8 @@ def kelly_criterion(win_prob: float, odds: float = 1.91) -> float:
     Kelly criterion for optimal bet sizing.
     odds = decimal odds (1.91 = -110 American)
     Returns fraction of bankroll to bet (0 = no bet).
+
+    Uses half-Kelly for variance reduction, capped at 60% per Gemini review.
     """
     # Convert to implied probability from odds
     implied_prob = 1 / odds
@@ -68,8 +70,9 @@ def kelly_criterion(win_prob: float, odds: float = 1.91) -> float:
     q = 1 - win_prob
     kelly = (b * win_prob - q) / b
 
-    # Half-Kelly for safety (reduces variance)
-    return max(0, kelly / 2)
+    # Half-Kelly for safety (reduces variance), capped at 60%
+    half_kelly = max(0, kelly / 2)
+    return min(half_kelly, 0.60)  # Cap at 60% per Gemini review
 
 
 @dataclass

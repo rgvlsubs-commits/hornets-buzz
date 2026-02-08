@@ -93,6 +93,7 @@ export default function FloatingControls({
           <div className="hidden md:block w-px h-6 bg-slate-700" />
 
           {/* Prediction Mode Toggle - 3 options */}
+          {/* Bayesian is recommended for betting; Std/Buzz are diagnostics */}
           <div className="flex items-center">
             <button
               onClick={() => onPredictionModeChange('standard')}
@@ -101,7 +102,7 @@ export default function FloatingControls({
                   ? 'bg-slate-500 text-white'
                   : 'bg-slate-700 text-slate-400 hover:text-white'
               }`}
-              title="Standard: Full season data (conservative)"
+              title="Standard: Full season data (diagnostic - conservative baseline)"
             >
               Std
             </button>
@@ -112,7 +113,7 @@ export default function FloatingControls({
                   ? 'bg-[#00788C] text-white'
                   : 'bg-slate-700 text-slate-400 hover:text-white'
               }`}
-              title="Bayesian: Blends standard + Core 5 data"
+              title="Bayesian: Recommended for betting - blends Standard + Core 5 with shrinkage"
             >
               Bayes
             </button>
@@ -123,7 +124,7 @@ export default function FloatingControls({
                   ? 'bg-[#F9A01B] text-slate-900'
                   : 'bg-slate-700 text-slate-400 hover:text-white'
               }`}
-              title="Full Buzz: Core 5 data only (aggressive)"
+              title="Full Buzz: Core 5 only (diagnostic - aggressive upper bound)"
             >
               🐝
             </button>

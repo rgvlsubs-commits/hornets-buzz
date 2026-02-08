@@ -1,7 +1,8 @@
 'use client';
 
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { UpcomingGame } from '@/lib/types';
+import { UpcomingGame, GameInjuryReport } from '@/lib/types';
 import { SpreadPrediction as Prediction, RollingMetrics, TrendAnalysis } from '@/lib/model';
 import { formatDate } from '@/lib/utils';
 
@@ -21,6 +22,31 @@ export default function SpreadPredictionComponent({
   upcomingGames,
   predictions,
 }: SpreadPredictionProps) {
+  // State for injury reports (allows refreshing without full page reload)
+  const [injuryReports, setInjuryReports] = useState<Record<string, GameInjuryReport>>({});
+  const [loadingInjuries, setLoadingInjuries] = useState<Record<string, boolean>>({});
+
+  // Fetch injury report for a specific game
+  const refreshInjuryReport = useCallback(async (gameId: string, opponent: string) => {
+    setLoadingInjuries(prev => ({ ...prev, [gameId]: true }));
+
+    try {
+      const response = await fetch(`/api/injuries?gameId=${gameId}&opponent=${encodeURIComponent(opponent)}`);
+      if (response.ok) {
+        const report = await response.json();
+        setInjuryReports(prev => ({ ...prev, [gameId]: report }));
+      }
+    } catch (error) {
+      console.error('Failed to fetch injury report:', error);
+    } finally {
+      setLoadingInjuries(prev => ({ ...prev, [gameId]: false }));
+    }
+  }, []);
+
+  // Get injury report - prefer local state, fallback to prop data
+  const getInjuryReport = (game: UpcomingGame): GameInjuryReport | undefined => {
+    return injuryReports[game.gameId] || game.injuryReport;
+  };
   return (
     <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700">
       <div className="flex items-center justify-between mb-6">
@@ -79,6 +105,17 @@ export default function SpreadPredictionComponent({
                       <p className="text-xs text-slate-500 mt-1">
                         {game.spread < 0 ? `Must win by ${Math.abs(game.spread) + 0.5}+` : `Can lose by ${game.spread - 0.5}`}
                       </p>
+                      {/* Opening spread & line movement */}
+                      {game.openingSpread !== undefined && game.openingSpread !== null && (
+                        <p className="text-xs text-slate-600 mt-1">
+                          Open: {game.openingSpread < 0 ? `FAV ${Math.abs(game.openingSpread)}` : `DOG ${game.openingSpread}`}
+                          {game.spreadMovement !== undefined && game.spreadMovement !== 0 && (
+                            <span className={`ml-1 ${game.spreadMovement < 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
+                              ({game.spreadMovement > 0 ? '+' : ''}{game.spreadMovement})
+                            </span>
+                          )}
+                        </p>
+                      )}
                     </>
                   ) : (
                     <>
@@ -239,6 +276,111 @@ export default function SpreadPredictionComponent({
                   ))}
                 </div>
               </div>
+
+              {/* Injury Report */}
+              {(() => {
+                const injuryReport = getInjuryReport(game);
+                const isLoading = loadingInjuries[game.gameId];
+
+                if (injuryReport) {
+                  return (
+                    <div className="border-t border-slate-700 pt-3 mt-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-slate-500">Injury Report</span>
+                          <span className={`text-xs px-1.5 py-0.5 rounded ${
+                            injuryReport.hornetsCore5Status === 'ALL_HEALTHY'
+                              ? 'bg-[#00788C]/20 text-[#00A3B4]'
+                              : injuryReport.hornetsCore5Status === 'KEY_PLAYER_OUT'
+                              ? 'bg-red-500/20 text-red-400'
+                              : 'bg-[#F9A01B]/20 text-[#F9A01B]'
+                          }`}>
+                            {injuryReport.hornetsCore5Status === 'ALL_HEALTHY'
+                              ? 'Core 5 Healthy'
+                              : injuryReport.hornetsCore5Status === 'KEY_PLAYER_OUT'
+                              ? 'Core 5 Impacted'
+                              : 'Monitor Status'}
+                          </span>
+                          {injuryReport.spreadAdjustment !== undefined && injuryReport.spreadAdjustment !== 0 && (
+                            <span className={`text-xs font-medium ${
+                              injuryReport.spreadAdjustment > 0 ? 'text-[#00A3B4]' : 'text-red-400'
+                            }`}>
+                              {injuryReport.spreadAdjustment > 0 ? '+' : ''}{injuryReport.spreadAdjustment} pts
+                            </span>
+                          )}
+                        </div>
+                        <button
+                          onClick={() => refreshInjuryReport(game.gameId, game.opponent)}
+                          disabled={isLoading}
+                          className="text-xs px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-400 hover:text-slate-300 transition-colors disabled:opacity-50 flex items-center gap-1"
+                          title="Refresh injury report"
+                        >
+                          <svg
+                            className={`w-3 h-3 ${isLoading ? 'animate-spin' : ''}`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                            />
+                          </svg>
+                          {isLoading ? 'Updating...' : 'Refresh'}
+                        </button>
+                      </div>
+                      <p className="text-xs text-slate-400 leading-relaxed">
+                        {injuryReport.injuryImpact}
+                      </p>
+                      <p className="text-xs text-slate-600 mt-1">
+                        Updated: {new Date(injuryReport.lastUpdated).toLocaleDateString('en-US', {
+                          month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+                        })}
+                      </p>
+                    </div>
+                  );
+                }
+
+                // No injury report yet - prompt to check
+                return (
+                  <div className="border-t border-slate-700 pt-3 mt-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-slate-500">Injury Report</span>
+                        <span className="text-xs px-1.5 py-0.5 rounded bg-slate-700 text-slate-400">
+                          Pending
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => refreshInjuryReport(game.gameId, game.opponent)}
+                        disabled={isLoading}
+                        className="text-xs px-2 py-1 rounded bg-[#00788C] hover:bg-[#00788C]/80 text-white transition-colors disabled:opacity-50 flex items-center gap-1"
+                      >
+                        <svg
+                          className={`w-3 h-3 ${isLoading ? 'animate-spin' : ''}`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                          />
+                        </svg>
+                        {isLoading ? 'Loading...' : 'Check Injuries'}
+                      </button>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      Check injury reports for both teams before placing bets.
+                      Core 5 availability is critical to our prediction model.
+                    </p>
+                  </div>
+                );
+              })()}
             </div>
           );
         })}

@@ -146,6 +146,17 @@ export default function ComparisonChart({
                         <p className="text-xs text-slate-500 mt-1">
                           {game.spread < 0 ? `Win by ${Math.abs(game.spread) + 0.5}+` : `Lose by ${game.spread - 0.5} OK`}
                         </p>
+                        {/* Opening spread & line movement */}
+                        {game.openingSpread !== undefined && game.openingSpread !== null && (
+                          <p className="text-xs text-slate-600 mt-0.5">
+                            Open: {game.openingSpread > 0 ? '+' : ''}{game.openingSpread}
+                            {game.spreadMovement !== undefined && game.spreadMovement !== 0 && (
+                              <span className={`ml-1 ${game.spreadMovement < 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
+                                ({game.spreadMovement > 0 ? '+' : ''}{game.spreadMovement})
+                              </span>
+                            )}
+                          </p>
+                        )}
                       </>
                     ) : (
                       <>
