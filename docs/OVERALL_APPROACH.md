@@ -68,7 +68,14 @@ Tracks Against The Spread performance:
 - Predicted margin (Hornets perspective)
 - Predicted cover (margin + spread)
 - Confidence level (high/medium/low)
+- Conviction score (0-100) for bet sizing
 - Factor breakdown showing what's driving the prediction
+
+**Bet Type Recommendation** (Moneyline vs Spread):
+- Compares expected value (EV) of spread vs moneyline
+- Shows model win probability vs Vegas implied probability
+- Recommends SPREAD, MONEYLINE, or PASS based on EV comparison
+- Includes edge calculation and plain English reasoning
 
 **Injury Report Integration**:
 - Real-time injury status for both teams
@@ -216,6 +223,51 @@ Predicted margins capped at ±15 points (most NBA games fall within this range).
 - ATS accuracy over time
 - CLV performance
 - Confidence calibration (do high-confidence bets outperform?)
+- Conviction calibration (do high-conviction bets size better?)
+
+### Architectural Improvements (Per ChatGPT Review)
+
+**1. Separation of Prediction from Conviction**
+- `predictedMargin`: Capped ±15 pts for display (reduces outlier noise)
+- `rawMargin`: Uncapped margin for internal sizing calculations
+- `conviction`: 0-100 score based on volatility factors, NOT the margin
+
+Conviction factors:
+- Low pace games = higher conviction (less variance)
+- Weak/mid opponents = higher conviction (more predictable)
+- Fresh Core 5 data = higher conviction
+- Good rest = higher conviction
+- Opponent injuries = higher conviction
+
+**2. Core 5 Time Decay**
+- Market adjusts to Core 5 performance over time
+- Half-life of 30 days: edge decays by ~63% each month
+- Formula: `core5_weight *= exp(-days_since_last_core5 / 30)`
+- Applied to Bayesian blend weight, not directly to margin
+
+**3. Margin Cap for Display Only**
+- Raw margin used for internal sizing calculations
+- ±15 pt cap applied only for UI display
+- Prevents extreme predictions while preserving signal strength
+
+**4. Regime-Based Variance (σ) - Per ChatGPT Review**
+This is "the single biggest upgrade - makes EV math honest":
+- Different situations have different VARIANCE, not just different means
+- Pace adjustment moved FROM margin TO sigma (pace doesn't make teams worse, it makes outcomes noisier)
+- Survivorship penalty moved FROM margin TO sigma/conviction (preserves upside while protecting sizing)
+
+| Regime | σ | Description |
+|--------|-----|-------------|
+| Normal | 11.5 | Standard games |
+| Core5 | 14.5 | Higher ceiling AND floor |
+| HighPace | 15.0 | More possessions = more variance |
+| EliteOpp | 13.5 | Unpredictable outcomes |
+
+**5. Tail-Risk Haircut**
+- Conviction score includes penalty for high-σ regimes
+- `tailPenalty = min(1.0, 11.5 / σ)`
+- At σ=15: ~23% conviction reduction → smaller bet sizes
+- Protects bankroll from blowout variance (Utah +57, OKC +27 type games)
 
 ---
 

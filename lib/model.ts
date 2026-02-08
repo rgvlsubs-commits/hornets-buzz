@@ -92,6 +92,359 @@ const PREDICTED_MARGIN_CAP = 15;
 const LEAGUE_AVG_PACE = 100;
 const PACE_VARIANCE_FACTOR = 0.03; // Each point above avg pace reduces margin certainty by 3% (was 2%)
 
+// === CORE 5 TIME DECAY ===
+// Per ChatGPT review: Market adjusts to Core 5 performance over time
+// Weight decays exponentially as days since last Core 5 game increases
+// Half-life of ~30 days means edge decays by ~50% each month
+const CORE5_DECAY_HALFLIFE = 30; // Days until Core 5 edge is halved
+
+// === REGIME-BASED VARIANCE (σ) ===
+// Per ChatGPT review: Stop modeling variance like a retail bettor
+// Different game situations have DIFFERENT variance, not just different means
+// σ = standard deviation of actual margin around predicted margin
+const SIGMA_BASE = 11.5;           // Normal games
+const SIGMA_CORE5 = 14.5;          // Core 5 games have higher ceiling AND floor
+const SIGMA_HIGH_PACE = 15.0;      // High pace = more possessions = more variance
+const SIGMA_ELITE_OPPONENT = 13.5; // Elite opponents create unpredictable outcomes
+const HIGH_PACE_THRESHOLD = 205;   // Combined pace above this = high pace game
+
+/**
+ * Calculate days between two dates
+ */
+function daysBetween(date1: string, date2: string): number {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+  const diffTime = Math.abs(d2.getTime() - d1.getTime());
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}
+
+/**
+ * Calculate regime-based variance (σ) for a game
+ *
+ * Per ChatGPT review: Different situations have different VARIANCE, not just different means.
+ * This is the single biggest upgrade - makes EV math honest.
+ *
+ * @returns sigma (standard deviation) and the regime description
+ */
+function calculateRegimeSigma(
+  isCore5Active: boolean,
+  combinedPace: number,
+  opponentNetRating: number,
+  daysSinceCore5: number
+): { sigma: number; regime: string } {
+  let sigma = SIGMA_BASE;
+  const regimeParts: string[] = [];
+
+  // Core 5 games have higher variance (ceiling AND floor)
+  if (isCore5Active) {
+    sigma = Math.max(sigma, SIGMA_CORE5);
+    regimeParts.push('Core5');
+  }
+
+  // High pace games have more possessions = more variance
+  if (combinedPace > HIGH_PACE_THRESHOLD) {
+    sigma = Math.max(sigma, SIGMA_HIGH_PACE);
+    regimeParts.push('HighPace');
+  }
+
+  // Elite opponents create unpredictable outcomes
+  if (opponentNetRating >= ELITE_OPPONENT_THRESHOLD) {
+    sigma = Math.max(sigma, SIGMA_ELITE_OPPONENT);
+    regimeParts.push('EliteOpp');
+  }
+
+  // Variance persists longer than mean - keep σ elevated for 45-60 days after Core 5
+  // Markets catch the average faster than they catch the distribution
+  if (daysSinceCore5 > 0 && daysSinceCore5 <= 60) {
+    const varianceDecay = Math.exp(-daysSinceCore5 / 60); // Slower decay than mean (60 vs 30)
+    const core5VarianceBoost = (SIGMA_CORE5 - SIGMA_BASE) * varianceDecay;
+    sigma = Math.max(sigma, SIGMA_BASE + core5VarianceBoost);
+    if (core5VarianceBoost > 0.5) {
+      regimeParts.push('Core5Var');
+    }
+  }
+
+  const regime = regimeParts.length > 0 ? regimeParts.join('+') : 'Normal';
+  return { sigma: Math.round(sigma * 10) / 10, regime };
+}
+
+/**
+ * Calculate Core 5 time decay factor
+ * Returns 0-1 where 1 = fresh (recent Core 5 game), 0 = stale (long time since Core 5)
+ *
+ * Formula: exp(-days_since_last_core5 / halflife)
+ * - At 0 days: 1.0 (full weight)
+ * - At 30 days: 0.37 (1/e weight)
+ * - At 60 days: 0.14 (heavily decayed)
+ */
+function calculateCore5TimeDecay(daysSinceLastCore5: number): number {
+  return Math.exp(-daysSinceLastCore5 / CORE5_DECAY_HALFLIFE);
+}
+
+/**
+ * Calculate conviction score (0-100) for bet sizing
+ *
+ * Separate from prediction - this measures HOW CONFIDENT we should be
+ * in the prediction, not what the prediction is.
+ *
+ * Per ChatGPT review: Also includes TAIL-RISK HAIRCUT based on sigma.
+ * Higher variance regimes get reduced conviction to protect bankroll.
+ *
+ * Factors that INCREASE conviction:
+ * - Low pace game (less variance)
+ * - Weak opponent (more predictable)
+ * - Fresh Core 5 data (recent performance)
+ * - Good rest situation
+ * - Opponent missing key players
+ *
+ * Factors that DECREASE conviction:
+ * - High pace game (more variance)
+ * - Elite opponent (more volatile outcomes)
+ * - Stale Core 5 data (market has adjusted)
+ * - Back-to-back (less predictable)
+ * - Core 5 missing players
+ * - High sigma regime (tail-risk haircut)
+ */
+interface ConvictionFactors {
+  paceScore: number;           // 0-20: Low pace = high, high pace = low
+  opponentScore: number;       // 0-20: Weak/mid = high, elite = low
+  core5FreshnessScore: number; // 0-25: Recent Core 5 games = high
+  restScore: number;           // 0-15: Good rest = high, B2B = low
+  injuryScore: number;         // 0-20: Opponent injuries = high, Core 5 injuries = low
+  tailRiskHaircut: number;     // 0 to -20: Higher sigma = bigger penalty
+}
+
+function calculateConviction(
+  combinedPace: number,
+  opponentNetRating: number,
+  core5DecayFactor: number,
+  restDays: number | undefined,
+  isBackToBack: boolean | undefined,
+  sigma: number,  // NEW: regime-based variance for tail-risk haircut
+  injuryReport?: { hornetsCore5Status: string; spreadAdjustment?: number }
+): { conviction: number; factors: ConvictionFactors } {
+  // Pace score (0-20): League avg combined pace = 200
+  // Low pace (< 195) = high score, High pace (> 205) = low score
+  const paceDeviation = combinedPace - 200;
+  const paceScore = Math.max(0, Math.min(20, 10 - paceDeviation * 0.5));
+
+  // Opponent score (0-20): Elite = risky, Weak/Mid = safer
+  let opponentScore: number;
+  if (opponentNetRating >= 6.0) {
+    opponentScore = 5; // Elite = low conviction
+  } else if (opponentNetRating >= 3.0) {
+    opponentScore = 10; // Strong = medium
+  } else if (opponentNetRating >= -3.0) {
+    opponentScore = 15; // Mid = medium-high
+  } else {
+    opponentScore = 20; // Weak = high conviction
+  }
+
+  // Core 5 freshness score (0-25): Based on time decay
+  const core5FreshnessScore = Math.round(core5DecayFactor * 25);
+
+  // Rest score (0-15)
+  let restScore: number;
+  if (isBackToBack) {
+    restScore = 5; // B2B = lower conviction
+  } else if (restDays !== undefined && restDays >= 2) {
+    restScore = 15; // Well rested = high conviction
+  } else {
+    restScore = 10; // Normal rest = medium
+  }
+
+  // Injury score (0-20): Based on injury report
+  let injuryScore = 10; // Default neutral
+  if (injuryReport) {
+    if (injuryReport.hornetsCore5Status === 'KEY_PLAYER_OUT') {
+      injuryScore = 0; // Core 5 missing = very low conviction
+    } else if (injuryReport.hornetsCore5Status === 'SOME_QUESTIONABLE') {
+      injuryScore = 5; // Uncertainty = lower conviction
+    } else if (injuryReport.spreadAdjustment && injuryReport.spreadAdjustment > 0) {
+      // Opponent missing key players = higher conviction
+      injuryScore = Math.min(20, 10 + injuryReport.spreadAdjustment * 2);
+    } else {
+      injuryScore = 10; // All healthy = neutral
+    }
+  }
+
+  // Tail-risk haircut (0 to -20): Per ChatGPT review
+  // Higher sigma = reduce bet size to protect bankroll
+  // tailPenalty = min(1.0, 12 / σ) → at σ=15, ~20% reduction
+  // Convert to conviction penalty: (1 - tailPenalty) * 20
+  const tailPenalty = Math.min(1.0, SIGMA_BASE / sigma);
+  const tailRiskHaircut = -Math.round((1 - tailPenalty) * 20);
+
+  const factors: ConvictionFactors = {
+    paceScore,
+    opponentScore,
+    core5FreshnessScore,
+    restScore,
+    injuryScore,
+    tailRiskHaircut,
+  };
+
+  const rawConviction = paceScore + opponentScore + core5FreshnessScore + restScore + injuryScore + tailRiskHaircut;
+  return { conviction: Math.min(100, Math.max(0, rawConviction)), factors };
+}
+
+/**
+ * Convert American moneyline odds to implied probability
+ * +150 means bet $100 to win $150 → implied prob = 100 / (150 + 100) = 40%
+ * -150 means bet $150 to win $100 → implied prob = 150 / (150 + 100) = 60%
+ */
+function moneylineToImpliedProb(moneyline: number): number {
+  if (moneyline > 0) {
+    // Underdog: +150 means 40% implied
+    return 100 / (moneyline + 100);
+  } else {
+    // Favorite: -150 means 60% implied
+    return Math.abs(moneyline) / (Math.abs(moneyline) + 100);
+  }
+}
+
+/**
+ * Calculate expected value (EV) per $100 bet on moneyline
+ * EV = (winProb × profit) - (loseProb × stake)
+ */
+function calculateMoneylineEV(modelWinProb: number, moneyline: number): number {
+  const loseProb = 1 - modelWinProb;
+
+  if (moneyline > 0) {
+    // Underdog: Win $moneyline on $100 bet
+    return (modelWinProb * moneyline) - (loseProb * 100);
+  } else {
+    // Favorite: Win $100 on $|moneyline| bet, normalized to $100 stake
+    const profitPer100 = (100 / Math.abs(moneyline)) * 100;
+    return (modelWinProb * profitPer100) - (loseProb * 100);
+  }
+}
+
+/**
+ * Calculate expected value (EV) per $100 bet on spread
+ * Standard -110 juice: bet $110 to win $100
+ * EV = (coverProb × 100) - (missProb × 110)
+ */
+function calculateSpreadEV(coverProb: number, juice: number = -110): number {
+  const missProb = 1 - coverProb;
+  const stakeToWin100 = Math.abs(juice); // Usually 110
+
+  return (coverProb * 100) - (missProb * stakeToWin100);
+}
+
+/**
+ * Estimate cover probability from predicted margin and spread
+ * Uses a normal distribution with REGIME-BASED sigma (not fixed 12)
+ *
+ * Per ChatGPT review: Different situations have different variance.
+ * Using dynamic sigma makes EV math honest.
+ *
+ * @param sigma - Regime-based standard deviation (11.5 to 15.0 depending on situation)
+ */
+function estimateCoverProbability(predictedMargin: number, spread: number, sigma: number): number {
+  // Cover margin = predictedMargin + spread
+  const predictedCover = predictedMargin + spread;
+
+  // Z-score: how many std devs is "covering" from our prediction
+  const zScore = predictedCover / sigma;
+
+  // Convert z-score to probability using approximation of normal CDF
+  return normalCDF(zScore);
+}
+
+/**
+ * Approximation of standard normal CDF
+ * Accurate to ~0.1% for most practical values
+ */
+function normalCDF(z: number): number {
+  // Abramowitz and Stegun approximation
+  const a1 =  0.254829592;
+  const a2 = -0.284496736;
+  const a3 =  1.421413741;
+  const a4 = -1.453152027;
+  const a5 =  1.061405429;
+  const p  =  0.3275911;
+
+  const sign = z < 0 ? -1 : 1;
+  z = Math.abs(z);
+
+  const t = 1.0 / (1.0 + p * z);
+  const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-z * z / 2);
+
+  return 0.5 * (1.0 + sign * y);
+}
+
+/**
+ * Analyze moneyline vs spread and recommend the better bet
+ *
+ * @param sigma - Regime-based standard deviation for cover probability
+ */
+function analyzeMoneyline(
+  predictedMargin: number,
+  spread: number | null,
+  moneyline: number | null,
+  eloDiff: number,
+  sigma: number  // NEW: regime-based variance
+): MoneylineAnalysis | undefined {
+  // Need both spread and moneyline to compare
+  if (spread === null || moneyline === null) {
+    return undefined;
+  }
+
+  // Calculate model win probability from Elo difference
+  const modelWinProb = eloToWinProbability(eloDiff);
+
+  // Get implied probability from moneyline
+  const impliedWinProb = moneylineToImpliedProb(moneyline);
+
+  // Calculate edge on moneyline
+  const edge = modelWinProb - impliedWinProb;
+
+  // Calculate EVs using regime-based sigma
+  const moneylineEV = calculateMoneylineEV(modelWinProb, moneyline);
+  const coverProb = estimateCoverProbability(predictedMargin, spread, sigma);
+  const spreadEV = calculateSpreadEV(coverProb);
+
+  // Determine recommendation
+  let recommendation: 'moneyline' | 'spread' | 'pass';
+  let reasoning: string;
+
+  // Minimum edge threshold to recommend a bet (accounts for vig and model uncertainty)
+  const MIN_EDGE = 0.03; // 3% edge minimum
+  const MIN_EV = 2.0;    // $2 EV per $100 minimum
+
+  if (moneylineEV <= MIN_EV && spreadEV <= MIN_EV) {
+    recommendation = 'pass';
+    reasoning = `Neither bet offers sufficient value. ML EV: $${moneylineEV.toFixed(1)}, Spread EV: $${spreadEV.toFixed(1)}`;
+  } else if (moneylineEV > spreadEV + 1) {
+    // Moneyline offers meaningfully better EV
+    recommendation = 'moneyline';
+    if (moneyline > 0) {
+      reasoning = `Underdog ML (+${moneyline}) offers better value. Model: ${(modelWinProb * 100).toFixed(0)}% win prob vs ${(impliedWinProb * 100).toFixed(0)}% implied. EV: $${moneylineEV.toFixed(1)} vs spread $${spreadEV.toFixed(1)}`;
+    } else {
+      reasoning = `Favorite ML (${moneyline}) offers better value. Model: ${(modelWinProb * 100).toFixed(0)}% win prob. EV: $${moneylineEV.toFixed(1)} vs spread $${spreadEV.toFixed(1)}`;
+    }
+  } else if (spreadEV > moneylineEV + 1) {
+    // Spread offers meaningfully better EV
+    recommendation = 'spread';
+    reasoning = `Spread (${spread > 0 ? '+' : ''}${spread}) offers better value. Cover prob: ${(coverProb * 100).toFixed(0)}%. EV: $${spreadEV.toFixed(1)} vs ML $${moneylineEV.toFixed(1)}`;
+  } else {
+    // Similar EVs - prefer spread (more common, lower variance)
+    recommendation = spreadEV >= MIN_EV ? 'spread' : 'pass';
+    reasoning = `Similar value on both. Spread: $${spreadEV.toFixed(1)} EV, ML: $${moneylineEV.toFixed(1)} EV. ${recommendation === 'spread' ? 'Spread preferred for lower variance.' : 'Insufficient edge on either.'}`;
+  }
+
+  return {
+    modelWinProb: Math.round(modelWinProb * 1000) / 1000,
+    impliedWinProb: Math.round(impliedWinProb * 1000) / 1000,
+    edge: Math.round(edge * 1000) / 1000,
+    moneylineEV: Math.round(moneylineEV * 10) / 10,
+    spreadEV: Math.round(spreadEV * 10) / 10,
+    recommendation,
+    reasoning,
+  };
+}
+
 // Roster change adjustments (trade impacts)
 // Positive = opponent got better, Negative = opponent got worse
 const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string }> = {
@@ -177,14 +530,29 @@ export interface TrendAnalysis {
   streakLength: number;
 }
 
+export interface MoneylineAnalysis {
+  modelWinProb: number;         // Model's predicted win probability (0-1)
+  impliedWinProb: number;       // Vegas implied probability from moneyline (0-1)
+  edge: number;                 // modelWinProb - impliedWinProb (positive = value)
+  moneylineEV: number;          // Expected value per $100 bet on moneyline
+  spreadEV: number;             // Expected value per $100 bet on spread
+  recommendation: 'moneyline' | 'spread' | 'pass';  // Which bet offers better value
+  reasoning: string;            // Plain English explanation
+}
+
 export interface SpreadPrediction {
-  predictedMargin: number;
+  predictedMargin: number;      // Capped margin for display (±15 pts)
+  rawMargin: number;            // Uncapped margin for internal sizing calculations
   predictedCover: number;
   confidence: 'high' | 'medium' | 'low';
   confidenceScore: number; // 0-100
+  conviction: number;           // 0-100 score for bet sizing (separate from prediction)
+  sigma: number;                // Regime-based variance (11.5-15.0)
+  regime: string;               // Variance regime description (e.g., "Core5+HighPace")
   eloComponent: number;
   netRatingComponent: number;
   mode: PredictionMode;
+  moneylineAnalysis?: MoneylineAnalysis;  // Moneyline vs spread comparison
   factors: {
     name: string;
     value: number;
@@ -426,7 +794,17 @@ export function analyzeTrend(games: Game[]): TrendAnalysis {
  * 2. Calculate complete Buzzing margin (Elo + NR blended)
  * 3. Bayesian blend the final margins
  *
+ * NEW: Separation of prediction from conviction (per ChatGPT review)
+ * - rawMargin: Uncapped margin for internal sizing calculations
+ * - predictedMargin: Capped margin for display (±15 pts)
+ * - conviction: 0-100 score for bet sizing based on volatility factors
+ *
+ * NEW: Core 5 time decay (per ChatGPT review)
+ * - Market adjusts to Core 5 performance over time
+ * - Edge decays exponentially with days since last Core 5 game
+ *
  * @param mode - 'bayesian' (default for betting), 'standard', or 'buzzing' (diagnostics)
+ * @param games - All games (for calculating days since last Core 5 game)
  */
 export function predictSpread(
   upcomingGame: UpcomingGame,
@@ -440,11 +818,28 @@ export function predictSpread(
   opponentStrength: number = 0,
   mode: PredictionMode = 'bayesian', // Changed default to bayesian
   buzzingMetrics?: RollingMetrics,
-  allGamesMetrics?: RollingMetrics
+  allGamesMetrics?: RollingMetrics,
+  games?: Game[]  // NEW: For Core 5 time decay calculation
 ): SpreadPrediction {
   const factors: SpreadPrediction['factors'] = [];
   const isBuzzing = mode === 'buzzing';
   const isBayesian = mode === 'bayesian';
+
+  // === Calculate Core 5 Time Decay ===
+  // Find days since last Core 5 game to determine edge freshness
+  let daysSinceLastCore5 = 0;
+  let core5DecayFactor = 1.0; // Default: full weight if we can't calculate
+
+  if (games && games.length > 0) {
+    const qualifiedGames = games.filter(g => g.isQualified);
+    if (qualifiedGames.length > 0) {
+      // Games are sorted newest first, so first qualified game is most recent
+      const lastCore5Date = qualifiedGames[0].date;
+      const gameDate = upcomingGame.date;
+      daysSinceLastCore5 = daysBetween(lastCore5Date, gameDate);
+      core5DecayFactor = calculateCore5TimeDecay(daysSinceLastCore5);
+    }
+  }
 
   // Use opponent net rating from game data if available
   const actualOpponentStrength = upcomingGame.opponentNetRating ?? opponentStrength;
@@ -556,18 +951,20 @@ export function predictSpread(
     displayElo = buzzingElo;
     displayNR = buzzingMetrics?.netRating ?? standardWeightedNR;
 
-    // Apply Core 5 risk penalties (survivorship + bench minutes)
-    predictedMargin += CORE5_SURVIVORSHIP_PENALTY + BENCH_MINUTE_PENALTY;
-    factors.push({
-      name: 'Core 5 Risk Adj',
-      value: CORE5_SURVIVORSHIP_PENALTY + BENCH_MINUTE_PENALTY,
-      impact: CORE5_SURVIVORSHIP_PENALTY + BENCH_MINUTE_PENALTY,
-    });
+    // Per ChatGPT: Removed survivorship penalty from margin
+    // Risk is now captured via higher sigma (14.5 for Core 5) and conviction haircut
+    // This preserves upside while protecting bankroll through sizing
   } else if (isBayesian && buzzingMetrics && buzzingMetrics.games > 0) {
     // Bayesian: Blend margins with adaptive prior strength
     // KEY FIX: Blend at margin level, not component level
     const priorStrength = getBayesianPriorStrength(buzzingMetrics.games);
-    const sampleWeight = buzzingMetrics.games;
+
+    // Apply Core 5 time decay to sample weight
+    // As days since last Core 5 game increases, we trust Core 5 data less
+    // (market has adjusted, edge has decayed)
+    const rawSampleWeight = buzzingMetrics.games;
+    const sampleWeight = rawSampleWeight * core5DecayFactor;
+
     predictedMargin = (priorStrength * standardMargin + sampleWeight * buzzingMargin) /
                       (priorStrength + sampleWeight);
     displayElo = (priorStrength * standardElo + sampleWeight * buzzingElo) /
@@ -576,21 +973,24 @@ export function predictSpread(
                  sampleWeight * (buzzingMetrics?.netRating ?? standardWeightedNR)) /
                 (priorStrength + sampleWeight);
 
-    // Apply partial Core 5 risk penalties (scaled by Core 5 weight in blend)
-    const core5Weight = sampleWeight / (priorStrength + sampleWeight);
-    const riskPenalty = core5Weight * (CORE5_SURVIVORSHIP_PENALTY + BENCH_MINUTE_PENALTY);
-    predictedMargin += riskPenalty;
+    // Per ChatGPT: Removed survivorship penalty from margin
+    // Risk is now captured via higher sigma and conviction tail-risk haircut
+    // This preserves legitimate upside while protecting bankroll through sizing
 
     factors.push({
       name: 'Bayesian Blend',
       value: priorStrength,
       impact: 0, // Informational
     });
-    factors.push({
-      name: 'Core 5 Risk Adj',
-      value: riskPenalty,
-      impact: riskPenalty,
-    });
+
+    // Show time decay factor if significant
+    if (core5DecayFactor < 0.9) {
+      factors.push({
+        name: 'Core 5 Time Decay',
+        value: Math.round(core5DecayFactor * 100),
+        impact: 0, // Informational - affects blend weight, not margin directly
+      });
+    }
   } else {
     // Standard: Full season data (diagnostic only)
     predictedMargin = standardMargin;
@@ -719,38 +1119,84 @@ export function predictSpread(
   if (confidenceScore >= 70) confidence = 'high';
   else if (confidenceScore < 45) confidence = 'low';
 
-  // Pace adjustment - high-pace games have more variance, regress margin toward 0
-  // Combined pace = Hornets pace + opponent pace (league avg combined = 200)
-  const hornetsPace = rollingMetrics.season.games > 0 ? 100 : LEAGUE_AVG_PACE; // TODO: Get from metrics
+  // === Calculate Combined Pace ===
+  const hornetsPace = rollingMetrics.season.games > 0 ? 100 : LEAGUE_AVG_PACE;
   const opponentPace = (upcomingGame as any).opponentPace ?? LEAGUE_AVG_PACE;
   const combinedPace = hornetsPace + opponentPace;
-  const paceDeviation = combinedPace - (2 * LEAGUE_AVG_PACE); // How much above/below average
-  const paceMultiplier = 1 - Math.max(0, paceDeviation * PACE_VARIANCE_FACTOR);
-  const paceAdjustedMargin = predictedMargin * paceMultiplier;
 
-  if (Math.abs(paceDeviation) > 5) {
+  // === Calculate Regime-Based Sigma (Variance) ===
+  // Per ChatGPT review: Model variance by regime, not just mean
+  // This is the single biggest upgrade - makes EV math honest
+  const isCore5Game = isBuzzing || Boolean(isBayesian && buzzingMetrics && buzzingMetrics.games > 0);
+  const { sigma, regime } = calculateRegimeSigma(
+    isCore5Game,
+    combinedPace,
+    actualOpponentStrength,
+    daysSinceLastCore5
+  );
+
+  // Add regime info to factors if not normal
+  if (regime !== 'Normal') {
     factors.push({
-      name: paceDeviation > 0 ? 'High Pace Game' : 'Low Pace Game',
-      value: combinedPace,
-      impact: paceAdjustedMargin - predictedMargin,
+      name: `Variance Regime`,
+      value: sigma,
+      impact: 0, // Informational - affects sizing, not margin
     });
   }
 
-  // Cap predicted margin to reduce MAE from extreme predictions
-  // Most NBA games land within ±15 points
-  const cappedMargin = Math.max(-PREDICTED_MARGIN_CAP, Math.min(PREDICTED_MARGIN_CAP, paceAdjustedMargin));
+  // === Raw vs Capped Margin ===
+  // Per ChatGPT review: Pace no longer adjusts margin - it only affects sigma (variance)
+  // rawMargin: Uncapped for internal sizing calculations
+  // cappedMargin: For display (±15 pts cap reduces outlier noise)
+  const rawMargin = predictedMargin;
+  const cappedMargin = Math.max(-PREDICTED_MARGIN_CAP, Math.min(PREDICTED_MARGIN_CAP, predictedMargin));
   const cappedCover = upcomingGame.spread !== null
     ? cappedMargin + upcomingGame.spread
     : 0;
 
+  // === Calculate Conviction Score (separate from prediction) ===
+  // Conviction = how confident should we be in the prediction for bet sizing?
+  // Based on volatility factors, NOT the predicted margin itself
+  // Per ChatGPT: Includes tail-risk haircut based on sigma
+  const { conviction } = calculateConviction(
+    combinedPace,
+    actualOpponentStrength,
+    core5DecayFactor,
+    upcomingGame.restDays,
+    upcomingGame.isBackToBack,
+    sigma,  // NEW: Regime-based sigma for tail-risk haircut
+    upcomingGame.injuryReport ? {
+      hornetsCore5Status: upcomingGame.injuryReport.hornetsCore5Status,
+      spreadAdjustment: upcomingGame.injuryReport.spreadAdjustment,
+    } : undefined
+  );
+
+  // === Moneyline Analysis ===
+  // Compare spread vs moneyline EV and recommend the better bet
+  // Need Elo difference for win probability calculation
+  // Per ChatGPT: Uses regime-based sigma for honest EV math
+  const eloDiffForML = displayElo - (ELO_INITIAL + actualOpponentStrength * 10);
+  const moneylineAnalysis = analyzeMoneyline(
+    rawMargin,  // Use raw margin for more accurate probability estimate
+    upcomingGame.spread,
+    upcomingGame.moneyline,
+    eloDiffForML,
+    sigma  // NEW: Regime-based sigma for cover probability
+  );
+
   return {
     predictedMargin: Math.round(cappedMargin * 10) / 10,
+    rawMargin: Math.round(rawMargin * 10) / 10,
     predictedCover: Math.round(cappedCover * 10) / 10,
     confidence,
     confidenceScore,
+    conviction,  // 0-100 score for bet sizing (includes tail-risk haircut)
+    sigma,       // Regime-based variance (11.5-15.0)
+    regime,      // Variance regime description
     eloComponent: Math.round(eloPrediction * 10) / 10,
     netRatingComponent: Math.round(nrPrediction * 10) / 10,
     mode,
+    moneylineAnalysis,  // Moneyline vs spread comparison (uses sigma for honest EV)
     factors,
   };
 }

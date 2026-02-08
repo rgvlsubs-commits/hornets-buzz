@@ -31,11 +31,26 @@ MID_VS_MID_ADJUSTMENT = -1.0     // Correct for overpredict bias
 
 ### Risk Controls
 ```typescript
-CORE5_SURVIVORSHIP_PENALTY = -0.25  // Reduced from -0.75
-BENCH_MINUTE_PENALTY = -0.25        // Reduced from -0.5
 KELLY_WIN_PROB_CAP = 0.56           // Cap win prob for sizing
 MOV_CAP = 20                        // Cap point diff in Elo calc
-PREDICTED_MARGIN_CAP = 15           // Cap extreme predictions
+PREDICTED_MARGIN_CAP = 15           // Cap extreme predictions (display only)
+CORE5_DECAY_HALFLIFE = 30           // Days until Core 5 MEAN edge halves
+CORE5_VARIANCE_DECAY = 60           // Days until Core 5 VARIANCE normalizes
+```
+
+### Regime-Based Variance (σ)
+```typescript
+// Per ChatGPT review: Model variance by regime, not just mean
+// This is "the single biggest upgrade - makes EV math honest"
+SIGMA_BASE = 11.5           // Normal games
+SIGMA_CORE5 = 14.5          // Core 5 games (higher ceiling AND floor)
+SIGMA_HIGH_PACE = 15.0      // High pace = more possessions = more variance
+SIGMA_ELITE_OPPONENT = 13.5 // Elite opponents = unpredictable outcomes
+HIGH_PACE_THRESHOLD = 205   // Combined pace above this = high variance
+
+// Variance persists longer than mean edge
+// Markets catch average faster than distribution
+varianceDecay = exp(-daysSinceCore5 / 60)  // Slower than mean decay (60 vs 30)
 ```
 
 ### Pace Adjustment
@@ -63,6 +78,68 @@ WINDOW_WEIGHTS = {
 priorStrength = max(40, min(60, 60 - 0.5 * sampleSize))
 // At 28 games: 46
 // At 40 games: 40
+```
+
+### Core 5 Time Decay
+```typescript
+// Market adjusts to Core 5 performance over time
+// Edge decays exponentially with days since last Core 5 game
+core5DecayFactor = exp(-daysSinceLastCore5 / CORE5_DECAY_HALFLIFE)
+// At 0 days: 1.0 (full weight)
+// At 30 days: 0.37 (1/e weight)
+// At 60 days: 0.14 (heavily decayed)
+
+// Applied to Bayesian blend:
+sampleWeight = rawSampleWeight * core5DecayFactor
+```
+
+### Prediction vs Conviction (Separation)
+```typescript
+// Two distinct outputs:
+// 1. predictedMargin: Capped ±15 pts for display
+// 2. rawMargin: Uncapped for internal sizing calculations
+// 3. conviction: 0-100 score based on volatility factors
+
+// Conviction factors (independent of margin prediction):
+// - Pace: Low pace = higher conviction (less variance)
+// - Opponent: Weak/mid = higher, elite = lower
+// - Core 5 Freshness: Recent Core 5 games = higher
+// - Rest: Well rested = higher, B2B = lower
+// - Injuries: Opponent stars out = higher, Core 5 out = lower
+```
+
+### Moneyline vs Spread Analysis
+```typescript
+interface MoneylineAnalysis {
+  modelWinProb: number;      // From Elo model (0-1)
+  impliedWinProb: number;    // From moneyline odds (0-1)
+  edge: number;              // modelWinProb - implied (positive = value)
+  moneylineEV: number;       // Expected value per $100 on ML
+  spreadEV: number;          // Expected value per $100 on spread
+  recommendation: 'moneyline' | 'spread' | 'pass';
+  reasoning: string;         // Plain English explanation
+}
+
+// Key formulas:
+// Moneyline to implied prob:
+//   +150 → 100 / (150 + 100) = 40%
+//   -150 → 150 / (150 + 100) = 60%
+
+// Moneyline EV (underdog +150, 45% model win prob):
+//   EV = (0.45 × 150) - (0.55 × 100) = $12.50
+
+// Spread EV (55% cover prob, -110 juice):
+//   EV = (0.55 × 100) - (0.45 × 110) = $5.50
+
+// Cover probability from margin prediction:
+//   Uses normal distribution with σ = 12 pts (NBA game variance)
+//   P(cover) = Φ((predictedMargin + spread) / 12)
+
+// Recommendation logic:
+// - If neither EV > $2: PASS
+// - If ML EV > spread EV + $1: MONEYLINE
+// - If spread EV > ML EV + $1: SPREAD
+// - Otherwise: Prefer spread (lower variance)
 ```
 
 ---

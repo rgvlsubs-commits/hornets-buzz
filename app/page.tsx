@@ -82,7 +82,8 @@ export default function Home() {
         0,
         predictionMode,
         buzzingMetrics,
-        allGamesMetrics  // Standard mode uses full season data
+        allGamesMetrics,  // Standard mode uses full season data
+        data.games        // Pass games for Core 5 time decay calculation
       );
       predictions.set(game.gameId, prediction);
     }

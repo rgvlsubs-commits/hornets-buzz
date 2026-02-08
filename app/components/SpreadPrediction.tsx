@@ -131,17 +131,42 @@ export default function SpreadPredictionComponent({
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-sm text-slate-400">Predicted vs Spread</span>
-                    <span
-                      className={`text-sm font-medium px-2 py-0.5 rounded ${
-                        prediction.confidence === 'high'
-                          ? 'bg-[#00788C]/20 text-[#00A3B4]'
-                          : prediction.confidence === 'medium'
-                          ? 'bg-[#F9A01B]/20 text-[#F9A01B]'
-                          : 'bg-slate-700 text-slate-400'
-                      }`}
-                    >
-                      {prediction.confidenceScore}% confidence
-                    </span>
+                    <div className="flex items-center gap-2">
+                      {/* Variance regime indicator */}
+                      {prediction.regime !== 'Normal' && (
+                        <span
+                          className="text-xs font-medium px-2 py-0.5 rounded bg-purple-500/20 text-purple-400"
+                          title={`Variance regime: σ=${prediction.sigma} (higher = more volatile)`}
+                        >
+                          σ{prediction.sigma}
+                        </span>
+                      )}
+                      {/* Conviction score (for bet sizing) */}
+                      <span
+                        className={`text-xs font-medium px-2 py-0.5 rounded ${
+                          prediction.conviction >= 70
+                            ? 'bg-[#00788C]/30 text-[#00A3B4]'
+                            : prediction.conviction >= 50
+                            ? 'bg-[#F9A01B]/30 text-[#F9A01B]'
+                            : 'bg-red-500/20 text-red-400'
+                        }`}
+                        title={`Conviction score for bet sizing (includes tail-risk haircut for σ=${prediction.sigma})`}
+                      >
+                        {prediction.conviction} conv
+                      </span>
+                      {/* Confidence score (in prediction) */}
+                      <span
+                        className={`text-sm font-medium px-2 py-0.5 rounded ${
+                          prediction.confidence === 'high'
+                            ? 'bg-[#00788C]/20 text-[#00A3B4]'
+                            : prediction.confidence === 'medium'
+                            ? 'bg-[#F9A01B]/20 text-[#F9A01B]'
+                            : 'bg-slate-700 text-slate-400'
+                        }`}
+                      >
+                        {prediction.confidenceScore}% conf
+                      </span>
+                    </div>
                   </div>
 
                   {/* Number line container */}
@@ -255,6 +280,53 @@ export default function SpreadPredictionComponent({
                   </div>
                 </div>
               ) : null}
+
+              {/* Moneyline Analysis */}
+              {prediction.moneylineAnalysis && (
+                <div className="border-t border-slate-700 pt-3 mt-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs text-slate-500">Bet Type Recommendation</p>
+                    <span
+                      className={`text-xs font-bold px-2 py-1 rounded ${
+                        prediction.moneylineAnalysis.recommendation === 'moneyline'
+                          ? 'bg-purple-500/20 text-purple-400'
+                          : prediction.moneylineAnalysis.recommendation === 'spread'
+                          ? 'bg-[#00788C]/20 text-[#00A3B4]'
+                          : 'bg-slate-700 text-slate-400'
+                      }`}
+                    >
+                      {prediction.moneylineAnalysis.recommendation === 'moneyline'
+                        ? `MONEYLINE ${game.moneyline! > 0 ? '+' : ''}${game.moneyline}`
+                        : prediction.moneylineAnalysis.recommendation === 'spread'
+                        ? `SPREAD ${game.spread! > 0 ? '+' : ''}${game.spread}`
+                        : 'PASS'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed mb-2">
+                    {prediction.moneylineAnalysis.reasoning}
+                  </p>
+                  <div className="flex gap-4 text-xs">
+                    <div>
+                      <span className="text-slate-500">Win Prob: </span>
+                      <span className={`font-medium ${
+                        prediction.moneylineAnalysis.edge > 0.03 ? 'text-[#00A3B4]' :
+                        prediction.moneylineAnalysis.edge < -0.03 ? 'text-red-400' : 'text-slate-300'
+                      }`}>
+                        {(prediction.moneylineAnalysis.modelWinProb * 100).toFixed(0)}%
+                      </span>
+                      <span className="text-slate-600"> vs {(prediction.moneylineAnalysis.impliedWinProb * 100).toFixed(0)}% implied</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Edge: </span>
+                      <span className={`font-medium ${
+                        prediction.moneylineAnalysis.edge > 0 ? 'text-[#00A3B4]' : 'text-red-400'
+                      }`}>
+                        {prediction.moneylineAnalysis.edge > 0 ? '+' : ''}{(prediction.moneylineAnalysis.edge * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Factor breakdown */}
               <div className="border-t border-slate-700 pt-3">
