@@ -49,19 +49,24 @@
 
 ---
 
-## 2. Current Lines (MANUAL CHECK REQUIRED)
+## 2. Current Lines (VERIFIED)
 
-*Note: Lines not available in API at time of document creation. Please verify current lines before evaluation.*
+| Market | Line | Notes |
+|--------|------|-------|
+| **Spread** | **CHA +3.5** | Hornets are UNDERDOGS |
+| **Moneyline** | **+130** | 43.5% implied win prob |
+| **Total** | 224.5 | |
+| Opening Spread | +3.5 | No movement yet |
 
-| Market | Expected Range | Notes |
-|--------|----------------|-------|
-| Spread | PK to CHA -2.5 | Home team, similar strength |
-| Moneyline | -105 to -130 | Close matchup |
-| Total | 225-230 | Both teams efficient |
+**Critical Insight:** Despite similar net ratings (+7.5 vs +7.8), Vegas has Charlotte as 3.5-point home underdogs. This suggests:
+- Market respects Detroit's 38-13 record
+- Possible injury concerns not fully priced in
+- Hornets Core 5 may still be undervalued
 
-**Line Movement to Watch:**
-- Opening spread capture
-- CLV opportunity if line moves toward Hornets
+**Line Movement Potential:**
+- If Cade Cunningham OUT: Line could move 2-3 pts toward CHA
+- If Jalen Duren OUT: Additional 1-2 pts toward CHA
+- Current injury adjustment model: **+4.5 pts** in Hornets' favor
 
 ---
 
@@ -155,49 +160,85 @@ The model has been ACCURATE vs elite opponents (nearly zero bias) but UNDERPREDI
 
 ## 5. Moneyline vs Spread Analysis
 
-### Expected Calculation (assuming spread = -1.5)
+### Actual Lines
 ```
-Model Win Prob: ~52-55% (close matchup)
-Implied Win Prob: ~53-56% (typical -110 to -130 line)
-Edge: Marginal (0-2%)
-
-Spread EV: Depends on cover probability at σ=15.5
-Moneyline EV: Depends on exact ML odds
-
-Recommendation: Need actual lines to calculate
+Spread: CHA +3.5 (-110)
+Moneyline: CHA +130
+Implied Win Prob: 43.5%
 ```
 
-### Scenarios
-| If Spread Is... | Likely Recommendation |
-|-----------------|----------------------|
-| CHA -3.5 or worse | PASS or small ML |
-| CHA -1.5 to -2.5 | SPREAD (if Core 5 healthy) |
-| CHA PK or +0.5 | SPREAD (value) |
-| CHA +1.5 or better | SPREAD (strong value) |
+### Model Calculation
+```
+Model Predicted Margin (Bayesian): ~+1.0 to +3.0 pts
++ Injury Adjustment: +4.5 pts
+= Adjusted Margin: +5.5 to +7.5 pts
+
+Model Win Prob: ~55-60% (after injury adjustment)
+Implied Win Prob: 43.5%
+EDGE: +11.5% to +16.5%
+```
+
+### Spread Analysis (at σ=15.5)
+```
+Predicted Cover Margin: +3.5 + (adjusted margin)
+                      = +3.5 + 6.5 = +10.0 pts expected cover
+Cover Probability: Φ(10.0 / 15.5) = Φ(0.65) ≈ 74%
+Spread EV: (0.74 × 100) - (0.26 × 110) = +45.4 per $100
+```
+
+### Moneyline Analysis
+```
+Model Win Prob: 57.5% (midpoint estimate)
+Implied Win Prob: 43.5%
+Edge: +14%
+
+ML EV (at +130): (0.575 × 130) - (0.425 × 100) = +32.3 per $100
+```
+
+### Recommendation
+| Bet Type | EV per $100 | Recommendation |
+|----------|-------------|----------------|
+| **Spread +3.5** | **+45.4** | **STRONG BET** |
+| Moneyline +130 | +32.3 | Good value, lower EV |
+
+**Verdict: SPREAD is the better bet** (higher EV, injury edge amplifies cover margin)
 
 ---
 
-## 6. Injury Report (MANUAL CHECK REQUIRED)
+## 6. Injury Report (VERIFIED - Feb 8, 2026)
 
-### Hornets Core 5 Status
-| Player | Status | Impact |
-|--------|--------|--------|
-| LaMelo Ball | CHECK | Critical |
-| Brandon Miller | CHECK | Critical |
-| Miles Bridges | CHECK | Critical |
-| Mark Williams | CHECK | Critical |
-| 5th Starter | CHECK | Important |
+### Hornets Core 5 Status: ALL HEALTHY ✓
+| Player | Status | Notes |
+|--------|--------|-------|
+| LaMelo Ball | AVAILABLE | ✓ |
+| Brandon Miller | AVAILABLE | ✓ |
+| Miles Bridges | AVAILABLE | ✓ |
+| Moussa Diabaté | AVAILABLE | ✓ |
+| Kon Knueppel | AVAILABLE | ✓ |
 
-**Trade Deadline Acquisitions:**
+**Other Hornets:**
+- Tidjane Salaun: PROBABLE (illness)
+- Josh Green: PROBABLE (Achilles management)
+- Malaki Branham: AVAILABLE (just traded, joining team)
 - Coby White: OUT (injured through All-Star break)
-- Malaki Branham: Available (integration period)
-- Xaiver Tillman: Available (integration period)
 
-### Pistons Key Players
-*Check injury report for:*
-- Cade Cunningham
-- Jaden Ivey
-- Other key rotation players
+### Detroit Pistons: SIGNIFICANT INJURIES
+| Player | Status | Impact | Notes |
+|--------|--------|--------|-------|
+| **Tobias Harris** | **OUT** | 4/5 | Left hip soreness |
+| **Cade Cunningham** | **DAY-TO-DAY** | 5/5 | Right wrist management (played 38 min Thu) |
+| **Jalen Duren** | **QUESTIONABLE** | 5/5 | Right knee soreness (left game early Thu) |
+
+### Injury Impact Analysis
+**Model Spread Adjustment: +4.5 pts in Hornets' favor**
+
+- Harris OUT = Weakened rotation (confirmed)
+- Cunningham questionable = Their best player at risk
+- Duren questionable = Their starting center at risk
+
+**If Cunningham + Duren both OUT:**
+- Line could move to CHA -1.5 to -2.5
+- This would be a MASSIVE value opportunity on current +3.5
 
 ---
 
@@ -272,16 +313,36 @@ Recommendation: Need actual lines to calculate
 | Aspect | Assessment |
 |--------|------------|
 | Matchup Quality | Premium (two top-5 teams) |
-| Model Confidence | Medium (elite opponent accurate, but Core 5 variance) |
+| Line Value | **STRONG** (CHA +3.5 with Detroit injuries) |
+| Model Edge | +14% win prob, +10 pts cover margin |
 | Variance Regime | High (σ=15.5) |
-| Conviction | ~60/100 |
-| Key Factor | Core 5 health status |
-| Recommendation | Wait for lines, verify injuries, likely SMALL position if Core 5 healthy |
+| Conviction | **75/100** (injury edge elevates) |
+| Core 5 Status | **ALL HEALTHY** ✓ |
+| Key Risk | Cunningham/Duren play through injuries |
 
-**Bottom Line:** This is a high-quality matchup between two elite teams. The model suggests a close game (Hornets slight favorite at home). Given high variance regime and elite opponent, bet sizing should be conservative. Wait for actual lines and injury confirmation before final decision.
+### Final Recommendation
+
+| Bet | Line | EV | Size | Reasoning |
+|-----|------|-----|------|-----------|
+| **SPREAD** | **+3.5** | **+45** | **1.5-2 units** | Best value; injury edge amplifies cover |
+| ML (alt) | +130 | +32 | 0.5-1 unit | Lower EV but higher ceiling |
+
+### Pre-Game Checklist
+- [ ] Confirm Cunningham status (DAY-TO-DAY)
+- [ ] Confirm Duren status (QUESTIONABLE)
+- [ ] Check for line movement toward Charlotte
+- [ ] If both OUT → Consider increasing position
+
+### Exit Signals (reduce/pass)
+- If Cunningham AND Duren both play full minutes
+- If line moves to CHA -1 or worse (value extracted)
+- If any Core 5 player scratched
+
+**Bottom Line:** This is a **strong value opportunity**. The Hornets are 3.5-point home underdogs despite similar team strength, Core 5 fully healthy, and Detroit missing key players. The injury-adjusted model shows +10 pts expected cover margin. Spread is the preferred bet (higher EV than ML). Size at 1.5-2 units given conviction of 75.
 
 ---
 
 *Document generated: February 8, 2026*
 *Model version: Regime-based variance with tail-risk sizing*
-*Data freshness: hornets_buzz.json updated February 8, 2026*
+*Lines captured: February 8, 2026 @ 5:09 PM EST*
+*Injury report: February 8, 2026 @ 4:00 PM EST*
