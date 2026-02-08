@@ -34,11 +34,13 @@ const ELO_WEIGHT = 0.55; // Increased from 0.40 based on backtest
 const NR_WEIGHT = 0.45; // Decreased from 0.60
 
 // Rolling window weights for net rating
+// Flattened from 40/30/20/10 to reduce MAE (less recency bias = more stable predictions)
+// Original weights optimized for ATS edge; flatter weights improve prediction accuracy
 const WINDOW_WEIGHTS = {
-  last4: 0.40,
-  last7: 0.30,
-  last10: 0.20,
-  season: 0.10,
+  last4: 0.30,
+  last7: 0.25,
+  last10: 0.25,
+  season: 0.20,
 };
 
 // Momentum multiplier
@@ -73,6 +75,10 @@ const CORE5_SURVIVORSHIP_PENALTY = -0.75;  // Points adjustment
 // Hornets bench is ~-5 net rating, so ~18/48 * (-5) = -1.9 pts
 // But we're already capturing some of this, so apply partial penalty
 const BENCH_MINUTE_PENALTY = -0.5;  // Partial bench penalty (conservative)
+
+// Predicted margin cap - extreme predictions are usually wrong
+// Most NBA games land within ±15 points; capping reduces MAE from outliers
+const PREDICTED_MARGIN_CAP = 15;
 
 // Roster change adjustments (trade impacts)
 // Positive = opponent got better, Negative = opponent got worse
@@ -696,9 +702,16 @@ export function predictSpread(
   if (confidenceScore >= 70) confidence = 'high';
   else if (confidenceScore < 45) confidence = 'low';
 
+  // Cap predicted margin to reduce MAE from extreme predictions
+  // Most NBA games land within ±15 points
+  const cappedMargin = Math.max(-PREDICTED_MARGIN_CAP, Math.min(PREDICTED_MARGIN_CAP, predictedMargin));
+  const cappedCover = upcomingGame.spread !== null
+    ? cappedMargin + upcomingGame.spread
+    : 0;
+
   return {
-    predictedMargin: Math.round(predictedMargin * 10) / 10,
-    predictedCover: Math.round(predictedCover * 10) / 10,
+    predictedMargin: Math.round(cappedMargin * 10) / 10,
+    predictedCover: Math.round(cappedCover * 10) / 10,
     confidence,
     confidenceScore,
     eloComponent: Math.round(eloPrediction * 10) / 10,
