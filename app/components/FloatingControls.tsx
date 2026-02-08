@@ -94,7 +94,9 @@ export default function FloatingControls({
 
           {/* Prediction Mode Toggle - 3 options */}
           {/* Bayesian is recommended for betting; Std/Buzz are diagnostics */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-400 uppercase tracking-wide hidden sm:inline">Predict</span>
+            <div className="flex items-center">
             <button
               onClick={() => onPredictionModeChange('standard')}
               className={`px-2.5 py-1.5 rounded-l-full text-xs font-medium transition-colors ${
@@ -128,6 +130,7 @@ export default function FloatingControls({
             >
               🐝
             </button>
+            </div>
           </div>
         </div>
       </div>

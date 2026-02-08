@@ -529,6 +529,7 @@ def main(odds_api_key: Optional[str] = None):
         opp_team_id = get_team_id_by_abbreviation(opponent)
         opp_stats = team_stats.get(opp_team_id, {})
         opp_net_rating = opp_stats.get("net_rating", 0)
+        opp_pace = opp_stats.get("pace", 100.0)
 
         # Check if all starters played
         missing_starters = check_starters_played(game_id, player_games_map)
@@ -581,6 +582,7 @@ def main(odds_api_key: Optional[str] = None):
             "impliedWinPct": est_implied_win_pct,
             "coveredSpread": covered_spread,
             "opponentNetRating": opp_net_rating,
+            "opponentPace": opp_pace,
             **advanced_stats,
         }
 
@@ -661,9 +663,10 @@ def main(odds_api_key: Optional[str] = None):
                         opp_team = [t for t in nba_teams.get_teams() if t['id'] == opp_id]
                         opp_name = opp_team[0]['full_name'] if opp_team else 'Unknown'
 
-                        # Get opponent strength
+                        # Get opponent strength and pace
                         opp_stats = team_stats.get(opp_id, {})
                         opp_net_rating = opp_stats.get("net_rating", 0)
+                        opp_pace = opp_stats.get("pace", 100.0)
 
                         # Calculate rest days from last game
                         if games:
@@ -698,6 +701,7 @@ def main(odds_api_key: Optional[str] = None):
                             "openingTimestamp": opening_timestamp,
                             "lastUpdated": None,
                             "opponentNetRating": opp_net_rating,
+                            "opponentPace": opp_pace,
                             "restDays": max(0, rest_days),
                             "isBackToBack": rest_days == 0,
                             "opponentRestDays": opp_rest_days,

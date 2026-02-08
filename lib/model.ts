@@ -26,8 +26,10 @@ const ELO_INITIAL = 1500;
 const ELO_TO_SPREAD = 28; // ~28 Elo points = 1 point spread
 
 // === Net Rating Parameters ===
-const NR_HOME_ADVANTAGE = 2.5; // Points
-const NR_FATIGUE_PENALTY = 3.0; // Back-to-back penalty in points
+// Home court reduced from 2.5 to 2.0 per backtest (was overpredicting home by +1.3)
+const NR_HOME_ADVANTAGE = 2.0; // Points (was 2.5)
+// B2B penalty reduced from 3.0 to 1.5 per backtest (Hornets +9.8 actual on B2Bs)
+const NR_FATIGUE_PENALTY = 1.5; // Back-to-back penalty in points (was 3.0)
 
 // === Blend Weights (optimized from backtest) ===
 const ELO_WEIGHT = 0.55; // Increased from 0.40 based on backtest
@@ -64,21 +66,31 @@ const ELITE_OPPONENT_PENALTY = -2.0;   // Additional penalty vs elite teams
 // === RISK ADJUSTMENTS (Per ChatGPT/Gemini Review) ===
 
 // Core 5 survivorship/schedule penalty
-// Our Core 5 sample may be inflated by:
-// - Softer schedule during healthy stretches
-// - Survivorship bias (we only see games they finished healthy)
-const CORE5_SURVIVORSHIP_PENALTY = -0.75;  // Points adjustment
+// Reduced from -0.75 to -0.25 per backtest (was underpredicting Core 5 by 5.7 pts)
+// The Core 5 really IS that good - less penalty needed
+const CORE5_SURVIVORSHIP_PENALTY = -0.25;  // Points adjustment (was -0.75)
 
 // Bench minute penalty
-// Core 5 plays ~30 minutes, bench plays ~18 minutes
-// If bench is significantly worse, we overstate Core 5 impact
-// Hornets bench is ~-5 net rating, so ~18/48 * (-5) = -1.9 pts
-// But we're already capturing some of this, so apply partial penalty
-const BENCH_MINUTE_PENALTY = -0.5;  // Partial bench penalty (conservative)
+// Reduced from -0.5 to -0.25 per backtest findings
+const BENCH_MINUTE_PENALTY = -0.25;  // Partial bench penalty (was -0.5)
+
+// Mid vs Mid adjustment
+// League backtest showed +2.2 overpredict bias when both teams are mid-tier
+// Apply -1.0 pt adjustment when opponent is mid-tier
+const MID_TIER_THRESHOLD_LOW = -3.0;
+const MID_TIER_THRESHOLD_HIGH = 3.0;
+const MID_VS_MID_ADJUSTMENT = -1.0;
 
 // Predicted margin cap - extreme predictions are usually wrong
 // Most NBA games land within ±15 points; capping reduces MAE from outliers
 const PREDICTED_MARGIN_CAP = 15;
+
+// Pace adjustment - high-pace games have more variance
+// When combined pace is high, regress margin toward 0 (less certainty)
+// League average pace is ~100 possessions per game
+// Increased from 2% to 3% per backtest (high-pace MAE was 50% worse than normal)
+const LEAGUE_AVG_PACE = 100;
+const PACE_VARIANCE_FACTOR = 0.03; // Each point above avg pace reduces margin certainty by 3% (was 2%)
 
 // Roster change adjustments (trade impacts)
 // Positive = opponent got better, Negative = opponent got worse
@@ -467,6 +479,11 @@ export function predictSpread(
   const isEliteOpponent = actualOpponentStrength >= ELITE_OPPONENT_THRESHOLD;
   const eliteOpponentPenalty = isEliteOpponent ? ELITE_OPPONENT_PENALTY : 0;
 
+  // Mid vs Mid adjustment - league backtest showed +2.2 overpredict bias
+  const isMidTierOpponent = actualOpponentStrength >= MID_TIER_THRESHOLD_LOW &&
+                            actualOpponentStrength < MID_TIER_THRESHOLD_HIGH;
+  const midVsMidAdjustment = isMidTierOpponent ? MID_VS_MID_ADJUSTMENT : 0;
+
   // === Calculate STANDARD margin (full season data) ===
   let standardElo: number;
   if (allGamesMetrics) {
@@ -495,7 +512,7 @@ export function predictSpread(
     (rollingMetrics.season.netRating * WINDOW_WEIGHTS.season);
 
   const standardNrPrediction = standardWeightedNR + homeAdj + momentumImpact +
-    oppAdjustment + fatigueAdjustment + eliteOpponentPenalty - rosterAdjustment + restDifferentialAdj;
+    oppAdjustment + fatigueAdjustment + eliteOpponentPenalty + midVsMidAdjustment - rosterAdjustment + restDifferentialAdj;
 
   // Complete Standard margin
   const standardMargin = (standardEloPrediction * ELO_WEIGHT) + (standardNrPrediction * NR_WEIGHT);
@@ -522,7 +539,7 @@ export function predictSpread(
       (buzzingMetrics.netRating * BUZZING_WINDOW_WEIGHTS.season);
 
     const buzzingNrPrediction = buzzingWeightedNR + homeAdj + momentumImpact +
-      oppAdjustment + fatigueAdjustment + eliteOpponentPenalty - rosterAdjustment + restDifferentialAdj;
+      oppAdjustment + fatigueAdjustment + eliteOpponentPenalty + midVsMidAdjustment - rosterAdjustment + restDifferentialAdj;
 
     // Complete Buzzing margin
     buzzingMargin = (buzzingEloPrediction * ELO_WEIGHT) + (buzzingNrPrediction * NR_WEIGHT);
@@ -702,9 +719,26 @@ export function predictSpread(
   if (confidenceScore >= 70) confidence = 'high';
   else if (confidenceScore < 45) confidence = 'low';
 
+  // Pace adjustment - high-pace games have more variance, regress margin toward 0
+  // Combined pace = Hornets pace + opponent pace (league avg combined = 200)
+  const hornetsPace = rollingMetrics.season.games > 0 ? 100 : LEAGUE_AVG_PACE; // TODO: Get from metrics
+  const opponentPace = (upcomingGame as any).opponentPace ?? LEAGUE_AVG_PACE;
+  const combinedPace = hornetsPace + opponentPace;
+  const paceDeviation = combinedPace - (2 * LEAGUE_AVG_PACE); // How much above/below average
+  const paceMultiplier = 1 - Math.max(0, paceDeviation * PACE_VARIANCE_FACTOR);
+  const paceAdjustedMargin = predictedMargin * paceMultiplier;
+
+  if (Math.abs(paceDeviation) > 5) {
+    factors.push({
+      name: paceDeviation > 0 ? 'High Pace Game' : 'Low Pace Game',
+      value: combinedPace,
+      impact: paceAdjustedMargin - predictedMargin,
+    });
+  }
+
   // Cap predicted margin to reduce MAE from extreme predictions
   // Most NBA games land within ±15 points
-  const cappedMargin = Math.max(-PREDICTED_MARGIN_CAP, Math.min(PREDICTED_MARGIN_CAP, predictedMargin));
+  const cappedMargin = Math.max(-PREDICTED_MARGIN_CAP, Math.min(PREDICTED_MARGIN_CAP, paceAdjustedMargin));
   const cappedCover = upcomingGame.spread !== null
     ? cappedMargin + upcomingGame.spread
     : 0;

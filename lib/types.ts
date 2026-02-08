@@ -123,6 +123,7 @@ export interface UpcomingGame {
   lastUpdated?: string;         // When current line was last updated
   // Opponent & rest data for predictions
   opponentNetRating?: number;    // Opponent's net rating
+  opponentPace?: number;         // Opponent's pace (possessions per game)
   restDays?: number;             // Days of rest before game
   isBackToBack?: boolean;        // Back-to-back game?
   opponentRestDays?: number;     // Opponent's days of rest
