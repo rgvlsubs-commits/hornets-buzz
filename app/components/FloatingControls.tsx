@@ -32,89 +32,91 @@ export default function FloatingControls({
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50
-                 bg-slate-900/95 backdrop-blur-md rounded-full
-                 px-6 py-3 border border-slate-700/50 shadow-2xl
-                 flex items-center gap-6"
+      className="fixed bottom-4 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50
+                 bg-slate-900/95 backdrop-blur-md rounded-2xl md:rounded-full
+                 px-4 py-3 md:px-6 border border-slate-700/50 shadow-2xl"
       style={{
         boxShadow: '0 0 30px rgba(0, 120, 140, 0.2), 0 10px 40px rgba(0, 0, 0, 0.5)',
       }}
     >
-      {/* Range Slider */}
-      <div className="flex items-center gap-3">
-        <input
-          type="range"
-          min={1}
-          max={sliderMax}
-          step={1}
-          value={Math.min(selectedWindow, sliderMax)}
-          onChange={(e) => onWindowChange(parseInt(e.target.value))}
-          className="w-32 md:w-48 h-2 cursor-pointer"
-        />
-        <span className="text-sm text-slate-300 min-w-[100px]">
-          {selectedWindow >= sliderMax ? (
-            <span className="text-[#00A3B4]">All {sliderMax} games</span>
-          ) : (
-            <>Last <span className="text-[#F9A01B] font-semibold">{selectedWindow}</span> games</>
-          )}
-        </span>
-      </div>
-
-      {/* Divider */}
-      <div className="w-px h-6 bg-slate-700" />
-
-      {/* Healthy Toggle */}
-      <div className="flex items-center gap-3">
-        <span className="text-xs text-slate-400 uppercase tracking-wide">Healthy</span>
-        <button
-          onClick={() => onHealthyToggle(!healthyOnly)}
-          className={`relative w-12 h-6 rounded-full transition-colors ${
-            healthyOnly
-              ? 'bg-[#00788C]'
-              : 'bg-slate-600'
-          }`}
-          aria-label={healthyOnly ? 'Showing healthy games only' : 'Showing all games'}
-        >
-          <motion.div
-            layout
-            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-            className={`absolute top-1 w-4 h-4 rounded-full shadow-md ${
-              healthyOnly
-                ? 'left-7 bg-[#F9A01B]'
-                : 'left-1 bg-slate-400'
-            }`}
+      {/* Mobile: 2 rows, Desktop: 1 row */}
+      <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
+        {/* Top row on mobile: Slider */}
+        <div className="flex items-center gap-3 justify-between md:justify-start">
+          <input
+            type="range"
+            min={1}
+            max={sliderMax}
+            step={1}
+            value={Math.min(selectedWindow, sliderMax)}
+            onChange={(e) => onWindowChange(parseInt(e.target.value))}
+            className="flex-1 md:flex-none md:w-48 h-2 cursor-pointer"
           />
-        </button>
-        <span className={`text-xs font-medium ${healthyOnly ? 'text-[#00A3B4]' : 'text-slate-500'}`}>
-          {healthyOnly ? 'ON' : 'OFF'}
-        </span>
-      </div>
+          <span className="text-sm text-slate-300 min-w-[80px] md:min-w-[100px] text-right md:text-left">
+            {selectedWindow >= sliderMax ? (
+              <span className="text-[#00A3B4]">All {sliderMax}</span>
+            ) : (
+              <span className="text-[#F9A01B] font-semibold">{selectedWindow} games</span>
+            )}
+          </span>
+        </div>
 
-      {/* Divider */}
-      <div className="w-px h-6 bg-slate-700" />
+        {/* Divider - hidden on mobile */}
+        <div className="hidden md:block w-px h-6 bg-slate-700" />
 
-      {/* Prediction Mode Toggle */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => onPredictionModeChange('standard')}
-          className={`px-3 py-1.5 rounded-l-full text-xs font-medium transition-colors ${
-            !isBuzzing
-              ? 'bg-[#00788C] text-white'
-              : 'bg-slate-700 text-slate-400 hover:text-white'
-          }`}
-        >
-          Standard
-        </button>
-        <button
-          onClick={() => onPredictionModeChange('buzzing')}
-          className={`px-3 py-1.5 rounded-r-full text-xs font-medium transition-colors ${
-            isBuzzing
-              ? 'bg-[#F9A01B] text-slate-900'
-              : 'bg-slate-700 text-slate-400 hover:text-white'
-          }`}
-        >
-          🐝 Buzzing
-        </button>
+        {/* Bottom row on mobile: Toggles */}
+        <div className="flex items-center justify-between md:justify-start gap-4 md:gap-6">
+          {/* Healthy Toggle */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-400 uppercase tracking-wide">Healthy</span>
+            <button
+              onClick={() => onHealthyToggle(!healthyOnly)}
+              className={`relative w-11 h-6 rounded-full transition-colors ${
+                healthyOnly
+                  ? 'bg-[#00788C]'
+                  : 'bg-slate-600'
+              }`}
+              aria-label={healthyOnly ? 'Showing healthy games only' : 'Showing all games'}
+            >
+              <motion.div
+                layout
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                className={`absolute top-1 w-4 h-4 rounded-full shadow-md ${
+                  healthyOnly
+                    ? 'left-6 bg-[#F9A01B]'
+                    : 'left-1 bg-slate-400'
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Divider - hidden on mobile */}
+          <div className="hidden md:block w-px h-6 bg-slate-700" />
+
+          {/* Prediction Mode Toggle */}
+          <div className="flex items-center">
+            <button
+              onClick={() => onPredictionModeChange('standard')}
+              className={`px-3 py-1.5 rounded-l-full text-xs font-medium transition-colors ${
+                !isBuzzing
+                  ? 'bg-[#00788C] text-white'
+                  : 'bg-slate-700 text-slate-400 hover:text-white'
+              }`}
+            >
+              Std
+            </button>
+            <button
+              onClick={() => onPredictionModeChange('buzzing')}
+              className={`px-3 py-1.5 rounded-r-full text-xs font-medium transition-colors ${
+                isBuzzing
+                  ? 'bg-[#F9A01B] text-slate-900'
+                  : 'bg-slate-700 text-slate-400 hover:text-white'
+              }`}
+            >
+              🐝
+            </button>
+          </div>
+        </div>
       </div>
     </motion.div>
   );

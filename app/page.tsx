@@ -138,7 +138,7 @@ export default function Home() {
   const { rollingMetrics, trend, predictions, spreads, maxGames } = computedData;
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-32 md:pb-24">
       {/* Header */}
       <header className="border-b border-slate-800 bg-gradient-to-r from-[#005F6B] to-[#00788C]">
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -233,24 +233,25 @@ export default function Home() {
         </div>
 
         {/* Tab navigation */}
-        <div className="flex flex-wrap gap-2 mb-6 border-b border-slate-700 pb-2">
+        <div className="flex flex-wrap gap-1.5 md:gap-2 mb-6 border-b border-slate-700 pb-2 overflow-x-auto">
           {[
-            { id: 'overview', label: 'Overview' },
-            { id: 'rolling', label: 'Rolling Trends' },
-            { id: 'ats', label: 'vs Spread' },
-            { id: 'predictions', label: 'Predictions' },
-            { id: 'games', label: 'Game Log' },
+            { id: 'overview', label: 'Overview', mobileLabel: 'Overview' },
+            { id: 'rolling', label: 'Rolling Trends', mobileLabel: 'Rolling' },
+            { id: 'ats', label: 'vs Spread', mobileLabel: 'ATS' },
+            { id: 'predictions', label: 'Predictions', mobileLabel: 'Predict' },
+            { id: 'games', label: 'Game Log', mobileLabel: 'Games' },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              className={`px-4 py-2 rounded-t-lg font-medium transition-colors ${
+              className={`px-3 md:px-4 py-2 rounded-t-lg font-medium transition-colors text-sm md:text-base whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-slate-800 text-white border-t border-l border-r border-slate-700'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
-              {tab.label}
+              <span className="md:hidden">{tab.mobileLabel}</span>
+              <span className="hidden md:inline">{tab.label}</span>
             </button>
           ))}
         </div>
