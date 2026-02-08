@@ -173,8 +173,9 @@ export default function SpreadPredictionComponent({
                   <div className="relative px-4">
                     {/* Zone labels */}
                     <div className="flex justify-between mb-1">
-                      <span className="text-xs text-red-400 font-medium">MISS SPREAD</span>
-                      <span className="text-xs text-[#00A3B4] font-medium">COVER SPREAD</span>
+                      <span className="text-xs text-red-400 font-medium">HORNETS LOSE</span>
+                      <span className="text-xs text-slate-500 font-medium">Predicted Margin</span>
+                      <span className="text-xs text-[#00A3B4] font-medium">HORNETS WIN</span>
                     </div>
 
                     {/* Track */}
@@ -199,16 +200,29 @@ export default function SpreadPredictionComponent({
                         );
                       })}
 
-                      {/* Current spread marker */}
-                      <div
-                        className="absolute top-0 flex flex-col items-center"
-                        style={{ left: '50%', transform: 'translateX(-50%)' }}
-                      >
-                        <div className="bg-[#F9A01B] text-slate-900 text-xs font-bold px-2 py-0.5 rounded-t">
-                          {game.spread! < 0 ? `FAV ${Math.abs(game.spread!)}` : `DOG ${game.spread}`}
-                        </div>
-                        <div className="w-0.5 h-2 bg-[#F9A01B]" />
-                      </div>
+                      {/* Current spread marker - positioned on margin scale */}
+                      {/* For DOG +3.5: spread line is at -3.5 (can lose by 3.5 and cover) */}
+                      {/* For FAV -3.5: spread line is at +3.5 (must win by 3.5 to cover) */}
+                      {(() => {
+                        // The spread line position: where you need to be to exactly cover
+                        // DOG +3.5 → need margin > -3.5 → line at -3.5
+                        // FAV -3.5 → need margin > +3.5 → line at +3.5
+                        const spreadLinePosition = -game.spread!;
+                        const spreadPct = ((Math.max(-15, Math.min(15, spreadLinePosition)) + 15) / 30) * 100;
+                        return (
+                          <div
+                            className="absolute top-0 flex flex-col items-center z-10"
+                            style={{ left: `${spreadPct}%`, transform: 'translateX(-50%)' }}
+                          >
+                            <div className="bg-[#F9A01B] text-slate-900 text-xs font-bold px-2 py-0.5 rounded-t whitespace-nowrap">
+                              {game.spread! < 0
+                                ? `Must win by ${Math.abs(game.spread!)}+`
+                                : `Can lose by ${game.spread}`}
+                            </div>
+                            <div className="w-0.5 h-2 bg-[#F9A01B]" />
+                          </div>
+                        );
+                      })()}
 
                       {/* Tick labels below */}
                       <div className="absolute -bottom-4 inset-x-0 flex justify-between text-xs text-slate-500">
@@ -221,11 +235,11 @@ export default function SpreadPredictionComponent({
                         <span>+15</span>
                       </div>
 
-                      {/* Prediction marker */}
+                      {/* Prediction marker - shows predicted margin on same scale as spread */}
                       <motion.div
                         initial={{ left: '50%' }}
                         animate={{
-                          left: `${((Math.max(-15, Math.min(15, prediction.predictedCover)) + 15) / 30) * 100}%`
+                          left: `${((Math.max(-15, Math.min(15, prediction.predictedMargin)) + 15) / 30) * 100}%`
                         }}
                         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
                         className="absolute top-3 -translate-x-1/2"
@@ -236,8 +250,9 @@ export default function SpreadPredictionComponent({
                               ? 'bg-[#00788C] border-[#00A3B4] text-white'
                               : 'bg-red-500 border-red-300 text-white'
                           }`}
+                          title={`Predicted margin: ${prediction.predictedMargin > 0 ? '+' : ''}${prediction.predictedMargin} | Cover by: ${prediction.predictedCover > 0 ? '+' : ''}${prediction.predictedCover.toFixed(1)}`}
                         >
-                          {prediction.predictedCover > 0 ? '+' : ''}{prediction.predictedCover.toFixed(1)}
+                          {prediction.predictedMargin > 0 ? '+' : ''}{prediction.predictedMargin.toFixed(1)}
                         </div>
                       </motion.div>
                     </div>
