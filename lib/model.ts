@@ -55,6 +55,23 @@ const BUZZING_WINDOW_WEIGHTS = {
 // Buzzing mode sample size
 const BUZZING_SAMPLE_SIZE = 15;
 
+// Elite opponent threshold and penalty
+const ELITE_OPPONENT_THRESHOLD = 6.0;  // Net rating threshold for elite teams
+const ELITE_OPPONENT_PENALTY = -2.0;   // Additional penalty vs elite teams
+
+// Roster change adjustments (trade impacts)
+// Positive = opponent got better, Negative = opponent got worse
+const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string }> = {
+  'Cleveland Cavaliers': {
+    adjustment: 1.5,  // Harden acquisition is net positive short-term
+    note: 'Harden trade (+1.5): Elite playmaker added, but integration period',
+  },
+  'CLE': {
+    adjustment: 1.5,
+    note: 'Harden trade (+1.5): Elite playmaker added, but integration period',
+  },
+};
+
 /**
  * Prediction mode for spread calculations
  * - 'standard': Uses season-long data with weighted rolling windows
@@ -315,8 +332,9 @@ export function analyzeTrend(games: Game[]): TrendAnalysis {
  *
  * Uses hybrid model: 55% Elo + 45% Net Rating (optimized from backtest)
  *
- * @param mode - 'standard' uses season data, 'buzzing' uses only last 15 healthy games
- * @param buzzingMetrics - Required for 'buzzing' mode: metrics from last 15 healthy games
+ * @param mode - 'standard' uses full season data, 'buzzing' uses only healthy games
+ * @param buzzingMetrics - Required for 'buzzing' mode: metrics from healthy games only
+ * @param allGamesMetrics - Full season metrics (for standard mode)
  */
 export function predictSpread(
   upcomingGame: UpcomingGame,
@@ -329,13 +347,18 @@ export function predictSpread(
   trend: TrendAnalysis,
   opponentStrength: number = 0, // Net rating of opponent, 0 = league average (fallback)
   mode: PredictionMode = 'standard',
-  buzzingMetrics?: RollingMetrics // Metrics from last 15 healthy games for buzzing mode
+  buzzingMetrics?: RollingMetrics, // Metrics from healthy games only (for buzzing mode)
+  allGamesMetrics?: RollingMetrics // Full season metrics (for standard mode)
 ): SpreadPrediction {
   const factors: SpreadPrediction['factors'] = [];
   const isBuzzing = mode === 'buzzing';
 
   // Use opponent net rating from game data if available, otherwise use parameter
   const actualOpponentStrength = upcomingGame.opponentNetRating ?? opponentStrength;
+
+  // Check for roster adjustments (trades, injuries, etc.)
+  const rosterAdj = ROSTER_ADJUSTMENTS[upcomingGame.opponent];
+  const rosterAdjustment = rosterAdj?.adjustment ?? 0;
 
   // === Fatigue Factor ===
   // Back-to-back games typically cost 2-3 points
@@ -349,12 +372,12 @@ export function predictSpread(
   }
 
   // === Elo Component ===
-  // In buzzing mode: use only healthy games to estimate Elo
-  // In standard mode: use season-long data
+  // Standard mode: use FULL SEASON data (all games, regardless of health)
+  // Buzzing mode: use only healthy/Core 5 games
   let teamElo: number;
 
   if (isBuzzing && buzzingMetrics) {
-    // Buzzing mode: Elo based only on healthy games (last 15)
+    // Buzzing mode: Elo based only on healthy games
     // This represents the "true" Hornets when Core 5 is healthy
     teamElo = estimateElo(
       buzzingMetrics.wins,
@@ -362,8 +385,16 @@ export function predictSpread(
       buzzingMetrics.pointDiff * buzzingMetrics.games,
       buzzingMetrics.games
     );
+  } else if (allGamesMetrics) {
+    // Standard mode: use FULL SEASON metrics (all games)
+    teamElo = estimateElo(
+      allGamesMetrics.wins,
+      allGamesMetrics.losses,
+      allGamesMetrics.pointDiff * allGamesMetrics.games,
+      allGamesMetrics.games
+    );
   } else {
-    // Standard mode: use season-long metrics
+    // Fallback to rollingMetrics.season if allGamesMetrics not provided
     teamElo = estimateElo(
       rollingMetrics.season.wins,
       rollingMetrics.season.losses,
@@ -415,7 +446,11 @@ export function predictSpread(
   // Opponent adjustment (subtract their net rating advantage)
   const oppAdjustment = -actualOpponentStrength;
 
-  const nrPrediction = weightedNR + homeAdj + momentumImpact + oppAdjustment + fatigueAdjustment;
+  // Elite opponent penalty - extra caution vs top-tier teams
+  const isEliteOpponent = actualOpponentStrength >= ELITE_OPPONENT_THRESHOLD;
+  const eliteOpponentPenalty = isEliteOpponent ? ELITE_OPPONENT_PENALTY : 0;
+
+  const nrPrediction = weightedNR + homeAdj + momentumImpact + oppAdjustment + fatigueAdjustment + eliteOpponentPenalty - rosterAdjustment;
 
   factors.push({
     name: isBuzzing ? 'Buzzing Net Rating' : 'Weighted Net Rating',
@@ -443,6 +478,24 @@ export function predictSpread(
       name: actualOpponentStrength > 0 ? 'Strong Opponent' : 'Weak Opponent',
       value: actualOpponentStrength,
       impact: oppAdjustment * NR_WEIGHT,
+    });
+  }
+
+  // Elite opponent penalty
+  if (isEliteOpponent) {
+    factors.push({
+      name: 'Elite Opponent',
+      value: actualOpponentStrength,
+      impact: eliteOpponentPenalty * NR_WEIGHT,
+    });
+  }
+
+  // Roster adjustment (trades, etc.)
+  if (rosterAdj) {
+    factors.push({
+      name: rosterAdj.note.split(':')[0], // Just the trade name
+      value: rosterAdjustment,
+      impact: -rosterAdjustment * NR_WEIGHT,
     });
   }
 

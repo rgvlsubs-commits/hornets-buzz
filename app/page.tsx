@@ -67,8 +67,11 @@ export default function Home() {
 
     const trend = analyzeTrend(data.games);
 
-    // Calculate buzzing metrics (last 15 healthy games)
+    // Calculate buzzing metrics (last 15 healthy games only)
     const buzzingMetrics = calculateBuzzingMetrics(data.games, spreads);
+
+    // Calculate ALL GAMES metrics for standard mode (ignores healthyOnly toggle)
+    const allGamesMetrics = calculateRollingMetrics(data.games, data.totalGames, spreads, false);
 
     // Generate predictions for upcoming games
     const predictions = new Map<string, SpreadPrediction>();
@@ -79,12 +82,13 @@ export default function Home() {
         trend,
         0,
         predictionMode,
-        buzzingMetrics
+        buzzingMetrics,
+        allGamesMetrics  // Standard mode uses full season data
       );
       predictions.set(game.gameId, prediction);
     }
 
-    return { rollingMetrics, trend, predictions, spreads, maxGames, buzzingMetrics };
+    return { rollingMetrics, trend, predictions, spreads, maxGames, buzzingMetrics, allGamesMetrics };
   }, [data, healthyOnly, predictionMode]);
 
   // Get currently selected window metrics - calculate for exact window size
