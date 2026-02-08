@@ -458,6 +458,20 @@ const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string }> =
   },
 };
 
+// === HORNETS ROSTER TRANSITION (Feb 2026 Trades) ===
+// Trades: OUT - Tyus Jones, Sexton, Plumlee, Connaughton
+//         IN  - Coby White (INJURED through ASB), Branham, Tillman
+// Net impact: Bench depth depleted, new players need integration
+// Core 5 unchanged, but bench support weaker short-term
+// Expires: After All-Star break (Feb 16, 2026)
+const HORNETS_TRADE_DEADLINE_ADJUSTMENT = {
+  active: true,
+  expiresAfter: '2026-02-16',  // All-Star break
+  marginAdjustment: -1.5,      // Slight penalty for bench disruption
+  sigmaBoost: 1.0,             // Extra variance during transition
+  note: 'Trade deadline roster transition: Lost Jones/Sexton/Plumlee, Coby White injured',
+};
+
 /**
  * Prediction mode for spread calculations
  * - 'standard': Uses full season data (all games, conservative baseline)
@@ -844,9 +858,21 @@ export function predictSpread(
   // Use opponent net rating from game data if available
   const actualOpponentStrength = upcomingGame.opponentNetRating ?? opponentStrength;
 
-  // Check for roster adjustments (trades, injuries, etc.)
+  // Check for opponent roster adjustments (trades, injuries, etc.)
   const rosterAdj = ROSTER_ADJUSTMENTS[upcomingGame.opponent];
   const rosterAdjustment = rosterAdj?.adjustment ?? 0;
+
+  // Check for Hornets roster transition adjustment (trade deadline impact)
+  let hornetsTradeAdjustment = 0;
+  let hornetsTradeNote = '';
+  if (HORNETS_TRADE_DEADLINE_ADJUSTMENT.active) {
+    const gameDate = new Date(upcomingGame.date);
+    const expirationDate = new Date(HORNETS_TRADE_DEADLINE_ADJUSTMENT.expiresAfter);
+    if (gameDate <= expirationDate) {
+      hornetsTradeAdjustment = HORNETS_TRADE_DEADLINE_ADJUSTMENT.marginAdjustment;
+      hornetsTradeNote = HORNETS_TRADE_DEADLINE_ADJUSTMENT.note;
+    }
+  }
 
   // === Fatigue Factor (Hornets) ===
   let fatigueAdjustment = 0;
@@ -907,7 +933,7 @@ export function predictSpread(
     (rollingMetrics.season.netRating * WINDOW_WEIGHTS.season);
 
   const standardNrPrediction = standardWeightedNR + homeAdj + momentumImpact +
-    oppAdjustment + fatigueAdjustment + eliteOpponentPenalty + midVsMidAdjustment - rosterAdjustment + restDifferentialAdj;
+    oppAdjustment + fatigueAdjustment + eliteOpponentPenalty + midVsMidAdjustment - rosterAdjustment + restDifferentialAdj + hornetsTradeAdjustment;
 
   // Complete Standard margin
   const standardMargin = (standardEloPrediction * ELO_WEIGHT) + (standardNrPrediction * NR_WEIGHT);
@@ -934,7 +960,7 @@ export function predictSpread(
       (buzzingMetrics.netRating * BUZZING_WINDOW_WEIGHTS.season);
 
     const buzzingNrPrediction = buzzingWeightedNR + homeAdj + momentumImpact +
-      oppAdjustment + fatigueAdjustment + eliteOpponentPenalty + midVsMidAdjustment - rosterAdjustment + restDifferentialAdj;
+      oppAdjustment + fatigueAdjustment + eliteOpponentPenalty + midVsMidAdjustment - rosterAdjustment + restDifferentialAdj + hornetsTradeAdjustment;
 
     // Complete Buzzing margin
     buzzingMargin = (buzzingEloPrediction * ELO_WEIGHT) + (buzzingNrPrediction * NR_WEIGHT);
@@ -1128,12 +1154,23 @@ export function predictSpread(
   // Per ChatGPT review: Model variance by regime, not just mean
   // This is the single biggest upgrade - makes EV math honest
   const isCore5Game = isBuzzing || Boolean(isBayesian && buzzingMetrics && buzzingMetrics.games > 0);
-  const { sigma, regime } = calculateRegimeSigma(
+  let { sigma, regime } = calculateRegimeSigma(
     isCore5Game,
     combinedPace,
     actualOpponentStrength,
     daysSinceLastCore5
   );
+
+  // Apply trade transition sigma boost if active
+  if (hornetsTradeAdjustment !== 0) {
+    sigma += HORNETS_TRADE_DEADLINE_ADJUSTMENT.sigmaBoost;
+    regime = regime === 'Normal' ? 'TradeTransition' : regime + '+Trade';
+    factors.push({
+      name: 'Trade Deadline',
+      value: hornetsTradeAdjustment,
+      impact: hornetsTradeAdjustment * NR_WEIGHT,
+    });
+  }
 
   // Add regime info to factors if not normal
   if (regime !== 'Normal') {
