@@ -69,6 +69,7 @@ def simple_predict_margin(game: Dict, hornets_metrics: Dict) -> float:
     Simple margin prediction using current model logic.
 
     This replicates the key logic from model.ts in Python for backtesting.
+    Updated to match post-backtest adjustments.
     """
     # Hornets baseline from recent performance
     hornets_nr = hornets_metrics.get('netRating', 0)
@@ -80,30 +81,33 @@ def simple_predict_margin(game: Dict, hornets_metrics: Dict) -> float:
     # Elite opponent penalty
     elite_penalty = -2.0 if opp_nr >= 6.0 else 0
 
-    # Home/away adjustment
-    home_adj = 2.5 if game.get('isHome', False) else -2.5
+    # Mid vs Mid adjustment (league showed +2.2 overpredict bias)
+    mid_vs_mid_adj = -1.0 if -3.0 <= opp_nr < 3.0 else 0
 
-    # Fatigue adjustment
+    # Home/away adjustment (reduced from 2.5 to 2.0)
+    home_adj = 2.0 if game.get('isHome', False) else -2.0
+
+    # Fatigue adjustment (B2B reduced from 3.0 to 1.5)
     rest_days = game.get('restDays', 1)
     if rest_days == 0:  # Back-to-back
-        fatigue_adj = -3.0
+        fatigue_adj = -1.5  # Reduced from -3.0
     elif rest_days >= 2:
         fatigue_adj = 1.0
     else:
         fatigue_adj = 0
 
-    # Core 5 risk penalties (survivorship + bench)
-    risk_penalty = -1.25 if game.get('isQualified', False) else 0
+    # Core 5 risk penalties (reduced from -1.25 to -0.5)
+    risk_penalty = -0.5 if game.get('isQualified', False) else 0
 
     # Base prediction
-    predicted_margin = hornets_nr + opp_adjustment + elite_penalty + home_adj + fatigue_adj + risk_penalty
+    predicted_margin = hornets_nr + opp_adjustment + elite_penalty + mid_vs_mid_adj + home_adj + fatigue_adj + risk_penalty
 
-    # Pace adjustment
+    # Pace adjustment (increased from 2% to 3%)
     hornets_pace = game.get('pace', 100)
     opp_pace = game.get('opponentPace', 100)
     combined_pace = hornets_pace + opp_pace
     pace_deviation = combined_pace - 200
-    pace_multiplier = 1 - max(0, pace_deviation * 0.02)
+    pace_multiplier = 1 - max(0, pace_deviation * 0.03)  # Increased from 0.02
     predicted_margin *= pace_multiplier
 
     # Cap at ±15
