@@ -102,10 +102,11 @@ Fatigue: None (2+ days rest expected)
 | Factor | Impact | Notes |
 |--------|--------|-------|
 | Home Court | +2.0 | Reduced from 2.5 per backtest |
-| Elite Opponent | -2.0 | Detroit NR = +7.8 |
-| Trade Deadline | -1.5 | Bench disruption (expires Feb 16) |
+| Elite Opponent | -2.0 | Detroit NR = +7.8 (backtest shows ~0 bias vs elite) |
+| Trade Deadline | **-0.75** | Reduced from -1.5 per ChatGPT review (was double-penalizing) |
 | Mid vs Mid | 0 | N/A (elite opponent) |
 | Fatigue | 0 | Well rested |
+| **Injury Adjustment** | **+4.5** | Harris OUT, Cunningham/Duren questionable |
 
 ### Regime-Based Variance (σ)
 | Component | σ Contribution |
@@ -255,6 +256,18 @@ ML EV (at +130): (0.575 × 130) - (0.425 × 100) = +32.3 per $100
 2. **Hot Streak** - 5-0 ATS, 5-0 SU in Core 5
 3. **Model Accuracy vs Elite** - Near-zero bias historically
 4. **Strong Offensive Rating** - 118.4 ORTG (2nd in league)
+5. **Detroit Injuries** - Harris OUT, Cunningham/Duren questionable (+4.5 adjustment)
+
+### Detroit-Specific Factors (Per ChatGPT Review)
+1. **Detroit punishes weak rim protection**
+   - Diabaté is solid but foul-prone
+   - If he gets early foul trouble → σ increases further
+
+2. **Detroit suppresses opponent assist rates**
+   - Hurts LaMelo-heavy offense
+   - Can flatten margin without killing win probability
+
+**Implication:** Both factors reinforce **small sizing**, but don't change the bet direction.
 
 ---
 

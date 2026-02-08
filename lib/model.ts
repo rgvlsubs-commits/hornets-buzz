@@ -60,6 +60,9 @@ const BUZZING_WINDOW_WEIGHTS = {
 const BUZZING_SAMPLE_SIZE = 15;
 
 // Elite opponent threshold and penalty
+// Note: Backtest shows ~0 bias vs elite (n=3), suggesting this penalty
+// may already be well-calibrated. ChatGPT suggested -1.0 to -1.5 for Bayesian,
+// but n=3 is too small to confidently reduce. Keep at -2.0 and monitor.
 const ELITE_OPPONENT_THRESHOLD = 6.0;  // Net rating threshold for elite teams
 const ELITE_OPPONENT_PENALTY = -2.0;   // Additional penalty vs elite teams
 
@@ -464,11 +467,18 @@ const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string }> =
 // Net impact: Bench depth depleted, new players need integration
 // Core 5 unchanged, but bench support weaker short-term
 // Expires: After All-Star break (Feb 16, 2026)
+//
+// Per ChatGPT review: Original -1.5 margin + 1.0 σ was "double-penalizing"
+// Bench disruption matters LESS in:
+//   - Home games (controlled environment)
+//   - Elite opponent games (Core 5 plays heavy minutes)
+//   - Low-pace games (fewer possessions = fewer bench opportunities)
+// Reduced margin penalty, removed σ boost (let conviction handle it)
 const HORNETS_TRADE_DEADLINE_ADJUSTMENT = {
   active: true,
   expiresAfter: '2026-02-16',  // All-Star break
-  marginAdjustment: -1.5,      // Slight penalty for bench disruption
-  sigmaBoost: 1.0,             // Extra variance during transition
+  marginAdjustment: -0.75,     // Reduced from -1.5 per ChatGPT review
+  sigmaBoost: 0,               // Removed - was double-counting with conviction
   note: 'Trade deadline roster transition: Lost Jones/Sexton/Plumlee, Coby White injured',
 };
 
