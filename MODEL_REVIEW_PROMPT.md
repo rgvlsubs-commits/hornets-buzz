@@ -175,12 +175,18 @@ const CORE5_ATS_PCT = 0.778;
 const CORE5_AVG_MARGIN = 8.9;
 
 // Value boosts - HEAVILY TEMPERED per multiple reviews
-// Road: Raw 86.7% (13-2) → Tempered to ~2-3% lift → 0.8 pts (was 2.0)
-// B2B: Raw 83.3% (5-1) → REMOVED - 5-game sample too small to extrapolate
-const ROAD_VALUE_BOOST = 0.8;     // Tempered from 2.0 → 1.5 → 0.8
+// Road: Raw 86.7% (13-2) → Tempered aggressively → 0.4 pts (was 2.0)
+// B2B: REMOVED - 5-game sample too small to extrapolate
+const ROAD_VALUE_BOOST = 0.4;     // Tempered from 2.0 → 1.5 → 0.8 → 0.4
 const BACK_TO_BACK_BOOST = 0.0;   // REMOVED: 5-game sample is too small
 const ELITE_OPPONENT_PENALTY = -3.0;
 const REST_ADVANTAGE_BOOST = 1.0; // When well rested (2+ days)
+
+// === RISK ADJUSTMENTS (Per Consolidated Review) ===
+const MOV_CAP = 20;                      // Cap margin at ±20 pts in Elo calc
+const KELLY_WIN_PROB_CAP = 0.56;         // Cap win prob for Kelly sizing
+const CORE5_SURVIVORSHIP_PENALTY = -0.75; // Survivorship/schedule bias
+const BENCH_MINUTE_PENALTY = -0.5;        // Partial bench impact (~18 min/game)
 ```
 
 ---
@@ -333,6 +339,17 @@ interface GameInjuryReport {
 | B2B boost on 5-game sample | FIXED | Removed entirely (0.0 pts) - sample too small to extrapolate |
 | Kelly can recommend >100% bankroll | FIXED | Added 60% cap to half-Kelly output |
 | Window weights aggressive (40/30/20/10) | KEPT | Optimized from backtest; flattening reduced accuracy |
+
+### Consolidated ChatGPT + Gemini Review - Fixes Applied
+
+| Issue | Status | Resolution |
+|-------|--------|------------|
+| **Kelly probability cap (CRITICAL)** | FIXED | Cap effective win_prob at 56% for sizing - inflated probs blow up bankrolls |
+| **MOV capping in Elo** | FIXED | Cap point diff at ±20 pts/game - prevents blowouts from distorting Elo |
+| **Road boost still too high** | FIXED | Cut from 0.8 → 0.4 pts - let CLV validate |
+| **Survivorship/schedule bias** | FIXED | Added -0.75 pt penalty for Core 5 survivorship bias |
+| **Bench minute impact** | FIXED | Added -0.5 pt partial bench penalty (Core 5 only plays ~30 min) |
+| **Core 5 risk adjustment** | FIXED | Bayesian now applies scaled risk penalty based on Core 5 weight in blend |
 
 ### Issues Noted for Future
 

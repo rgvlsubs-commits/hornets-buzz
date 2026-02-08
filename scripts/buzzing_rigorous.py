@@ -53,13 +53,22 @@ def kelly_criterion(win_prob: float, odds: float = 1.91) -> float:
     odds = decimal odds (1.91 = -110 American)
     Returns fraction of bankroll to bet (0 = no bet).
 
-    Uses half-Kelly for variance reduction, capped at 60% per Gemini review.
+    CRITICAL RISK CONTROL (per ChatGPT/Gemini review):
+    1. Cap effective win_prob at 56% - inflated probabilities are how models blow up
+    2. Half-Kelly for variance reduction
+    3. Hard cap at 60% of bankroll
     """
+    # RISK CONTROL: Cap win probability at 56%
+    # Our 75%+ estimates are almost certainly inflated by small samples
+    # Feeding them into Kelly is the fastest way to blow up a bankroll
+    KELLY_WIN_PROB_CAP = 0.56
+    effective_win_prob = min(win_prob, KELLY_WIN_PROB_CAP)
+
     # Convert to implied probability from odds
     implied_prob = 1 / odds
 
     # Edge = our probability - implied probability
-    edge = win_prob - implied_prob
+    edge = effective_win_prob - implied_prob
 
     if edge <= 0:
         return 0.0
@@ -67,12 +76,12 @@ def kelly_criterion(win_prob: float, odds: float = 1.91) -> float:
     # Kelly formula: f = (bp - q) / b
     # where b = decimal odds - 1, p = win prob, q = 1-p
     b = odds - 1
-    q = 1 - win_prob
-    kelly = (b * win_prob - q) / b
+    q = 1 - effective_win_prob
+    kelly = (b * effective_win_prob - q) / b
 
     # Half-Kelly for safety (reduces variance), capped at 60%
     half_kelly = max(0, kelly / 2)
-    return min(half_kelly, 0.60)  # Cap at 60% per Gemini review
+    return min(half_kelly, 0.60)  # Hard cap at 60%
 
 
 @dataclass

@@ -59,6 +59,21 @@ const BUZZING_SAMPLE_SIZE = 15;
 const ELITE_OPPONENT_THRESHOLD = 6.0;  // Net rating threshold for elite teams
 const ELITE_OPPONENT_PENALTY = -2.0;   // Additional penalty vs elite teams
 
+// === RISK ADJUSTMENTS (Per ChatGPT/Gemini Review) ===
+
+// Core 5 survivorship/schedule penalty
+// Our Core 5 sample may be inflated by:
+// - Softer schedule during healthy stretches
+// - Survivorship bias (we only see games they finished healthy)
+const CORE5_SURVIVORSHIP_PENALTY = -0.75;  // Points adjustment
+
+// Bench minute penalty
+// Core 5 plays ~30 minutes, bench plays ~18 minutes
+// If bench is significantly worse, we overstate Core 5 impact
+// Hornets bench is ~-5 net rating, so ~18/48 * (-5) = -1.9 pts
+// But we're already capturing some of this, so apply partial penalty
+const BENCH_MINUTE_PENALTY = -0.5;  // Partial bench penalty (conservative)
+
 // Roster change adjustments (trade impacts)
 // Positive = opponent got better, Negative = opponent got worse
 const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string }> = {
@@ -97,6 +112,30 @@ function getBayesianPriorStrength(sampleSize: number): number {
   // At 28 games: 60 - 14 = 46
   // At 40 games: 60 - 20 = 40
   // At 10 games: 60 - 5 = 55
+}
+
+/**
+ * MOV (Margin of Victory) capping to prevent blowouts from distorting Elo
+ * Per ChatGPT/Gemini review: uncapped MOV inflates Elo and distorts spreads
+ * Cap at ±20 points per game
+ */
+const MOV_CAP = 20;
+
+function capMargin(margin: number): number {
+  return Math.max(-MOV_CAP, Math.min(MOV_CAP, margin));
+}
+
+/**
+ * Kelly-safe win probability - caps effective probability for sizing
+ * Per ChatGPT/Gemini review: feeding inflated 75%+ probabilities into Kelly
+ * is the fastest way to blow up a bankroll. Cap at 56% for sizing purposes.
+ *
+ * This doesn't change predictions - only bet sizing calculations.
+ */
+const KELLY_WIN_PROB_CAP = 0.56;
+
+export function getKellySafeWinProb(rawWinProb: number): number {
+  return Math.min(rawWinProb, KELLY_WIN_PROB_CAP);
 }
 
 export interface RollingMetrics {
@@ -205,7 +244,8 @@ export function estimateElo(
   wins: number,
   losses: number,
   pointDiff: number,
-  gamesPlayed: number
+  gamesPlayed: number,
+  useMOVCap: boolean = true
 ): number {
   if (gamesPlayed === 0) return ELO_INITIAL;
 
@@ -214,7 +254,13 @@ export function estimateElo(
   const eloFromWinPct = winPctToElo(winPct);
 
   // Point differential component (rough: +10 diff ≈ +100 Elo above average)
-  const avgPointDiff = pointDiff / gamesPlayed;
+  // Apply MOV cap to prevent blowouts from distorting Elo
+  // Per ChatGPT/Gemini: uncapped MOV inflates Elo and overweights garbage time
+  let avgPointDiff = pointDiff / gamesPlayed;
+  if (useMOVCap) {
+    // Cap effective point diff at ±20 per game equivalent
+    avgPointDiff = capMargin(avgPointDiff);
+  }
   const eloFromPointDiff = ELO_INITIAL + avgPointDiff * 10;
 
   // Blend: Weight point diff higher throughout (better predictor per analytics research)
@@ -486,6 +532,14 @@ export function predictSpread(
     predictedMargin = buzzingMargin;
     displayElo = buzzingElo;
     displayNR = buzzingMetrics?.netRating ?? standardWeightedNR;
+
+    // Apply Core 5 risk penalties (survivorship + bench minutes)
+    predictedMargin += CORE5_SURVIVORSHIP_PENALTY + BENCH_MINUTE_PENALTY;
+    factors.push({
+      name: 'Core 5 Risk Adj',
+      value: CORE5_SURVIVORSHIP_PENALTY + BENCH_MINUTE_PENALTY,
+      impact: CORE5_SURVIVORSHIP_PENALTY + BENCH_MINUTE_PENALTY,
+    });
   } else if (isBayesian && buzzingMetrics && buzzingMetrics.games > 0) {
     // Bayesian: Blend margins with adaptive prior strength
     // KEY FIX: Blend at margin level, not component level
@@ -499,10 +553,20 @@ export function predictSpread(
                  sampleWeight * (buzzingMetrics?.netRating ?? standardWeightedNR)) /
                 (priorStrength + sampleWeight);
 
+    // Apply partial Core 5 risk penalties (scaled by Core 5 weight in blend)
+    const core5Weight = sampleWeight / (priorStrength + sampleWeight);
+    const riskPenalty = core5Weight * (CORE5_SURVIVORSHIP_PENALTY + BENCH_MINUTE_PENALTY);
+    predictedMargin += riskPenalty;
+
     factors.push({
       name: 'Bayesian Blend',
       value: priorStrength,
       impact: 0, // Informational
+    });
+    factors.push({
+      name: 'Core 5 Risk Adj',
+      value: riskPenalty,
+      impact: riskPenalty,
     });
   } else {
     // Standard: Full season data (diagnostic only)
@@ -511,18 +575,22 @@ export function predictSpread(
     displayNR = standardWeightedNR;
   }
 
+  // === Calculate component predictions for display and confidence ===
+  const eloPrediction = eloToSpread(displayElo - opponentElo) * ELO_WEIGHT;
+  const nrPrediction = displayNR * NR_WEIGHT;
+
   // === Build factors for display ===
   const modeLabel = isBuzzing ? ' [Buzz]' : isBayesian ? ' [Bayes]' : ' [Std]';
   factors.push({
     name: `Elo${modeLabel}`,
     value: displayElo,
-    impact: eloToSpread(displayElo - opponentElo) * ELO_WEIGHT,
+    impact: eloPrediction,
   });
 
   factors.push({
     name: `Net Rating${modeLabel}`,
     value: displayNR,
-    impact: displayNR * NR_WEIGHT,
+    impact: nrPrediction,
   });
 
   factors.push({

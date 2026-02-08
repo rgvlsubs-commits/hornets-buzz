@@ -41,10 +41,11 @@ const LOW_VALUE_THRESHOLD = 1.0;    // Our prediction beats spread by 1-3
 // NOTE: Boosts heavily tempered per ChatGPT review - elite road teams historically
 // top out around +2-3% ATS before regression. Our raw numbers are likely overstated.
 //
-// Road: Raw 86.7% (13-2) → Implied ~6-7% lift → Tempered to ~2-3% → 0.8 pts
-// B2B: Raw 83.3% (5-1) → Sample too small (5 games!) → Removed per Gemini review
+// Road: Raw 86.7% (13-2) → Per ChatGPT/Gemini: still too aggressive at 0.8
+// Cut to 0.4 pts and let CLV tell us if we were right
+// B2B: Removed entirely - 5-game sample is noise
 const HOME_BOOST = 0.0;           // Home isn't where ATS value is
-const ROAD_VALUE_BOOST = 0.8;     // Road games have ATS value (tempered from 1.5)
+const ROAD_VALUE_BOOST = 0.4;     // Heavily tempered: 2.0 → 1.5 → 0.8 → 0.4
 const BACK_TO_BACK_BOOST = 0.0;   // Removed: 5-game sample is too small to extrapolate
 const REST_ADVANTAGE_BOOST = 1.0; // Reduced from 1.5
 const STREAK_BOOST = 0.3;         // Per game in streak, max 3 points
