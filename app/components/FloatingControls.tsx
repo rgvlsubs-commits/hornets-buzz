@@ -26,7 +26,6 @@ export default function FloatingControls({
 }: FloatingControlsProps) {
   // Calculate the actual max for the slider based on healthyOnly mode
   const sliderMax = healthyOnly ? maxGames : totalGames;
-  const isBuzzing = predictionMode === 'buzzing';
 
   return (
     <motion.div
@@ -93,25 +92,38 @@ export default function FloatingControls({
           {/* Divider - hidden on mobile */}
           <div className="hidden md:block w-px h-6 bg-slate-700" />
 
-          {/* Prediction Mode Toggle */}
+          {/* Prediction Mode Toggle - 3 options */}
           <div className="flex items-center">
             <button
               onClick={() => onPredictionModeChange('standard')}
-              className={`px-3 py-1.5 rounded-l-full text-xs font-medium transition-colors ${
-                !isBuzzing
-                  ? 'bg-[#00788C] text-white'
+              className={`px-2.5 py-1.5 rounded-l-full text-xs font-medium transition-colors ${
+                predictionMode === 'standard'
+                  ? 'bg-slate-500 text-white'
                   : 'bg-slate-700 text-slate-400 hover:text-white'
               }`}
+              title="Standard: Full season data (conservative)"
             >
               Std
             </button>
             <button
+              onClick={() => onPredictionModeChange('bayesian')}
+              className={`px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                predictionMode === 'bayesian'
+                  ? 'bg-[#00788C] text-white'
+                  : 'bg-slate-700 text-slate-400 hover:text-white'
+              }`}
+              title="Bayesian: Blends standard + Core 5 data"
+            >
+              Bayes
+            </button>
+            <button
               onClick={() => onPredictionModeChange('buzzing')}
-              className={`px-3 py-1.5 rounded-r-full text-xs font-medium transition-colors ${
-                isBuzzing
+              className={`px-2.5 py-1.5 rounded-r-full text-xs font-medium transition-colors ${
+                predictionMode === 'buzzing'
                   ? 'bg-[#F9A01B] text-slate-900'
                   : 'bg-slate-700 text-slate-400 hover:text-white'
               }`}
+              title="Full Buzz: Core 5 data only (aggressive)"
             >
               🐝
             </button>

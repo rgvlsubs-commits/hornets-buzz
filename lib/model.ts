@@ -74,10 +74,15 @@ const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string }> =
 
 /**
  * Prediction mode for spread calculations
- * - 'standard': Uses season-long data with weighted rolling windows
- * - 'buzzing': Uses only the last 15 healthy games as the baseline
+ * - 'standard': Uses full season data (all games, conservative baseline)
+ * - 'bayesian': Blends standard prior with Core 5 evidence (mathematically principled)
+ * - 'buzzing': Uses only Core 5 healthy games (aggressive, high conviction)
  */
-export type PredictionMode = 'standard' | 'buzzing';
+export type PredictionMode = 'standard' | 'bayesian' | 'buzzing';
+
+// Bayesian prior strength - how many "games worth" of prior belief
+// Higher = more conservative, slower to update toward Core 5 data
+const BAYESIAN_PRIOR_STRENGTH = 20;
 
 export interface RollingMetrics {
   window: number;
@@ -352,6 +357,7 @@ export function predictSpread(
 ): SpreadPrediction {
   const factors: SpreadPrediction['factors'] = [];
   const isBuzzing = mode === 'buzzing';
+  const isBayesian = mode === 'bayesian';
 
   // Use opponent net rating from game data if available, otherwise use parameter
   const actualOpponentStrength = upcomingGame.opponentNetRating ?? opponentStrength;
@@ -372,35 +378,53 @@ export function predictSpread(
   }
 
   // === Elo Component ===
-  // Standard mode: use FULL SEASON data (all games, regardless of health)
-  // Buzzing mode: use only healthy/Core 5 games
-  let teamElo: number;
+  // Standard: Full season data (conservative)
+  // Bayesian: Blend standard prior with Core 5 evidence
+  // Buzzing: Pure Core 5 data (aggressive)
 
-  if (isBuzzing && buzzingMetrics) {
-    // Buzzing mode: Elo based only on healthy games
-    // This represents the "true" Hornets when Core 5 is healthy
-    teamElo = estimateElo(
-      buzzingMetrics.wins,
-      buzzingMetrics.losses,
-      buzzingMetrics.pointDiff * buzzingMetrics.games,
-      buzzingMetrics.games
-    );
-  } else if (allGamesMetrics) {
-    // Standard mode: use FULL SEASON metrics (all games)
-    teamElo = estimateElo(
+  // Calculate standard Elo (full season baseline)
+  let standardElo: number;
+  if (allGamesMetrics) {
+    standardElo = estimateElo(
       allGamesMetrics.wins,
       allGamesMetrics.losses,
       allGamesMetrics.pointDiff * allGamesMetrics.games,
       allGamesMetrics.games
     );
   } else {
-    // Fallback to rollingMetrics.season if allGamesMetrics not provided
-    teamElo = estimateElo(
+    standardElo = estimateElo(
       rollingMetrics.season.wins,
       rollingMetrics.season.losses,
       rollingMetrics.season.pointDiff * rollingMetrics.season.games,
       rollingMetrics.season.games
     );
+  }
+
+  // Calculate buzzing Elo (Core 5 only)
+  let buzzingElo: number = standardElo; // Default to standard
+  if (buzzingMetrics && buzzingMetrics.games > 0) {
+    buzzingElo = estimateElo(
+      buzzingMetrics.wins,
+      buzzingMetrics.losses,
+      buzzingMetrics.pointDiff * buzzingMetrics.games,
+      buzzingMetrics.games
+    );
+  }
+
+  // Select team Elo based on mode
+  let teamElo: number;
+  if (isBuzzing) {
+    // Full Buzz: Use only Core 5 data
+    teamElo = buzzingElo;
+  } else if (isBayesian && buzzingMetrics && buzzingMetrics.games > 0) {
+    // Bayesian: Blend standard prior with Core 5 evidence
+    // Formula: (prior_weight * prior + sample_weight * sample) / (prior_weight + sample_weight)
+    const priorWeight = BAYESIAN_PRIOR_STRENGTH;
+    const sampleWeight = buzzingMetrics.games;
+    teamElo = (priorWeight * standardElo + sampleWeight * buzzingElo) / (priorWeight + sampleWeight);
+  } else {
+    // Standard: Use full season data
+    teamElo = standardElo;
   }
 
   // Opponent Elo based on their net rating
@@ -419,23 +443,42 @@ export function predictSpread(
 
   const eloPrediction = eloToSpread(eloDiff);
 
+  const modeLabel = isBuzzing ? ' [Buzz]' : isBayesian ? ' [Bayes]' : '';
   factors.push({
-    name: `Elo (${Math.round(teamElo)} vs ${Math.round(opponentElo)})${isBuzzing ? ' [Buzzing]' : ''}`,
+    name: `Elo (${Math.round(teamElo)} vs ${Math.round(opponentElo)})${modeLabel}`,
     value: eloPrediction,
     impact: eloPrediction * ELO_WEIGHT,
   });
 
   // === Net Rating Component ===
   // In buzzing mode: use different weights that emphasize healthy-only data
-  const weights = isBuzzing ? BUZZING_WINDOW_WEIGHTS : WINDOW_WEIGHTS;
+  // Calculate standard weighted NR (full season baseline)
+  const standardWeightedNR =
+    (rollingMetrics.last4.netRating * WINDOW_WEIGHTS.last4) +
+    (rollingMetrics.last7.netRating * WINDOW_WEIGHTS.last7) +
+    (rollingMetrics.last10.netRating * WINDOW_WEIGHTS.last10) +
+    (rollingMetrics.season.netRating * WINDOW_WEIGHTS.season);
 
-  // For buzzing mode, cap the windows to only healthy games
-  // The rolling metrics passed should already be filtered to healthy games
-  const weightedNR =
-    (rollingMetrics.last4.netRating * weights.last4) +
-    (rollingMetrics.last7.netRating * weights.last7) +
-    (rollingMetrics.last10.netRating * weights.last10) +
-    ((isBuzzing && buzzingMetrics ? buzzingMetrics.netRating : rollingMetrics.season.netRating) * weights.season);
+  // Calculate buzzing weighted NR (Core 5 only)
+  const buzzingWeightedNR = buzzingMetrics
+    ? (rollingMetrics.last4.netRating * BUZZING_WINDOW_WEIGHTS.last4) +
+      (rollingMetrics.last7.netRating * BUZZING_WINDOW_WEIGHTS.last7) +
+      (rollingMetrics.last10.netRating * BUZZING_WINDOW_WEIGHTS.last10) +
+      (buzzingMetrics.netRating * BUZZING_WINDOW_WEIGHTS.season)
+    : standardWeightedNR;
+
+  // Select weighted NR based on mode
+  let weightedNR: number;
+  if (isBuzzing) {
+    weightedNR = buzzingWeightedNR;
+  } else if (isBayesian && buzzingMetrics && buzzingMetrics.games > 0) {
+    // Bayesian blend of standard and buzzing NR
+    const priorWeight = BAYESIAN_PRIOR_STRENGTH;
+    const sampleWeight = buzzingMetrics.games;
+    weightedNR = (priorWeight * standardWeightedNR + sampleWeight * buzzingWeightedNR) / (priorWeight + sampleWeight);
+  } else {
+    weightedNR = standardWeightedNR;
+  }
 
   // Home court adjustment
   const homeAdj = upcomingGame.isHome ? NR_HOME_ADVANTAGE : -NR_HOME_ADVANTAGE;
@@ -452,8 +495,9 @@ export function predictSpread(
 
   const nrPrediction = weightedNR + homeAdj + momentumImpact + oppAdjustment + fatigueAdjustment + eliteOpponentPenalty - rosterAdjustment;
 
+  const nrModeLabel = isBuzzing ? 'Buzz NR' : isBayesian ? 'Bayes NR' : 'Weighted NR';
   factors.push({
-    name: isBuzzing ? 'Buzzing Net Rating' : 'Weighted Net Rating',
+    name: nrModeLabel,
     value: weightedNR,
     impact: weightedNR * NR_WEIGHT,
   });
