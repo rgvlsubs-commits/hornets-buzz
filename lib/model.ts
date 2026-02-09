@@ -64,7 +64,8 @@ const BUZZING_SAMPLE_SIZE = 15;
 // may already be well-calibrated. ChatGPT suggested -1.0 to -1.5 for Bayesian,
 // but n=3 is too small to confidently reduce. Keep at -2.0 and monitor.
 const ELITE_OPPONENT_THRESHOLD = 6.0;  // Net rating threshold for elite teams
-const ELITE_OPPONENT_PENALTY = -2.0;   // Additional penalty vs elite teams
+// Per ChatGPT review: Reduce from -2.0 to -1.0, let σ do more work
+const ELITE_OPPONENT_PENALTY = -1.0;   // Additional penalty vs elite teams (was -2.0)
 
 // === RISK ADJUSTMENTS (Per ChatGPT/Gemini Review) ===
 
@@ -111,6 +112,14 @@ const SIGMA_HIGH_PACE = 15.0;      // High pace = more possessions = more varian
 const SIGMA_ELITE_OPPONENT = 13.5; // Elite opponents create unpredictable outcomes
 const HIGH_PACE_THRESHOLD = 205;   // Combined pace above this = high pace game
 
+// Per ChatGPT review: Make σ partially conditional on predicted margin
+// "This fixes why your biggest misses are positive blowouts"
+// σ_effective += δ × |predicted_margin| where δ ≈ 0.15-0.25
+const SIGMA_MARGIN_COEFFICIENT = 0.20;  // σ increases by 0.2 per point of |margin|
+
+// Per ChatGPT review: Increase max tail-risk haircut from 15 to 20 for high σ
+const TAIL_RISK_HAIRCUT_MAX = 20;       // Was 15, increased for σ > 17
+
 /**
  * Calculate days between two dates
  */
@@ -131,13 +140,19 @@ function daysBetween(date1: string, date2: string): number {
  * Independent variance sources should combine, not cap at highest single factor.
  * Formula: σ = sqrt(σ_base² + Σ(σ_regime - σ_base)²)
  *
+ * Per ChatGPT follow-up: Make σ partially conditional on predicted margin.
+ * "This fixes why your biggest misses are positive blowouts."
+ * σ_effective += δ × |predicted_margin| where δ ≈ 0.20
+ *
+ * @param predictedMargin - The predicted margin (optional, for margin-conditional σ)
  * @returns sigma (standard deviation) and the regime description
  */
 function calculateRegimeSigma(
   isCore5Active: boolean,
   combinedPace: number,
   opponentNetRating: number,
-  daysSinceCore5: number
+  daysSinceCore5: number,
+  predictedMargin: number = 0  // Optional: for margin-conditional σ
 ): { sigma: number; regime: string } {
   const regimeParts: string[] = [];
   const varianceBoosts: number[] = []; // Collect (σ_regime - σ_base)² terms
@@ -176,7 +191,15 @@ function calculateRegimeSigma(
 
   // RSS combination: σ = sqrt(σ_base² + Σ boosts²)
   const totalVarianceBoost = varianceBoosts.reduce((sum, v) => sum + v, 0);
-  const sigma = Math.sqrt(SIGMA_BASE * SIGMA_BASE + totalVarianceBoost);
+  let sigma = Math.sqrt(SIGMA_BASE * SIGMA_BASE + totalVarianceBoost);
+
+  // Margin-conditional σ: larger predicted margins = more uncertainty
+  // Per ChatGPT: "This fixes why your biggest misses are positive blowouts"
+  const marginBoost = SIGMA_MARGIN_COEFFICIENT * Math.abs(predictedMargin);
+  if (marginBoost > 0.5) {
+    sigma += marginBoost;
+    regimeParts.push('MarginVar');
+  }
 
   const regime = regimeParts.length > 0 ? regimeParts.join('+') : 'Normal';
   return { sigma: Math.round(sigma * 10) / 10, regime };
@@ -1186,12 +1209,14 @@ export function predictSpread(
   // === Calculate Regime-Based Sigma (Variance) ===
   // Per ChatGPT review: Model variance by regime, not just mean
   // This is the single biggest upgrade - makes EV math honest
+  // Per ChatGPT follow-up: Pass predicted margin for margin-conditional σ
   const isCore5Game = isBuzzing || Boolean(isBayesian && buzzingMetrics && buzzingMetrics.games > 0);
   let { sigma, regime } = calculateRegimeSigma(
     isCore5Game,
     combinedPace,
     actualOpponentStrength,
-    daysSinceLastCore5
+    daysSinceLastCore5,
+    predictedMargin  // NEW: margin-conditional σ
   );
 
   // Apply trade transition sigma boost if active

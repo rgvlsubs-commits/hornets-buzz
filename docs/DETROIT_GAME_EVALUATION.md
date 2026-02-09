@@ -161,7 +161,7 @@ The model has been ACCURATE vs elite opponents (nearly zero bias) but UNDERPREDI
 
 ---
 
-## 5. Moneyline vs Spread Analysis
+## 5. Moneyline vs Spread Analysis - SCENARIO-WEIGHTED (Per ChatGPT)
 
 ### Actual Lines
 ```
@@ -170,38 +170,56 @@ Moneyline: CHA +130
 Implied Win Prob: 43.5%
 ```
 
-### Model Calculation
-```
-Model Predicted Margin (Bayesian): ~+1.0 to +3.0 pts
-+ Injury Adjustment: +4.5 pts
-= Adjusted Margin: +5.5 to +7.5 pts
+### Scenario-Weighted EV Calculation
 
-Model Win Prob: ~55-60% (after injury adjustment)
-Implied Win Prob: 43.5%
-EDGE: +11.5% to +16.5%
+Per ChatGPT: "Your EV math implicitly assumes the best scenario. Explicitly weight scenarios."
+
+**Formula:** `E[margin] = Σ P(scenario_i) × margin_i`
+
+| Scenario | Probability | Injury Adj | Margin | Weighted |
+|----------|-------------|------------|--------|----------|
+| All Detroit stars play | 40% | +0.5 | +1.0 | +0.40 |
+| Cunningham plays, Duren OUT | 25% | +2.0 | +2.5 | +0.63 |
+| Duren plays, Cunningham OUT | 15% | +2.5 | +3.0 | +0.45 |
+| Both Cunningham + Duren OUT | 20% | +4.5 | +5.0 | +1.00 |
+| **Expected Margin** | | | | **+2.48** |
+
+**vs Previous Estimate:** Was +3.45 (max scenario bias) → Now +2.48 (probability-weighted)
+**Reduction:** -0.97 pts (per ChatGPT's ~1-1.5 pts warning)
+
+### Updated σ Calculation (Margin-Conditional)
+
+Per ChatGPT: "Make σ partially conditional on predicted margin."
+```
+Base σ (RSS): 16.2
++ Margin boost: 0.20 × |2.48| = +0.5
+= Effective σ: 16.7
 ```
 
-### Spread Analysis (at σ=15.5)
+### Spread Analysis (at σ=16.7)
 ```
-Predicted Cover Margin: +3.5 + (adjusted margin)
-                      = +3.5 + 6.5 = +10.0 pts expected cover
-Cover Probability: Φ(10.0 / 15.5) = Φ(0.65) ≈ 74%
-Spread EV: (0.74 × 100) - (0.26 × 110) = +45.4 per $100
+Expected Cover Margin: +3.5 + 2.48 = +5.98 pts
+Cover Probability: Φ(5.98 / 16.7) = Φ(0.36) ≈ 64%
+Spread EV: (0.64 × 100) - (0.36 × 110) = +24.4 per $100
 ```
 
 ### Moneyline Analysis
 ```
-Model Win Prob: 57.5% (midpoint estimate)
+Model Win Prob: Φ(2.48 / 16.7) = Φ(0.15) ≈ 56%
 Implied Win Prob: 43.5%
-Edge: +14%
+Edge: +12.5%
 
-ML EV (at +130): (0.575 × 130) - (0.425 × 100) = +32.3 per $100
+ML EV (at +130): (0.56 × 130) - (0.44 × 100) = +28.8 per $100
 ```
 
-### Recommendation
-| Bet Type | EV per $100 | Recommendation |
-|----------|-------------|----------------|
-| **Spread +3.5** | **+45.4** | **STRONG BET** |
+### Updated Recommendation (Scenario-Weighted)
+| Bet Type | Old EV | New EV | Recommendation |
+|----------|--------|--------|----------------|
+| Spread +3.5 | +45.4 | **+24.4** | Moderate value |
+| ML +130 | +32.3 | **+28.8** | Similar value |
+
+**Key Insight:** After probability-weighting, ML and Spread are nearly equal EV.
+Per ChatGPT: "Your 60/40 split is a very grown-up solution."
 | Moneyline +130 | +32.3 | Good value, lower EV |
 
 **Verdict: SPREAD is the better bet** (higher EV, injury edge amplifies cover margin)
