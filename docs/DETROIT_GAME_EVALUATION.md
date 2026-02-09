@@ -226,7 +226,7 @@ Per ChatGPT: "Your 60/40 split is a very grown-up solution."
 
 ---
 
-## 6. Injury Report (UPDATED - Feb 8, 2026 8:00 PM EST)
+## 6. Injury Report (UPDATED - Feb 9, 2026 9:45 AM EST)
 
 ### Hornets Core 5 Status: ALL HEALTHY ✓
 | Player | Status | Notes |
@@ -237,38 +237,38 @@ Per ChatGPT: "Your 60/40 split is a very grown-up solution."
 | Moussa Diabaté | AVAILABLE | ✓ |
 | Kon Knueppel | AVAILABLE | ✓ |
 
-**Other Hornets:**
-- Tidjane Salaun: PROBABLE (illness)
-- Josh Green: PROBABLE (Achilles management)
-- **Malaki Branham: OUT (thumb, not injury-related)** ← Per Gemini: bench is shorter than model assumes
+**Other Hornets OUT:**
 - Coby White: OUT (injured through All-Star break)
+- Liam McNeeley: OUT (rookie)
+- Malaki Branham: OUT (thumb)
 
-### Detroit Pistons: STATUS CHANGING
+**Impact:** Core 5 intact. Bench shortened but not critical for our model.
+
+### Detroit Pistons: 2 OUT + KEY GTD
 | Player | Status | Impact | Notes |
 |--------|--------|--------|-------|
-| **Tobias Harris** | **PROBABLE** | 4/5 | Hip soreness improving (may return) |
-| **Cade Cunningham** | **DAY-TO-DAY** | 5/5 | Wrist management (played 38 min Thu) |
-| **Jalen Duren** | **PROBABLE/QUESTIONABLE** | 5/5 | Knee soreness (not ruled out) |
-| Duncan Robinson | PROBABLE | 2/5 | May return |
+| **Ron Holland II** | **OUT** | 3/5 | Confirmed |
+| **Tim Smith** | **OUT** | 2/5 | Confirmed |
+| **Jalen Duren** | **GTD** | 5/5 | **KEY - Game Time Decision** |
+| Cade Cunningham | AVAILABLE | 5/5 | Expected to play |
+| Tobias Harris | AVAILABLE | 4/5 | Expected to play |
 
-### Injury Impact Analysis (Per Gemini Critique)
+### Injury Impact Analysis (UPDATED Feb 9, 9:45 AM)
 
-**⚠️ CRITICAL: Our +4.5 pts adjustment was TOO AGGRESSIVE**
+**Current Assessment:**
+- Cunningham & Harris: AVAILABLE (playing)
+- Holland & Smith: OUT (minor bench impact)
+- **Duren: GTD** (key variable)
 
-Per Gemini: "If you bake in a +4.5 spread shift for players who ultimately suit up, your 'Value' is actually a 'Ghost.'"
+**Revised Adjustment:**
+| Scenario | Probability | Adjustment | Notes |
+|----------|-------------|------------|-------|
+| Duren PLAYS | 60% | +0.5 pts | Holland/Smith OUT adds ~+0.5 |
+| Duren OUT | 40% | +2.5 pts | Core 5 vs Stewart mismatch |
+| **Weighted** | — | **+1.3 pts** | Current expected adjustment |
 
-**Revised Adjustment Scenarios:**
-| Scenario | Adjustment | Action |
-|----------|------------|--------|
-| Harris + Duren + Cunningham all PLAY | +0.5 pts | REDUCE position or PASS |
-| Harris plays, Duren/Cunningham OUT | +3.0 pts | Standard bet |
-| Duren OUT only | +2.0 pts | Core 5 vs Stewart = mismatch |
-| Cunningham + Duren both OUT | +4.5 pts | HAMMER ML (+130) |
-
-**STRATEGY: WAIT UNTIL 60 MINUTES BEFORE TIP**
-- The market (at +3.5) is "waiting" on Detroit's health
-- We gain nothing by betting early
-- Final injury status determines bet type and size
+**Position already locked at +3.0** - no change to strategy.
+If Duren ruled OUT before tip, add reserve 0.5 units.
 
 ---
 
