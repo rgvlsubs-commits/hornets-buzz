@@ -350,39 +350,39 @@ Per Gemini: "If you bake in a +4.5 spread shift for players who ultimately suit 
 
 ---
 
-## 10. Summary (REVISED PER GEMINI CRITIQUE)
+## 10. Summary (UPDATED FEB 9, 2026 - 9:30 AM)
 
 | Aspect | Assessment |
 |--------|------------|
 | Matchup Quality | Premium (two top-5 teams) |
-| Line Value | **CONDITIONAL** (depends on final injury status) |
-| Model Edge | +2.0 to +4.5 pts (scenario-dependent) |
-| Variance Regime | High (σ=16.2 with RSS combination) |
-| Conviction | **60-70** (reduced from 75, pending injuries) |
+| Line Value | **LOCKED IN** at +3.0 |
+| Model Edge | +2.5 pts (scenario-weighted) |
+| Variance Regime | High (σ=16.7 with margin-conditional) |
+| Conviction | **65** |
 | Core 5 Status | **ALL HEALTHY** ✓ |
 | Key Risk | Detroit stars play through "management" |
 | Bench Risk | Branham OUT = shorter rotation |
 
-### Strategy: WAIT AND SEE
+### Strategy: BET LOCKED IN
 
-**Do NOT bet early.** The market is waiting on Detroit's health. Final status 60 min before tip.
+**Line moved +3.5 → +3.0.** Locked in position before further movement.
 
-### Final Recommendations (Scenario-Based)
+### Position Locked (Feb 9, 9:30 AM)
 
-| Scenario | Spread Bet | ML Bet | Total Size |
-|----------|------------|--------|------------|
-| **Cunningham + Duren OUT** | 1.0 unit | 1.0 unit (+130) | 2.0 units |
-| **Duren OUT only** | 0.75 unit | 0.5 unit | 1.25 units |
-| **All Detroit stars PLAY** | 0.5 unit | PASS | 0.5 units |
-| **Line moves to CHA -1** | PASS | PASS | 0 units |
+| Bet | Line | Size | Status |
+|-----|------|------|--------|
+| **SPREAD** | **+3.0** | **0.6 units** | LOCKED |
+| **ML** | **+130** | **0.3 units** | LOCKED |
+| **Reserve** | TBD | 0.5 units | IF Cunningham OUT |
 
-**Per Gemini:** "The Vegas Fade Rule—because the Hornets have high MAE (+12.27), they are a classic 'ML or Pass' team. Split the unit: 60% Spread / 40% ML."
+**Total Exposure:** 0.9 units (with 0.5 reserve)
 
-### Pre-Game Checklist (60 min before tip)
-- [ ] Confirm Cunningham status (plays or sits?)
-- [ ] Confirm Duren status (plays or sits?)
-- [ ] Confirm Harris status (returning?)
-- [ ] Check line movement (value extracted if CHA -1)
+**Rationale:** Line moved +3.5 → +3.0. Locked in before further movement. Reserve kept for add-on if Cunningham ruled OUT (line would move to CHA -1 or better).
+
+### Pre-Game Monitoring (60 min before tip)
+- [ ] Confirm Cunningham status → IF OUT, add 0.5 units at current line
+- [ ] Confirm Duren status → IF OUT, consider adding ML
+- [ ] Watch for line movement past CHA -1 (would indicate major news)
 - [ ] Check referee crew (high foul rate = Diabaté risk)
 
 ### Live Betting Triggers
@@ -397,7 +397,7 @@ Per Gemini:
 - Any Core 5 player scratched → PASS
 - Diabaté early foul trouble → Reduce live exposure
 
-**Bottom Line:** This is a **conditional value opportunity**. The spread (+3.5) has value IF Detroit's injuries materialize. Wait for final injury status before betting. If Duren sits, hammer ML (+130)—Core 5 vs Isaiah Stewart is a massive mismatch. Split bets 60/40 Spread/ML per Gemini's "Vegas Fade" rule for high-MAE teams.
+**Bottom Line:** Position locked at +3.0 spread (0.6u) and +130 ML (0.3u). Line moved from +3.5—bet the number, not the news. Reserve 0.5u to add if Cunningham ruled OUT. Live triggers active: BUY if opponent star exits early or Diabaté survives Q1 clean; SELL if Diabaté gets early foul trouble.
 
 ---
 
