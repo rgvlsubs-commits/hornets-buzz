@@ -350,34 +350,50 @@ If Duren ruled OUT before tip, add reserve 0.5 units.
 
 ---
 
-## 10. Summary (UPDATED FEB 9, 2026 - 9:30 AM)
+## 10. Summary (UPDATED FEB 9, 2026 - 6:40 PM)
 
 | Aspect | Assessment |
 |--------|------------|
 | Matchup Quality | Premium (two top-5 teams) |
-| Line Value | **LOCKED IN** at +3.0 |
-| Model Edge | +2.5 pts (scenario-weighted) |
-| Variance Regime | High (σ=16.7 with margin-conditional) |
+| **Current Line** | **+2.5** (was +3.5 → +3.0 → +2.5) |
+| **Our Position** | **LOCKED at +3.0** ✓ |
+| **CLV Captured** | **+0.5 pts** (got better number) |
+| Model Edge | +1.3 pts (injury-weighted) |
+| Variance Regime | High (σ=16.7) |
 | Conviction | **65** |
 | Core 5 Status | **ALL HEALTHY** ✓ |
-| Key Risk | Detroit stars play through "management" |
-| Bench Risk | Branham OUT = shorter rotation |
 
-### Strategy: BET LOCKED IN
+### Strategy: POSITION LOCKED - CLV POSITIVE
 
-**Line moved +3.5 → +3.0.** Locked in position before further movement.
+**Line movement: +3.5 → +3.0 → +2.5**
+We locked at +3.0. Current line +2.5. **We captured +0.5 pts of Closing Line Value (CLV).**
 
-### Position Locked (Feb 9, 9:30 AM)
+### Position Locked (Feb 9, 9:30 AM) - CLV ANALYSIS
 
-| Bet | Line | Size | Status |
-|-----|------|------|--------|
-| **SPREAD** | **+3.0** | **0.6 units** | LOCKED |
-| **ML** | **+130** | **0.3 units** | LOCKED |
-| **Reserve** | TBD | 0.5 units | IF Cunningham OUT |
+| Bet | Our Line | Current Line | CLV | Size | Status |
+|-----|----------|--------------|-----|------|--------|
+| **SPREAD** | **+3.0** | +2.5 | **+0.5** | 0.6 units | LOCKED ✓ |
+| **ML** | **+130** | +120 | **+10** | 0.3 units | LOCKED ✓ |
 
-**Total Exposure:** 0.9 units (with 0.5 reserve)
+**Total Exposure:** 0.9 units | **CLV Captured:** +0.5 pts spread, +10 ML
 
-**Rationale:** Line moved +3.5 → +3.0. Locked in before further movement. Reserve kept for add-on if Cunningham ruled OUT (line would move to CHA -1 or better).
+### EV Comparison: Our Line vs Current Line
+
+| Metric | At +3.0 (ours) | At +2.5 (current) | Advantage |
+|--------|----------------|-------------------|-----------|
+| Cover Margin | +4.3 pts | +3.8 pts | +0.5 pts |
+| Cover Prob | 60% | 58% | +2% |
+| Spread EV | +$13/100 | +$9/100 | **+$4** |
+
+**Verdict:** Locking in at +3.0 was correct. Line continued moving as expected.
+
+### Reserve Strategy Update
+
+| Scenario | Action |
+|----------|--------|
+| Duren ruled OUT | Add 0.5u at current +2.5 (still +EV) |
+| Duren plays | Hold position, no add |
+| Line moves to -1 | Do NOT add (value extracted) |
 
 ### Pre-Game Monitoring (60 min before tip)
 - [ ] Confirm Cunningham status → IF OUT, add 0.5 units at current line
