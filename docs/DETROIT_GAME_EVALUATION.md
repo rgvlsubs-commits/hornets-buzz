@@ -108,13 +108,15 @@ Fatigue: None (2+ days rest expected)
 | Fatigue | 0 | Well rested |
 | **Injury Adjustment** | **+4.5** | Harris OUT, Cunningham/Duren questionable |
 
-### Regime-Based Variance (σ)
-| Component | σ Contribution |
-|-----------|----------------|
-| Core 5 Active | 14.5 (base) |
-| Elite Opponent | +0 (already in Core5) |
-| Trade Transition | +1.0 |
-| **Total σ** | **15.5** |
+### Regime-Based Variance (σ) - RSS Method
+Per Gemini: Use Root Sum of Squares, not MAX.
+
+| Component | σ Value | Boost² |
+|-----------|---------|--------|
+| Base | 11.5 | — |
+| Core 5 | 14.5 | (14.5-11.5)² = 9.0 |
+| Elite Opponent | 13.5 | (13.5-11.5)² = 4.0 |
+| **Total σ** | **sqrt(11.5² + 9 + 4) = 16.2** | |
 
 **Implication:** Higher σ means:
 - Cover probability more uncertain
@@ -206,7 +208,7 @@ ML EV (at +130): (0.575 × 130) - (0.425 × 100) = +32.3 per $100
 
 ---
 
-## 6. Injury Report (VERIFIED - Feb 8, 2026)
+## 6. Injury Report (UPDATED - Feb 8, 2026 8:00 PM EST)
 
 ### Hornets Core 5 Status: ALL HEALTHY ✓
 | Player | Status | Notes |
@@ -220,26 +222,35 @@ ML EV (at +130): (0.575 × 130) - (0.425 × 100) = +32.3 per $100
 **Other Hornets:**
 - Tidjane Salaun: PROBABLE (illness)
 - Josh Green: PROBABLE (Achilles management)
-- Malaki Branham: AVAILABLE (just traded, joining team)
+- **Malaki Branham: OUT (thumb, not injury-related)** ← Per Gemini: bench is shorter than model assumes
 - Coby White: OUT (injured through All-Star break)
 
-### Detroit Pistons: SIGNIFICANT INJURIES
+### Detroit Pistons: STATUS CHANGING
 | Player | Status | Impact | Notes |
 |--------|--------|--------|-------|
-| **Tobias Harris** | **OUT** | 4/5 | Left hip soreness |
-| **Cade Cunningham** | **DAY-TO-DAY** | 5/5 | Right wrist management (played 38 min Thu) |
-| **Jalen Duren** | **QUESTIONABLE** | 5/5 | Right knee soreness (left game early Thu) |
+| **Tobias Harris** | **PROBABLE** | 4/5 | Hip soreness improving (may return) |
+| **Cade Cunningham** | **DAY-TO-DAY** | 5/5 | Wrist management (played 38 min Thu) |
+| **Jalen Duren** | **PROBABLE/QUESTIONABLE** | 5/5 | Knee soreness (not ruled out) |
+| Duncan Robinson | PROBABLE | 2/5 | May return |
 
-### Injury Impact Analysis
-**Model Spread Adjustment: +4.5 pts in Hornets' favor**
+### Injury Impact Analysis (Per Gemini Critique)
 
-- Harris OUT = Weakened rotation (confirmed)
-- Cunningham questionable = Their best player at risk
-- Duren questionable = Their starting center at risk
+**⚠️ CRITICAL: Our +4.5 pts adjustment was TOO AGGRESSIVE**
 
-**If Cunningham + Duren both OUT:**
-- Line could move to CHA -1.5 to -2.5
-- This would be a MASSIVE value opportunity on current +3.5
+Per Gemini: "If you bake in a +4.5 spread shift for players who ultimately suit up, your 'Value' is actually a 'Ghost.'"
+
+**Revised Adjustment Scenarios:**
+| Scenario | Adjustment | Action |
+|----------|------------|--------|
+| Harris + Duren + Cunningham all PLAY | +0.5 pts | REDUCE position or PASS |
+| Harris plays, Duren/Cunningham OUT | +3.0 pts | Standard bet |
+| Duren OUT only | +2.0 pts | Core 5 vs Stewart = mismatch |
+| Cunningham + Duren both OUT | +4.5 pts | HAMMER ML (+130) |
+
+**STRATEGY: WAIT UNTIL 60 MINUTES BEFORE TIP**
+- The market (at +3.5) is "waiting" on Detroit's health
+- We gain nothing by betting early
+- Final injury status determines bet type and size
 
 ---
 
@@ -321,37 +332,54 @@ ML EV (at +130): (0.575 × 130) - (0.425 × 100) = +32.3 per $100
 
 ---
 
-## 10. Summary
+## 10. Summary (REVISED PER GEMINI CRITIQUE)
 
 | Aspect | Assessment |
 |--------|------------|
 | Matchup Quality | Premium (two top-5 teams) |
-| Line Value | **STRONG** (CHA +3.5 with Detroit injuries) |
-| Model Edge | +14% win prob, +10 pts cover margin |
-| Variance Regime | High (σ=15.5) |
-| Conviction | **75/100** (injury edge elevates) |
+| Line Value | **CONDITIONAL** (depends on final injury status) |
+| Model Edge | +2.0 to +4.5 pts (scenario-dependent) |
+| Variance Regime | High (σ=16.2 with RSS combination) |
+| Conviction | **60-70** (reduced from 75, pending injuries) |
 | Core 5 Status | **ALL HEALTHY** ✓ |
-| Key Risk | Cunningham/Duren play through injuries |
+| Key Risk | Detroit stars play through "management" |
+| Bench Risk | Branham OUT = shorter rotation |
 
-### Final Recommendation
+### Strategy: WAIT AND SEE
 
-| Bet | Line | EV | Size | Reasoning |
-|-----|------|-----|------|-----------|
-| **SPREAD** | **+3.5** | **+45** | **1.5-2 units** | Best value; injury edge amplifies cover |
-| ML (alt) | +130 | +32 | 0.5-1 unit | Lower EV but higher ceiling |
+**Do NOT bet early.** The market is waiting on Detroit's health. Final status 60 min before tip.
 
-### Pre-Game Checklist
-- [ ] Confirm Cunningham status (DAY-TO-DAY)
-- [ ] Confirm Duren status (QUESTIONABLE)
-- [ ] Check for line movement toward Charlotte
-- [ ] If both OUT → Consider increasing position
+### Final Recommendations (Scenario-Based)
+
+| Scenario | Spread Bet | ML Bet | Total Size |
+|----------|------------|--------|------------|
+| **Cunningham + Duren OUT** | 1.0 unit | 1.0 unit (+130) | 2.0 units |
+| **Duren OUT only** | 0.75 unit | 0.5 unit | 1.25 units |
+| **All Detroit stars PLAY** | 0.5 unit | PASS | 0.5 units |
+| **Line moves to CHA -1** | PASS | PASS | 0 units |
+
+**Per Gemini:** "The Vegas Fade Rule—because the Hornets have high MAE (+12.27), they are a classic 'ML or Pass' team. Split the unit: 60% Spread / 40% ML."
+
+### Pre-Game Checklist (60 min before tip)
+- [ ] Confirm Cunningham status (plays or sits?)
+- [ ] Confirm Duren status (plays or sits?)
+- [ ] Confirm Harris status (returning?)
+- [ ] Check line movement (value extracted if CHA -1)
+- [ ] Check referee crew (high foul rate = Diabaté risk)
+
+### Live Betting Triggers
+Per Gemini:
+- If Cunningham/Duren start but leave early → Live bet CHA
+- If Diabaté gets 2 fouls in Q1 → σ increases, reduce live exposure
+- If pace runs high (both teams ~102) → Variance elevated
 
 ### Exit Signals (reduce/pass)
-- If Cunningham AND Duren both play full minutes
-- If line moves to CHA -1 or worse (value extracted)
-- If any Core 5 player scratched
+- Cunningham AND Duren both play full minutes → Reduce to 0.5 units
+- Line moves to CHA -1 or worse → Value extracted, PASS
+- Any Core 5 player scratched → PASS
+- Diabaté early foul trouble → Reduce live exposure
 
-**Bottom Line:** This is a **strong value opportunity**. The Hornets are 3.5-point home underdogs despite similar team strength, Core 5 fully healthy, and Detroit missing key players. The injury-adjusted model shows +10 pts expected cover margin. Spread is the preferred bet (higher EV than ML). Size at 1.5-2 units given conviction of 75.
+**Bottom Line:** This is a **conditional value opportunity**. The spread (+3.5) has value IF Detroit's injuries materialize. Wait for final injury status before betting. If Duren sits, hammer ML (+130)—Core 5 vs Isaiah Stewart is a massive mismatch. Split bets 60/40 Spread/ML per Gemini's "Vegas Fade" rule for high-MAE teams.
 
 ---
 

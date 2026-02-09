@@ -127,6 +127,10 @@ function daysBetween(date1: string, date2: string): number {
  * Per ChatGPT review: Different situations have different VARIANCE, not just different means.
  * This is the single biggest upgrade - makes EV math honest.
  *
+ * Per Gemini review: Use Root Sum of Squares (RSS) instead of MAX.
+ * Independent variance sources should combine, not cap at highest single factor.
+ * Formula: σ = sqrt(σ_base² + Σ(σ_regime - σ_base)²)
+ *
  * @returns sigma (standard deviation) and the regime description
  */
 function calculateRegimeSigma(
@@ -135,24 +139,27 @@ function calculateRegimeSigma(
   opponentNetRating: number,
   daysSinceCore5: number
 ): { sigma: number; regime: string } {
-  let sigma = SIGMA_BASE;
   const regimeParts: string[] = [];
+  const varianceBoosts: number[] = []; // Collect (σ_regime - σ_base)² terms
 
   // Core 5 games have higher variance (ceiling AND floor)
   if (isCore5Active) {
-    sigma = Math.max(sigma, SIGMA_CORE5);
+    const boost = SIGMA_CORE5 - SIGMA_BASE;
+    varianceBoosts.push(boost * boost);
     regimeParts.push('Core5');
   }
 
   // High pace games have more possessions = more variance
   if (combinedPace > HIGH_PACE_THRESHOLD) {
-    sigma = Math.max(sigma, SIGMA_HIGH_PACE);
+    const boost = SIGMA_HIGH_PACE - SIGMA_BASE;
+    varianceBoosts.push(boost * boost);
     regimeParts.push('HighPace');
   }
 
   // Elite opponents create unpredictable outcomes
   if (opponentNetRating >= ELITE_OPPONENT_THRESHOLD) {
-    sigma = Math.max(sigma, SIGMA_ELITE_OPPONENT);
+    const boost = SIGMA_ELITE_OPPONENT - SIGMA_BASE;
+    varianceBoosts.push(boost * boost);
     regimeParts.push('EliteOpp');
   }
 
@@ -161,11 +168,15 @@ function calculateRegimeSigma(
   if (daysSinceCore5 > 0 && daysSinceCore5 <= 60) {
     const varianceDecay = Math.exp(-daysSinceCore5 / 60); // Slower decay than mean (60 vs 30)
     const core5VarianceBoost = (SIGMA_CORE5 - SIGMA_BASE) * varianceDecay;
-    sigma = Math.max(sigma, SIGMA_BASE + core5VarianceBoost);
     if (core5VarianceBoost > 0.5) {
+      varianceBoosts.push(core5VarianceBoost * core5VarianceBoost);
       regimeParts.push('Core5Var');
     }
   }
+
+  // RSS combination: σ = sqrt(σ_base² + Σ boosts²)
+  const totalVarianceBoost = varianceBoosts.reduce((sum, v) => sum + v, 0);
+  const sigma = Math.sqrt(SIGMA_BASE * SIGMA_BASE + totalVarianceBoost);
 
   const regime = regimeParts.length > 0 ? regimeParts.join('+') : 'Normal';
   return { sigma: Math.round(sigma * 10) / 10, regime };
@@ -231,16 +242,19 @@ function calculateConviction(
   const paceDeviation = combinedPace - 200;
   const paceScore = Math.max(0, Math.min(20, 10 - paceDeviation * 0.5));
 
-  // Opponent score (0-20): Elite = risky, Weak/Mid = safer
+  // Opponent score (0-20): Based on predictability, NOT risk
+  // Per Gemini review: Elite opponent risk is already captured in σ (via tail-risk haircut).
+  // Don't double-penalize here. Elite teams are actually MORE predictable (consistent play).
+  // Weak teams are less predictable (inconsistent effort).
   let opponentScore: number;
   if (opponentNetRating >= 6.0) {
-    opponentScore = 5; // Elite = low conviction
+    opponentScore = 10; // Elite = medium (predictable but variance in σ)
   } else if (opponentNetRating >= 3.0) {
     opponentScore = 10; // Strong = medium
   } else if (opponentNetRating >= -3.0) {
     opponentScore = 15; // Mid = medium-high
   } else {
-    opponentScore = 20; // Weak = high conviction
+    opponentScore = 12; // Weak = medium (inconsistent effort)
   }
 
   // Core 5 freshness score (0-25): Based on time decay
@@ -498,12 +512,21 @@ export type PredictionMode = 'standard' | 'bayesian' | 'buzzing';
  * - Early Core 5 data → more conservative (higher prior)
  * - More Core 5 games → allow data to dominate (lower prior)
  *
- * Per Gemini review: Prior of 20-30 is too volatile for NBA.
- * Minimum 40 recommended; 50 is safer.
- * Formula: clamp(40, 60 - 0.5 * sampleSize, 60)
+ * Per Gemini review: Use exponential decay instead of linear.
+ * Linear decay hits floor too quickly and could reach 0 at high sample sizes.
+ * Exponential decay asymptotically approaches a "Season-Reliability Floor" of 20.
+ *
+ * Formula: 20 + 40 * exp(-sampleSize / 40)
+ * - At 0 games: 60 (very conservative)
+ * - At 28 games: ~40 (balanced)
+ * - At 40 games: ~35 (data-driven)
+ * - At infinity: 20 (never ignores season context)
  */
 function getBayesianPriorStrength(sampleSize: number): number {
-  return Math.max(40, Math.min(60, 60 - 0.5 * sampleSize));
+  const PRIOR_FLOOR = 20;    // Season-reliability floor (never ignore all context)
+  const PRIOR_RANGE = 40;    // Range from floor to max (60 - 20 = 40)
+  const DECAY_RATE = 40;     // Half-life in games (~28 games = 50% decay)
+  return PRIOR_FLOOR + PRIOR_RANGE * Math.exp(-sampleSize / DECAY_RATE);
   // At 28 games: 60 - 14 = 46
   // At 40 games: 60 - 20 = 40
   // At 10 games: 60 - 5 = 55
