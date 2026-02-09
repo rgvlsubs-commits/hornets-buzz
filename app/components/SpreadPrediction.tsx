@@ -468,6 +468,125 @@ export default function SpreadPredictionComponent({
                   </div>
                 );
               })()}
+
+              {/* Betting Strategy - only show when line is populated */}
+              {hasLine && (
+                <div className="border-t border-slate-700 pt-3 mt-3">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xs font-medium text-[#F9A01B]">BETTING STRATEGY</span>
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-slate-700 text-slate-400">
+                      Wait 60 min before tip
+                    </span>
+                  </div>
+
+                  {/* Pre-Game Bets */}
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    {/* Spread Bet */}
+                    <div className={`p-2 rounded-lg border ${
+                      prediction.moneylineAnalysis?.recommendation === 'spread' || !prediction.moneylineAnalysis
+                        ? 'bg-[#00788C]/10 border-[#00788C]/30'
+                        : 'bg-slate-800/50 border-slate-700'
+                    }`}>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-400">ATS</span>
+                        <span className={`text-xs font-bold ${
+                          willCover ? 'text-[#00A3B4]' : 'text-red-400'
+                        }`}>
+                          {game.spread! > 0 ? '+' : ''}{game.spread}
+                        </span>
+                      </div>
+                      <div className="text-sm font-medium text-white mb-1">
+                        {(() => {
+                          // Calculate spread bet size based on conviction and 60/40 split
+                          const spreadPct = 0.6;
+                          const convictionMultiplier = prediction.conviction / 100;
+                          const units = (convictionMultiplier * spreadPct * 2).toFixed(1);
+                          return `${units} units`;
+                        })()}
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {(() => {
+                          // Calculate cover probability
+                          const coverMargin = prediction.predictedCover;
+                          const sigma = prediction.sigma || 12;
+                          const zScore = coverMargin / sigma;
+                          // Approximate normal CDF
+                          const coverProb = 0.5 * (1 + Math.tanh(zScore * 0.85));
+                          return `${(coverProb * 100).toFixed(0)}% cover prob`;
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* ML Bet */}
+                    <div className={`p-2 rounded-lg border ${
+                      prediction.moneylineAnalysis?.recommendation === 'moneyline'
+                        ? 'bg-purple-500/10 border-purple-500/30'
+                        : 'bg-slate-800/50 border-slate-700'
+                    }`}>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-400">ML</span>
+                        <span className="text-xs font-bold text-purple-400">
+                          {game.moneyline ? (game.moneyline > 0 ? '+' : '') + game.moneyline : 'TBD'}
+                        </span>
+                      </div>
+                      <div className="text-sm font-medium text-white mb-1">
+                        {(() => {
+                          // Calculate ML bet size based on conviction and 60/40 split
+                          const mlPct = 0.4;
+                          const convictionMultiplier = prediction.conviction / 100;
+                          const units = (convictionMultiplier * mlPct * 2).toFixed(1);
+                          return `${units} units`;
+                        })()}
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {prediction.moneylineAnalysis
+                          ? `${(prediction.moneylineAnalysis.modelWinProb * 100).toFixed(0)}% win prob`
+                          : 'Awaiting odds'}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Live Betting Triggers */}
+                  <div className="bg-slate-900/50 rounded-lg p-2">
+                    <div className="flex items-center gap-1 mb-2">
+                      <svg className="w-3 h-3 text-[#F9A01B]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-xs font-medium text-[#F9A01B]">LIVE TRIGGERS</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span className="text-[#00A3B4] font-medium">BUY:</span>
+                        <ul className="text-slate-400 mt-0.5 space-y-0.5">
+                          <li>• Opp star leaves early</li>
+                          <li>• Diabate survives Q1</li>
+                          <li>• Pace &gt;104 @ 6 min</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <span className="text-red-400 font-medium">SELL:</span>
+                        <ul className="text-slate-400 mt-0.5 space-y-0.5">
+                          <li>• Diabate 2 fouls Q1</li>
+                          <li>• LaMelo injury scare</li>
+                          <li>• Down 15+ at half</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pass Conditions */}
+                  {(prediction.conviction < 40 || prediction.moneylineAnalysis?.recommendation === 'pass') && (
+                    <div className="mt-2 p-2 bg-red-500/10 border border-red-500/30 rounded-lg">
+                      <span className="text-xs text-red-400 font-medium">PASS SIGNAL: </span>
+                      <span className="text-xs text-red-300">
+                        {prediction.conviction < 40
+                          ? `Low conviction (${prediction.conviction}) - reduce or skip`
+                          : 'Model recommends passing on this game'}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}
