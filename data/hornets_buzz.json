@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-08T22:09:05.268610Z",
+  "lastUpdated": "2026-02-09T09:23:51.165662",
   "seasonStartDate": "2025-10-22",
   "trackingStartDate": "2025-10-22",
   "coreStarters": [
@@ -1464,10 +1464,10 @@
       "date": "2026-02-09",
       "opponent": "Detroit Pistons",
       "isHome": true,
-      "spread": 3.5,
+      "spread": 3.0,
       "openingSpread": 3.5,
-      "spreadMovement": 0.0,
-      "moneyline": 130,
+      "spreadMovement": -0.5,
+      "moneyline": 124,
       "impliedWinPct": 0.435,
       "overUnder": 224.5,
       "hasRealOdds": true,
@@ -2064,5 +2064,6 @@
         "eloRank": 29
       }
     ]
-  }
+  },
+  "oddsLastUpdated": "2026-02-09T09:23:51.165662"
 }

@@ -25,6 +25,32 @@ export default function SpreadPredictionComponent({
   // State for injury reports (allows refreshing without full page reload)
   const [injuryReports, setInjuryReports] = useState<Record<string, GameInjuryReport>>({});
   const [loadingInjuries, setLoadingInjuries] = useState<Record<string, boolean>>({});
+  const [refreshingOdds, setRefreshingOdds] = useState(false);
+  const [lastOddsRefresh, setLastOddsRefresh] = useState<string | null>(null);
+  const [oddsError, setOddsError] = useState<string | null>(null);
+
+  // Refresh odds from The Odds API
+  const refreshOdds = useCallback(async () => {
+    setRefreshingOdds(true);
+    setOddsError(null);
+
+    try {
+      const response = await fetch('/api/refresh-odds', { method: 'POST' });
+      const data = await response.json();
+
+      if (data.success) {
+        setLastOddsRefresh(new Date().toLocaleTimeString());
+        // Reload the page to show updated odds
+        window.location.reload();
+      } else {
+        setOddsError(data.error || 'Failed to refresh odds');
+      }
+    } catch (error) {
+      setOddsError('Network error - try again');
+    } finally {
+      setRefreshingOdds(false);
+    }
+  }, []);
 
   // Fetch injury report for a specific game
   const refreshInjuryReport = useCallback(async (gameId: string, opponent: string) => {
@@ -58,11 +84,45 @@ export default function SpreadPredictionComponent({
             Model-based predictions for upcoming games
           </p>
         </div>
-        <div className="flex items-center gap-2 text-xs text-slate-500">
-          <div className="w-3 h-3 rounded-full bg-[#00788C]" />
-          <span>Cover</span>
-          <div className="w-3 h-3 rounded-full bg-red-500 ml-2" />
-          <span>Miss</span>
+        <div className="flex items-center gap-4">
+          {/* Refresh Odds Button */}
+          <button
+            onClick={refreshOdds}
+            disabled={refreshingOdds}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F9A01B]/20 hover:bg-[#F9A01B]/30 border border-[#F9A01B]/50 text-[#F9A01B] text-xs font-medium transition-colors disabled:opacity-50"
+            title="Refresh odds from DraftKings/FanDuel (uses 1 API request)"
+          >
+            <svg
+              className={`w-3.5 h-3.5 ${refreshingOdds ? 'animate-spin' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+            {refreshingOdds ? 'Refreshing...' : 'Refresh Odds'}
+          </button>
+
+          {/* Status indicators */}
+          {oddsError && (
+            <span className="text-xs text-red-400">{oddsError}</span>
+          )}
+          {lastOddsRefresh && !oddsError && (
+            <span className="text-xs text-slate-500">Updated {lastOddsRefresh}</span>
+          )}
+
+          {/* Legend */}
+          <div className="flex items-center gap-2 text-xs text-slate-500">
+            <div className="w-3 h-3 rounded-full bg-[#00788C]" />
+            <span>Cover</span>
+            <div className="w-3 h-3 rounded-full bg-red-500 ml-2" />
+            <span>Miss</span>
+          </div>
         </div>
       </div>
 
