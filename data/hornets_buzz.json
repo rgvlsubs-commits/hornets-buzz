@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-09T18:36:43.675014",
+  "lastUpdated": "2026-02-09T18:38:30.016994",
   "seasonStartDate": "2025-10-22",
   "trackingStartDate": "2025-10-22",
   "coreStarters": [
@@ -1482,61 +1482,77 @@
       "injuryReport": {
         "hornetsInjuries": [
           {
-            "name": "Tidjane Salaun",
+            "name": "Coby White",
+            "position": "G",
+            "status": "OUT",
+            "injury": "injured through All-Star break",
+            "isKeyStar": false,
+            "impactRating": 2
+          },
+          {
+            "name": "Liam McNeeley",
             "position": "F",
-            "status": "PROBABLE",
-            "injury": "illness",
+            "status": "OUT",
+            "injury": "rookie - out",
             "isKeyStar": false,
             "impactRating": 1
           },
           {
             "name": "Malaki Branham",
             "position": "G",
-            "status": "AVAILABLE",
-            "injury": "recently traded - joining team",
+            "status": "OUT",
+            "injury": "thumb",
             "isKeyStar": false,
             "impactRating": 1
-          },
-          {
-            "name": "Josh Green",
-            "position": "G",
-            "status": "PROBABLE",
-            "injury": "Achilles management",
-            "isKeyStar": false,
-            "impactRating": 2
           }
         ],
         "opponentInjuries": [
           {
-            "name": "Cade Cunningham",
-            "position": "PG",
-            "status": "DAY-TO-DAY",
-            "injury": "right wrist management",
+            "name": "Jalen Duren",
+            "position": "C",
+            "status": "GTD",
+            "injury": "right knee - game time decision",
             "isKeyStar": true,
             "impactRating": 5
           },
           {
-            "name": "Jalen Duren",
-            "position": "C",
-            "status": "QUESTIONABLE",
-            "injury": "right knee soreness",
+            "name": "Ron Holland II",
+            "position": "F",
+            "status": "OUT",
+            "injury": "confirmed out",
+            "isKeyStar": false,
+            "impactRating": 2
+          },
+          {
+            "name": "Tim Smith",
+            "position": "G",
+            "status": "OUT",
+            "injury": "confirmed out",
+            "isKeyStar": false,
+            "impactRating": 1
+          },
+          {
+            "name": "Cade Cunningham",
+            "position": "PG",
+            "status": "AVAILABLE",
+            "injury": "wrist - playing",
             "isKeyStar": true,
-            "impactRating": 5
+            "impactRating": 0
           },
           {
             "name": "Tobias Harris",
             "position": "PF",
-            "status": "OUT",
-            "injury": "left hip soreness",
+            "status": "AVAILABLE",
+            "injury": "hip - playing",
             "isKeyStar": true,
-            "impactRating": 4
+            "impactRating": 0
           }
         ],
         "hornetsCore5Status": "ALL_HEALTHY",
-        "opponentKeyPlayersStatus": "2 starters questionable, 1 out",
-        "injuryImpact": "All Core 5 starters are healthy and available. ADVANTAGE: Detroit Pistons will be without Tobias Harris. This weakens their rotation significantly. Detroit's Cade Cunningham, Jalen Duren are questionable - monitor for updates. Cunningham has been managing a wrist injury and played 38 minutes Thursday. Duren left Thursday's game early with knee soreness. If both are limited or out, expect the line to move 3-5 points toward Charlotte. Net injury edge: +4.5 pts in Hornets' favor.",
-        "spreadAdjustment": 4.5,
-        "lastUpdated": "2026-02-08T16:00:00Z"
+        "opponentKeyPlayersStatus": "Duren GTD, Holland/Smith OUT, Cunningham/Harris playing",
+        "injuryImpact": "Core 5 all healthy. Detroit: Cunningham and Harris ARE PLAYING. Duren is GTD (game time decision) - key variable. Holland and Smith confirmed OUT (minor bench impact). If Duren OUT, add 0.5u reserve. Net injury edge: +1.3 pts weighted.",
+        "spreadAdjustment": 1.3,
+        "lastUpdated": "2026-02-09T18:45:00Z"
       }
     },
     {
@@ -2065,5 +2081,5 @@
       }
     ]
   },
-  "oddsLastUpdated": "2026-02-09T18:36:43.677025"
+  "oddsLastUpdated": "2026-02-09T18:38:30.016994"
 }
