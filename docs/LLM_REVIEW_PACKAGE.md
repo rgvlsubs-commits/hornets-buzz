@@ -6,6 +6,25 @@
 
 ---
 
+## GEMINI FEEDBACK INCORPORATED (Feb 8, 8:00 PM EST)
+
+The following changes were made based on Gemini's critique:
+
+| Issue | Original | Fix Applied |
+|-------|----------|-------------|
+| **σ combination** | MAX of regimes | RSS: `√(σ_base² + Σboosts²)` |
+| **Bayesian prior** | Linear decay, floor 40 | Exponential decay, floor 20 |
+| **Elite conviction penalty** | +5 pts (triple-penalized) | +10 pts (σ handles via tail-risk) |
+| **Injury adjustment** | +4.5 pts fixed | Scenario-based (+0.5 to +4.5) |
+| **Detroit status** | Harris OUT, Duren QUESTIONABLE | Harris/Duren now PROBABLE |
+| **Branham status** | AVAILABLE | OUT (shorter bench) |
+| **Bet strategy** | Bet now | Wait 60 min before tip |
+| **Bet split** | Spread only | 60% Spread / 40% ML |
+
+**Key Gemini insight:** "If you bake in a +4.5 spread shift for players who ultimately suit up, your 'Value' is actually a 'Ghost.'"
+
+---
+
 # PART 1: MODEL ARCHITECTURE & BACKTEST RESULTS
 
 ## 1.1 Model Overview
@@ -48,8 +67,10 @@ ELITE_OPPONENT_PENALTY = -2.0    // Additional margin penalty vs elite teams
 MID_VS_MID_ADJUSTMENT = -1.0     // Corrects for +2.2 league overpredict bias
 ```
 
-### Regime-Based Variance (σ)
+### Regime-Based Variance (σ) - UPDATED PER GEMINI
 Per ChatGPT review: "Stop modeling variance like a retail bettor. Different situations have DIFFERENT variance, not just different means."
+
+Per Gemini review: "Use Root Sum of Squares (RSS) instead of MAX. Independent variance sources should combine, not cap at highest single factor."
 
 ```typescript
 SIGMA_BASE = 11.5           // Normal games
@@ -57,6 +78,10 @@ SIGMA_CORE5 = 14.5          // Core 5 games (higher ceiling AND floor)
 SIGMA_HIGH_PACE = 15.0      // High pace = more possessions = more variance
 SIGMA_ELITE_OPPONENT = 13.5 // Elite opponents = unpredictable outcomes
 HIGH_PACE_THRESHOLD = 205   // Combined pace above this = high variance
+
+// RSS combination formula:
+// σ = sqrt(σ_base² + Σ(σ_regime - σ_base)²)
+// Example (Core5 + Elite): sqrt(11.5² + (14.5-11.5)² + (13.5-11.5)²) = 16.2
 ```
 
 **Why this matters:** Cover probability = Φ((predicted_margin + spread) / σ). Higher σ means lower certainty, which must flow through to sizing.
@@ -74,11 +99,16 @@ WINDOW_WEIGHTS = {
 }
 ```
 
-### Bayesian Prior (Adaptive)
+### Bayesian Prior (Adaptive) - UPDATED PER GEMINI
+Per Gemini review: "Linear decay is dangerous—it hits floor too quickly and could reach 0. Use exponential decay with a Season-Reliability Floor of 20."
+
 ```typescript
-priorStrength = max(40, min(60, 60 - 0.5 * sampleSize))
-// At 28 games: 46
-// At 40 games: 40
+// Exponential decay with floor (never ignores season context)
+priorStrength = 20 + 40 * exp(-sampleSize / 40)
+// At 0 games: 60 (very conservative)
+// At 28 games: ~40 (balanced)
+// At 40 games: ~35 (data-driven)
+// At infinity: 20 (floor, never zero)
 
 bayesianMargin = (priorStrength × standardMargin + sampleSize × buzzingMargin)
                  / (priorStrength + sampleSize)
@@ -154,19 +184,21 @@ sampleWeight = rawSampleWeight * core5DecayFactor
 
 ---
 
-## 1.6 Conviction Scoring (Separate from Prediction)
+## 1.6 Conviction Scoring (Separate from Prediction) - UPDATED PER GEMINI
 
 **Problem:** A model can predict +5 margin, but how confident should we be?
 
 **Solution:** A 0-100 conviction score based on volatility factors, NOT the margin itself.
 
+Per Gemini review: "You are triple-penalizing elite opponents (margin + σ + conviction). Remove conviction penalty—σ already flows to sizing via tail-risk haircut."
+
 | Factor | Points | Rationale |
 |--------|--------|-----------|
 | Normal Pace (<195 combined) | +20 | Predictable game flow |
 | Low Pace bonus | +10 | Even more stable |
-| Weak Opponent (NR < -3.0) | +20 | More predictable |
+| Weak Opponent (NR < -3.0) | +12 | Inconsistent effort |
 | Mid Opponent (-3.0 to +3.0) | +15 | Medium |
-| Elite Opponent (NR ≥ +6.0) | +5 | Volatile outcomes |
+| Elite/Strong Opponent (NR ≥ +3.0) | +10 | Predictable (σ handles variance) |
 | Core 5 Recent (<5 days) | +25 | Fresh lineup data |
 | Well Rested (2+ days) | +15 | Performance boost |
 | Opponent Stars OUT | +10 | Clear advantage |
@@ -328,7 +360,7 @@ Possible explanations:
 
 ---
 
-## 3.3 Injury Report (Critical - Feb 8, 4:00 PM EST)
+## 3.3 Injury Report (UPDATED - Feb 8, 8:00 PM EST per Gemini)
 
 ### Charlotte Hornets Core 5: ALL HEALTHY ✓
 | Player | Status |
@@ -342,26 +374,31 @@ Possible explanations:
 **Other Hornets:**
 - Tidjane Salaun: PROBABLE (illness)
 - Josh Green: PROBABLE (Achilles management)
-- Malaki Branham: AVAILABLE (just traded, joining team)
+- **Malaki Branham: OUT (thumb, not injury-related)** ← Gemini catch: bench shorter than model assumes
 - Coby White: OUT (injured through All-Star break)
 
-### Detroit Pistons: SIGNIFICANT INJURIES
+### Detroit Pistons: STATUS CHANGING (Per Gemini)
 | Player | Status | Impact | Notes |
 |--------|--------|--------|-------|
-| **Tobias Harris** | **OUT** | 4/5 | Left hip soreness |
-| **Cade Cunningham** | **DAY-TO-DAY** | 5/5 | Right wrist management (played 38 min Thu) |
-| **Jalen Duren** | **QUESTIONABLE** | 5/5 | Right knee soreness (left game early Thu) |
+| **Tobias Harris** | **PROBABLE** | 4/5 | Hip improving, may return |
+| **Cade Cunningham** | **DAY-TO-DAY** | 5/5 | Wrist management (played 38 min Thu) |
+| **Jalen Duren** | **PROBABLE/QUESTIONABLE** | 5/5 | Knee soreness, not ruled out |
 
-### Injury Impact Analysis
-**Model Spread Adjustment: +4.5 pts in Charlotte's favor**
+### Injury Impact Analysis - REVISED PER GEMINI
 
-- Harris OUT = Confirmed rotation weakening
-- Cunningham DAY-TO-DAY = Their best player at risk
-- Duren QUESTIONABLE = Their starting center at risk
+**⚠️ CRITICAL: Original +4.5 pts adjustment was TOO AGGRESSIVE**
 
-**Potential Line Movement:**
-- If Cunningham + Duren both OUT: Line could move to CHA -1.5 to -2.5
-- Current +3.5 becomes MASSIVE value if both sit
+Per Gemini: "If you bake in a +4.5 spread shift for players who ultimately suit up, your 'Value' is actually a 'Ghost.'"
+
+**Scenario-Based Adjustment:**
+| Scenario | Adjustment | Action |
+|----------|------------|--------|
+| Harris + Duren + Cunningham all PLAY | +0.5 pts | REDUCE or PASS |
+| Harris plays, Duren/Cunningham OUT | +3.0 pts | Standard bet |
+| Duren OUT only | +2.0 pts | Core 5 vs Stewart mismatch |
+| Cunningham + Duren both OUT | +4.5 pts | HAMMER ML (+130) |
+
+**STRATEGY: WAIT UNTIL 60 MINUTES BEFORE TIP**
 
 ---
 
