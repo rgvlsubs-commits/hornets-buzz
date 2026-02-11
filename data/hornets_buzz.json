@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-11T00:58:02.661080Z",
+  "lastUpdated": "2026-02-10T20:15:49.303690",
   "seasonStartDate": "2025-10-22",
   "trackingStartDate": "2025-10-22",
   "coreStarters": [
@@ -1491,7 +1491,7 @@
       "spread": -5.5,
       "openingSpread": -5.5,
       "spreadMovement": 0.0,
-      "moneyline": -218,
+      "moneyline": -198,
       "impliedWinPct": 0.686,
       "overUnder": 231.5,
       "hasRealOdds": true,
@@ -2029,5 +2029,6 @@
         "eloRank": 29
       }
     ]
-  }
+  },
+  "oddsLastUpdated": "2026-02-10T20:15:49.303690"
 }

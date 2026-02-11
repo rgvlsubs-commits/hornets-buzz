@@ -72,23 +72,25 @@ export default function Home() {
     // Calculate ALL GAMES metrics for standard mode (ignores healthyOnly toggle)
     const allGamesMetrics = calculateRollingMetrics(data.games, data.totalGames, spreads, false);
 
-    // Generate predictions for upcoming games
+    // Generate predictions for upcoming games (all three modes for comparison)
     const predictions = new Map<string, SpreadPrediction>();
+    const allModePredictions = new Map<string, { standard: SpreadPrediction; bayesian: SpreadPrediction; buzzing: SpreadPrediction }>();
+
     for (const game of data.upcomingGames) {
-      const prediction = predictSpread(
-        game,
-        rollingMetrics,
-        trend,
-        0,
-        predictionMode,
-        buzzingMetrics,
-        allGamesMetrics,  // Standard mode uses full season data
-        data.games        // Pass games for Core 5 time decay calculation
-      );
+      // Calculate all three modes
+      const standardPred = predictSpread(game, rollingMetrics, trend, 0, 'standard', buzzingMetrics, allGamesMetrics, data.games);
+      const bayesianPred = predictSpread(game, rollingMetrics, trend, 0, 'bayesian', buzzingMetrics, allGamesMetrics, data.games);
+      const buzzingPred = predictSpread(game, rollingMetrics, trend, 0, 'buzzing', buzzingMetrics, allGamesMetrics, data.games);
+
+      // Store all modes for comparison display
+      allModePredictions.set(game.gameId, { standard: standardPred, bayesian: bayesianPred, buzzing: buzzingPred });
+
+      // Use selected mode for main prediction
+      const prediction = predictionMode === 'standard' ? standardPred : predictionMode === 'buzzing' ? buzzingPred : bayesianPred;
       predictions.set(game.gameId, prediction);
     }
 
-    return { rollingMetrics, trend, predictions, spreads, maxGames, buzzingMetrics, allGamesMetrics };
+    return { rollingMetrics, trend, predictions, allModePredictions, spreads, maxGames, buzzingMetrics, allGamesMetrics };
   }, [data, healthyOnly, predictionMode]);
 
   // Get currently selected window metrics - calculate for exact window size
@@ -137,7 +139,7 @@ export default function Home() {
     );
   }
 
-  const { rollingMetrics, trend, predictions, spreads, maxGames } = computedData;
+  const { rollingMetrics, trend, predictions, allModePredictions, spreads, maxGames } = computedData;
 
   return (
     <div className="min-h-screen pb-32 md:pb-24">
@@ -321,6 +323,7 @@ export default function Home() {
           <SpreadPredictionComponent
             upcomingGames={data.upcomingGames}
             predictions={predictions}
+            allModePredictions={allModePredictions}
             metrics={rollingMetrics}
             trend={trend}
           />

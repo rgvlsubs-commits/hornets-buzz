@@ -9,6 +9,7 @@ import { formatDate } from '@/lib/utils';
 interface SpreadPredictionProps {
   upcomingGames: UpcomingGame[];
   predictions: Map<string, Prediction>;
+  allModePredictions?: Map<string, { standard: Prediction; bayesian: Prediction; buzzing: Prediction }>;
   metrics: {
     last4: RollingMetrics;
     last7: RollingMetrics;
@@ -21,6 +22,7 @@ interface SpreadPredictionProps {
 export default function SpreadPredictionComponent({
   upcomingGames,
   predictions,
+  allModePredictions,
 }: SpreadPredictionProps) {
   // State for injury reports (allows refreshing without full page reload)
   const [injuryReports, setInjuryReports] = useState<Record<string, GameInjuryReport>>({});
@@ -355,6 +357,50 @@ export default function SpreadPredictionComponent({
                   </div>
                 </div>
               ) : null}
+
+              {/* All Three Modes Comparison */}
+              {hasLine && allModePredictions?.get(game.gameId) && (
+                <div className="bg-slate-900/30 rounded-lg p-3 mb-4 border border-slate-700/50">
+                  <p className="text-xs text-slate-500 mb-2">Model Predictions (All Modes)</p>
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    {(() => {
+                      const modes = allModePredictions.get(game.gameId)!;
+                      const spread = game.spread ?? 0;
+                      return (
+                        <>
+                          <div className="bg-slate-800/50 rounded p-2">
+                            <p className="text-xs text-slate-500">Standard</p>
+                            <p className={`text-sm font-bold ${modes.standard.predictedMargin > 0 ? 'text-slate-300' : 'text-red-400'}`}>
+                              {modes.standard.predictedMargin > 0 ? '+' : ''}{modes.standard.predictedMargin}
+                            </p>
+                            <p className={`text-xs ${modes.standard.predictedMargin + spread > 0 ? 'text-slate-400' : 'text-red-400'}`}>
+                              {(modes.standard.predictedMargin + spread) > 0 ? '+' : ''}{(modes.standard.predictedMargin + spread).toFixed(1)} cover
+                            </p>
+                          </div>
+                          <div className="bg-[#00788C]/20 rounded p-2 ring-1 ring-[#00788C]/50">
+                            <p className="text-xs text-[#00A3B4]">Bayesian</p>
+                            <p className={`text-sm font-bold ${modes.bayesian.predictedMargin > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
+                              {modes.bayesian.predictedMargin > 0 ? '+' : ''}{modes.bayesian.predictedMargin}
+                            </p>
+                            <p className={`text-xs ${modes.bayesian.predictedMargin + spread > 0 ? 'text-[#00A3B4]' : 'text-red-400'}`}>
+                              {(modes.bayesian.predictedMargin + spread) > 0 ? '+' : ''}{(modes.bayesian.predictedMargin + spread).toFixed(1)} cover
+                            </p>
+                          </div>
+                          <div className="bg-[#F9A01B]/10 rounded p-2">
+                            <p className="text-xs text-[#F9A01B]">Buzzing</p>
+                            <p className={`text-sm font-bold ${modes.buzzing.predictedMargin > 0 ? 'text-[#F9A01B]' : 'text-red-400'}`}>
+                              {modes.buzzing.predictedMargin > 0 ? '+' : ''}{modes.buzzing.predictedMargin}
+                            </p>
+                            <p className={`text-xs ${modes.buzzing.predictedMargin + spread > 0 ? 'text-[#F9A01B]' : 'text-red-400'}`}>
+                              {(modes.buzzing.predictedMargin + spread) > 0 ? '+' : ''}{(modes.buzzing.predictedMargin + spread).toFixed(1)} cover
+                            </p>
+                          </div>
+                        </>
+                      );
+                    })()}
+                  </div>
+                </div>
+              )}
 
               {/* Moneyline Analysis */}
               {prediction.moneylineAnalysis && (
