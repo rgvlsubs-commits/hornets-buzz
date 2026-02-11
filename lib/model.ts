@@ -46,7 +46,13 @@ const WINDOW_WEIGHTS = {
 };
 
 // Momentum multiplier
-const MOMENTUM_MULTIPLIER = 0.4;
+// DISABLED per backtest: Rolling window weights (30% last4) already capture recent form.
+// Adding momentum on top was double-counting and HURT predictions:
+// - With momentum: 55.6% ATS, 64.0% Core 5 ATS
+// - Without momentum: 58.3% ATS, 68.0% Core 5 ATS
+// - Negative momentum games: Hornets bounce back 86% of the time
+// The momentum penalty was over-penalizing after bad games.
+const MOMENTUM_MULTIPLIER = 0.0;  // Was 0.4
 
 // Buzzing mode: window weights when using only healthy games
 const BUZZING_WINDOW_WEIGHTS = {
