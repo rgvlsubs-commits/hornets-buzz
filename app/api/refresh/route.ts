@@ -1,50 +1,66 @@
 import { NextResponse } from 'next/server';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import path from 'path';
 
-const execAsync = promisify(exec);
+const GITHUB_REPO = 'rgvlsubs-commits/hornets-buzz';
+const WORKFLOW_FILE = 'update-data.yml';
 
-export async function POST(request: Request) {
-  try {
-    // Get API key from request body if provided
-    const body = await request.json().catch(() => ({}));
-    const oddsApiKey = body.oddsApiKey || process.env.ODDS_API_KEY;
-
-    const scriptPath = path.join(process.cwd(), 'scripts', 'fetch_data.py');
-
-    let command = `python "${scriptPath}"`;
-    if (oddsApiKey) {
-      command += ` --odds-api-key "${oddsApiKey}"`;
-    }
-
-    const { stdout, stderr } = await execAsync(command, {
-      cwd: process.cwd(),
-      timeout: 120000, // 2 minute timeout
-    });
-
-    if (stderr && !stderr.includes('Warning')) {
-      console.error('Script stderr:', stderr);
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Data refreshed successfully',
-      output: stdout,
-    });
-  } catch (error) {
-    console.error('Refresh error:', error);
+/**
+ * Triggers the GitHub Actions "Update Hornets Buzz Data" workflow.
+ * Used by the Vercel daily cron and can be called manually.
+ */
+async function triggerWorkflow() {
+  const token = process.env.GH_PAT;
+  if (!token) {
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
-      },
+      { success: false, error: 'GH_PAT environment variable not configured' },
       { status: 500 }
     );
   }
+
+  const res = await fetch(
+    `https://api.github.com/repos/${GITHUB_REPO}/actions/workflows/${WORKFLOW_FILE}/dispatches`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ref: 'main' }),
+    }
+  );
+
+  if (res.status === 204) {
+    return NextResponse.json({
+      success: true,
+      message: 'GitHub Actions workflow triggered. Data will update in ~2 minutes.',
+    });
+  }
+
+  const errorText = await res.text();
+  return NextResponse.json(
+    { success: false, error: `GitHub API returned ${res.status}: ${errorText}` },
+    { status: res.status }
+  );
 }
 
-// Also support GET for cron jobs (Vercel Cron)
-export async function GET() {
-  return POST(new Request('http://localhost', { method: 'POST' }));
+// GET handler for Vercel Cron
+export async function GET(request: Request) {
+  // Verify cron secret if configured (Vercel sends this automatically)
+  const cronSecret = process.env.CRON_SECRET;
+  if (cronSecret) {
+    const authHeader = request.headers.get('authorization');
+    if (authHeader !== `Bearer ${cronSecret}`) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+  }
+
+  return triggerWorkflow();
+}
+
+// POST handler for manual triggers
+export async function POST() {
+  return triggerWorkflow();
 }
