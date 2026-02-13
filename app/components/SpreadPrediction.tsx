@@ -17,12 +17,14 @@ interface SpreadPredictionProps {
     season: RollingMetrics;
   };
   trend: TrendAnalysis;
+  onOddsRefresh?: (updatedGames: UpcomingGame[]) => void;
 }
 
 export default function SpreadPredictionComponent({
   upcomingGames,
   predictions,
   allModePredictions,
+  onOddsRefresh,
 }: SpreadPredictionProps) {
   // State for injury reports (allows refreshing without full page reload)
   const [injuryReports, setInjuryReports] = useState<Record<string, GameInjuryReport>>({});
@@ -42,8 +44,9 @@ export default function SpreadPredictionComponent({
 
       if (data.success) {
         setLastOddsRefresh(new Date().toLocaleTimeString());
-        // Reload the page to show updated odds
-        window.location.reload();
+        if (data.upcomingGames && onOddsRefresh) {
+          onOddsRefresh(data.upcomingGames);
+        }
       } else {
         setOddsError(data.error || 'Failed to refresh odds');
       }

@@ -326,6 +326,9 @@ export default function Home() {
             allModePredictions={allModePredictions}
             metrics={rollingMetrics}
             trend={trend}
+            onOddsRefresh={(updatedGames) => {
+              setData(prev => prev ? { ...prev, upcomingGames: updatedGames } : prev);
+            }}
           />
         )}
 
