@@ -271,11 +271,12 @@
       "away_score": null
     }
   ],
-  "last_updated": "2026-02-08T09:52:54.176127",
+  "last_updated": "2026-02-14T06:55:16.335950",
   "summary": {
     "total": 18,
     "su_correct": 0,
     "ats_correct": 0,
-    "with_real_spreads": 0
+    "with_real_spreads": 0,
+    "completed": 0
   }
 }
