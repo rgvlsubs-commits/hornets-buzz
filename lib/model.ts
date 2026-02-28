@@ -248,90 +248,122 @@ function calculateCore5TimeDecay(daysSinceLastCore5: number): number {
  * - Core 5 missing players
  * - High sigma regime (tail-risk haircut)
  */
-interface ConvictionFactors {
-  paceScore: number;           // 0-20: Low pace = high, high pace = low
-  opponentScore: number;       // 0-20: Weak/mid = high, elite = low
-  core5FreshnessScore: number; // 0-25: Recent Core 5 games = high
-  restScore: number;           // 0-15: Good rest = high, B2B = low
-  injuryScore: number;         // 0-20: Opponent injuries = high, Core 5 injuries = low
-  tailRiskHaircut: number;     // 0 to -20: Higher sigma = bigger penalty
+export interface ConvictionBreakdown {
+  // Bucket 1: Game Chaos (0-30, higher = calmer game)
+  chaos: {
+    score: number;
+    sigmaPenalty: number;    // from tail-risk haircut (0 to -15)
+    paceScore: number;       // 0-15: low pace = calm
+  };
+  // Bucket 2: Edge Reliability (0-35, higher = more trustworthy edge)
+  edge: {
+    score: number;
+    core5Freshness: number;  // 0-20: recent Core 5 data
+    restScore: number;       // 0-10: good rest situation
+    hornetsHealthScore: number; // 0-5: Core 5 healthy = full credit
+  };
+  // Bucket 3: Signal Alignment (0-35, higher = stronger agreement)
+  alignment: {
+    score: number;
+    modeConsensus: number;   // 0-15: all modes agree on cover direction
+    componentConsensus: number; // 0-10: Elo and NR both point same way vs spread
+    opponentInjuryEdge: number; // 0-10: unmodeled opponent injuries = free edge
+  };
+  total: number; // 0-100
 }
 
 function calculateConviction(
   combinedPace: number,
-  opponentNetRating: number,
   core5DecayFactor: number,
   restDays: number | undefined,
   isBackToBack: boolean | undefined,
-  sigma: number,  // NEW: regime-based variance for tail-risk haircut
+  sigma: number,
+  eloComponent: number,
+  netRatingComponent: number,
+  spread: number | null,
   injuryReport?: { hornetsCore5Status: string; spreadAdjustment?: number }
-): { conviction: number; factors: ConvictionFactors } {
-  // Pace score (0-20): League avg combined pace = 200
-  // Low pace (< 195) = high score, High pace (> 205) = low score
+): { conviction: number; breakdown: ConvictionBreakdown } {
+  // === Bucket 1: Game Chaos (0-30) ===
+  // paceScore (0-15): League avg combined pace = 200
   const paceDeviation = combinedPace - 200;
-  const paceScore = Math.max(0, Math.min(20, 10 - paceDeviation * 0.5));
+  const paceScore = Math.max(0, Math.min(15, 7.5 - paceDeviation * 0.375));
 
-  // Opponent score (0-20): Based on predictability, NOT risk
-  // Per Gemini review: Elite opponent risk is already captured in σ (via tail-risk haircut).
-  // Don't double-penalize here. Elite teams are actually MORE predictable (consistent play).
-  // Weak teams are less predictable (inconsistent effort).
-  let opponentScore: number;
-  if (opponentNetRating >= 6.0) {
-    opponentScore = 10; // Elite = medium (predictable but variance in σ)
-  } else if (opponentNetRating >= 3.0) {
-    opponentScore = 10; // Strong = medium
-  } else if (opponentNetRating >= -3.0) {
-    opponentScore = 15; // Mid = medium-high
-  } else {
-    opponentScore = 12; // Weak = medium (inconsistent effort)
-  }
+  // sigmaPenalty (0 to -15): Tail-risk haircut from sigma
+  // This is the ONLY place sigma reduces conviction — no double-counting
+  const tailPenalty = Math.min(1.0, SIGMA_BASE / sigma);
+  const sigmaPenalty = -Math.round((1 - tailPenalty) * 15);
 
-  // Core 5 freshness score (0-25): Based on time decay
-  const core5FreshnessScore = Math.round(core5DecayFactor * 25);
+  const chaosScore = Math.max(0, Math.min(30, paceScore + 15 + sigmaPenalty));
 
-  // Rest score (0-15)
+  // === Bucket 2: Edge Reliability (0-35) ===
+  // core5Freshness (0-20): Based on time decay
+  const core5Freshness = Math.round(core5DecayFactor * 20);
+
+  // restScore (0-10): Simplified tiers
   let restScore: number;
   if (isBackToBack) {
-    restScore = 5; // B2B = lower conviction
+    restScore = 3;
   } else if (restDays !== undefined && restDays >= 2) {
-    restScore = 15; // Well rested = high conviction
+    restScore = 10;
   } else {
-    restScore = 10; // Normal rest = medium
+    restScore = 7;
   }
 
-  // Injury score (0-20): Based on injury report
-  let injuryScore = 10; // Default neutral
+  // hornetsHealthScore (0-5): Core 5 health
+  let hornetsHealthScore = 5; // Default: all healthy
   if (injuryReport) {
     if (injuryReport.hornetsCore5Status === 'KEY_PLAYER_OUT') {
-      injuryScore = 0; // Core 5 missing = very low conviction
+      hornetsHealthScore = 0;
     } else if (injuryReport.hornetsCore5Status === 'SOME_QUESTIONABLE') {
-      injuryScore = 5; // Uncertainty = lower conviction
-    } else if (injuryReport.spreadAdjustment && injuryReport.spreadAdjustment > 0) {
-      // Opponent missing key players = higher conviction
-      injuryScore = Math.min(20, 10 + injuryReport.spreadAdjustment * 2);
-    } else {
-      injuryScore = 10; // All healthy = neutral
+      hornetsHealthScore = 2;
     }
   }
 
-  // Tail-risk haircut (0 to -20): Per ChatGPT review
-  // Higher sigma = reduce bet size to protect bankroll
-  // tailPenalty = min(1.0, 12 / σ) → at σ=15, ~20% reduction
-  // Convert to conviction penalty: (1 - tailPenalty) * 20
-  const tailPenalty = Math.min(1.0, SIGMA_BASE / sigma);
-  const tailRiskHaircut = -Math.round((1 - tailPenalty) * 20);
+  const edgeScore = Math.max(0, Math.min(35, core5Freshness + restScore + hornetsHealthScore));
 
-  const factors: ConvictionFactors = {
-    paceScore,
-    opponentScore,
-    core5FreshnessScore,
-    restScore,
-    injuryScore,
-    tailRiskHaircut,
+  // === Bucket 3: Signal Alignment (0-35) — Phase 1 only ===
+  // componentConsensus (0-10): Do Elo and NR both imply cover vs spread?
+  let componentConsensus = 5; // Default neutral when no spread
+  if (spread !== null) {
+    const eloCovers = eloComponent + spread > 0;
+    const nrCovers = netRatingComponent + spread > 0;
+    if (eloCovers && nrCovers) {
+      componentConsensus = 10;
+    } else if (eloCovers || nrCovers) {
+      componentConsensus = 5;
+    } else {
+      componentConsensus = 0;
+    }
+  }
+
+  // opponentInjuryEdge (0-10): Unmodeled opponent injuries = free edge
+  let opponentInjuryEdge = 0;
+  if (injuryReport?.spreadAdjustment && injuryReport.spreadAdjustment > 0) {
+    const adj = injuryReport.spreadAdjustment;
+    if (adj >= 3) {
+      opponentInjuryEdge = 10;
+    } else if (adj >= 1.5) {
+      opponentInjuryEdge = 7;
+    } else {
+      opponentInjuryEdge = 4;
+    }
+  }
+
+  // modeConsensus starts at 0 — filled in by applyAlignmentBonus()
+  const modeConsensus = 0;
+
+  const alignmentScore = Math.max(0, Math.min(35, modeConsensus + componentConsensus + opponentInjuryEdge));
+
+  const total = Math.min(100, Math.max(0, chaosScore + edgeScore + alignmentScore));
+
+  const breakdown: ConvictionBreakdown = {
+    chaos: { score: chaosScore, sigmaPenalty, paceScore },
+    edge: { score: edgeScore, core5Freshness, restScore, hornetsHealthScore },
+    alignment: { score: alignmentScore, modeConsensus, componentConsensus, opponentInjuryEdge },
+    total,
   };
 
-  const rawConviction = paceScore + opponentScore + core5FreshnessScore + restScore + injuryScore + tailRiskHaircut;
-  return { conviction: Math.min(100, Math.max(0, rawConviction)), factors };
+  return { conviction: total, breakdown };
 }
 
 /**
@@ -623,6 +655,7 @@ export interface SpreadPrediction {
   confidence: 'high' | 'medium' | 'low';
   confidenceScore: number; // 0-100
   conviction: number;           // 0-100 score for bet sizing (separate from prediction)
+  convictionBreakdown?: ConvictionBreakdown;  // Three-bucket breakdown
   sigma: number;                // Regime-based variance (11.5-15.0)
   regime: string;               // Variance regime description (e.g., "Core5+HighPace")
   eloComponent: number;
@@ -1255,17 +1288,19 @@ export function predictSpread(
     ? cappedMargin + upcomingGame.spread
     : 0;
 
-  // === Calculate Conviction Score (separate from prediction) ===
-  // Conviction = how confident should we be in the prediction for bet sizing?
-  // Based on volatility factors, NOT the predicted margin itself
-  // Per ChatGPT: Includes tail-risk haircut based on sigma
-  const { conviction } = calculateConviction(
+  // === Calculate Conviction Score (three-bucket breakdown) ===
+  // Bucket 1: Game Chaos — is the game environment volatile?
+  // Bucket 2: Edge Reliability — can we trust the edge is real?
+  // Bucket 3: Signal Alignment — do multiple signals agree? (mode consensus added post-hoc)
+  const { conviction, breakdown: convictionBreakdown } = calculateConviction(
     combinedPace,
-    actualOpponentStrength,
     core5DecayFactor,
     upcomingGame.restDays,
     upcomingGame.isBackToBack,
-    sigma,  // NEW: Regime-based sigma for tail-risk haircut
+    sigma,
+    eloPrediction,
+    nrPrediction,
+    upcomingGame.spread,
     upcomingGame.injuryReport ? {
       hornetsCore5Status: upcomingGame.injuryReport.hornetsCore5Status,
       spreadAdjustment: upcomingGame.injuryReport.spreadAdjustment,
@@ -1291,7 +1326,8 @@ export function predictSpread(
     predictedCover: Math.round(cappedCover * 10) / 10,
     confidence,
     confidenceScore,
-    conviction,  // 0-100 score for bet sizing (includes tail-risk haircut)
+    conviction,  // 0-100 score for bet sizing (three-bucket total)
+    convictionBreakdown,  // Three-bucket breakdown (chaos/edge/alignment)
     sigma,       // Regime-based variance (11.5-15.0)
     regime,      // Variance regime description
     eloComponent: Math.round(eloPrediction * 10) / 10,
@@ -1299,6 +1335,67 @@ export function predictSpread(
     mode,
     moneylineAnalysis,  // Moneyline vs spread comparison (uses sigma for honest EV)
     factors,
+  };
+}
+
+/**
+ * Apply mode consensus bonus to conviction after all three modes are generated.
+ * This is Phase 2 of the Signal Alignment bucket — requires all three modes.
+ *
+ * Counts how many modes predict a cover, computes modeConsensus score (0-15),
+ * and returns an updated prediction with adjusted conviction and full breakdown.
+ */
+export function applyAlignmentBonus(
+  prediction: SpreadPrediction,
+  allModes: { standard: SpreadPrediction; bayesian: SpreadPrediction; buzzing: SpreadPrediction },
+  spread: number | null
+): SpreadPrediction {
+  if (!prediction.convictionBreakdown || spread === null) {
+    return prediction;
+  }
+
+  // Count how many modes predict a cover
+  const covers = [
+    allModes.standard.predictedMargin + spread > 0,
+    allModes.bayesian.predictedMargin + spread > 0,
+    allModes.buzzing.predictedMargin + spread > 0,
+  ].filter(Boolean).length;
+
+  let modeConsensus: number;
+  if (covers === 3) {
+    modeConsensus = 15; // All three modes agree on cover
+  } else if (covers === 2) {
+    modeConsensus = 8;  // Two of three agree
+  } else {
+    modeConsensus = 0;  // One or zero — no consensus
+  }
+
+  // Rebuild alignment bucket with mode consensus
+  const bd = prediction.convictionBreakdown;
+  const newAlignmentScore = Math.max(0, Math.min(35,
+    modeConsensus + bd.alignment.componentConsensus + bd.alignment.opponentInjuryEdge
+  ));
+
+  const newTotal = Math.min(100, Math.max(0,
+    bd.chaos.score + bd.edge.score + newAlignmentScore
+  ));
+
+  const newBreakdown: ConvictionBreakdown = {
+    chaos: { ...bd.chaos },
+    edge: { ...bd.edge },
+    alignment: {
+      score: newAlignmentScore,
+      modeConsensus,
+      componentConsensus: bd.alignment.componentConsensus,
+      opponentInjuryEdge: bd.alignment.opponentInjuryEdge,
+    },
+    total: newTotal,
+  };
+
+  return {
+    ...prediction,
+    conviction: newTotal,
+    convictionBreakdown: newBreakdown,
   };
 }
 

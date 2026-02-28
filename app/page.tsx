@@ -7,6 +7,7 @@ import {
   calculateBuzzingMetrics,
   analyzeTrend,
   predictSpread,
+  applyAlignmentBonus,
   getHistoricalSpreads,
   RollingMetrics,
   TrendAnalysis,
@@ -83,10 +84,12 @@ export default function Home() {
       const buzzingPred = predictSpread(game, rollingMetrics, trend, 0, 'buzzing', buzzingMetrics, allGamesMetrics, data.games);
 
       // Store all modes for comparison display
-      allModePredictions.set(game.gameId, { standard: standardPred, bayesian: bayesianPred, buzzing: buzzingPred });
+      const modes = { standard: standardPred, bayesian: bayesianPred, buzzing: buzzingPred };
+      allModePredictions.set(game.gameId, modes);
 
-      // Use selected mode for main prediction
-      const prediction = predictionMode === 'standard' ? standardPred : predictionMode === 'buzzing' ? buzzingPred : bayesianPred;
+      // Use selected mode for main prediction, then apply alignment bonus (mode consensus)
+      const basePrediction = predictionMode === 'standard' ? standardPred : predictionMode === 'buzzing' ? buzzingPred : bayesianPred;
+      const prediction = applyAlignmentBonus(basePrediction, modes, game.spread);
       predictions.set(game.gameId, prediction);
     }
 

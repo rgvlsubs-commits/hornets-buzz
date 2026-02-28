@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { UpcomingGame, GameInjuryReport } from '@/lib/types';
 import { SpreadPrediction as Prediction, RollingMetrics, TrendAnalysis } from '@/lib/model';
 import { formatDate } from '@/lib/utils';
+import { generateNarrative } from '@/lib/narrative';
 
 interface SpreadPredictionProps {
   upcomingGames: UpcomingGame[];
@@ -24,6 +25,8 @@ export default function SpreadPredictionComponent({
   upcomingGames,
   predictions,
   allModePredictions,
+  metrics,
+  trend,
   onOddsRefresh,
 }: SpreadPredictionProps) {
   // State for injury reports (allows refreshing without full page reload)
@@ -32,6 +35,7 @@ export default function SpreadPredictionComponent({
   const [refreshingOdds, setRefreshingOdds] = useState(false);
   const [lastOddsRefresh, setLastOddsRefresh] = useState<string | null>(null);
   const [oddsError, setOddsError] = useState<string | null>(null);
+  const [showFactorDetails, setShowFactorDetails] = useState<Record<string, boolean>>({});
 
   // Refresh odds from The Odds API
   const refreshOdds = useCallback(async () => {
@@ -452,25 +456,42 @@ export default function SpreadPredictionComponent({
                 </div>
               )}
 
-              {/* Factor breakdown */}
+              {/* Analysis narrative + factor details toggle */}
               <div className="border-t border-slate-700 pt-3">
-                <p className="text-xs text-slate-500 mb-2">Key Factors</p>
-                <div className="flex flex-wrap gap-2">
-                  {prediction.factors.map((factor, idx) => (
-                    <span
-                      key={idx}
-                      className={`text-xs px-2 py-1 rounded ${
-                        factor.impact > 0
-                          ? 'bg-[#00788C]/20 text-[#00A3B4]'
-                          : factor.impact < 0
-                          ? 'bg-red-500/20 text-red-400'
-                          : 'bg-slate-700 text-slate-400'
-                      }`}
-                    >
-                      {factor.name}: {factor.impact > 0 ? '+' : ''}{factor.impact.toFixed(1)}
-                    </span>
-                  ))}
-                </div>
+                <p className="text-xs text-slate-500 mb-2">Analysis</p>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  {generateNarrative({
+                    prediction,
+                    allModePredictions: allModePredictions?.get(game.gameId),
+                    game,
+                    metrics,
+                    trend,
+                  })}
+                </p>
+                <button
+                  onClick={() => setShowFactorDetails(prev => ({ ...prev, [game.gameId]: !prev[game.gameId] }))}
+                  className="text-xs text-slate-500 hover:text-slate-400 mt-2 underline underline-offset-2"
+                >
+                  {showFactorDetails[game.gameId] ? 'Hide details' : 'Show details'}
+                </button>
+                {showFactorDetails[game.gameId] && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {prediction.factors.map((factor, idx) => (
+                      <span
+                        key={idx}
+                        className={`text-xs px-2 py-1 rounded ${
+                          factor.impact > 0
+                            ? 'bg-[#00788C]/20 text-[#00A3B4]'
+                            : factor.impact < 0
+                            ? 'bg-red-500/20 text-red-400'
+                            : 'bg-slate-700 text-slate-400'
+                        }`}
+                      >
+                        {factor.name}: {factor.impact > 0 ? '+' : ''}{factor.impact.toFixed(1)}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Injury Report */}
