@@ -21,15 +21,20 @@ import { Game, UpcomingGame } from './types';
 // === Elo Parameters (from 538) ===
 const ELO_K_FACTOR = 20;
 const ELO_HOME_ADVANTAGE = 70; // Elo points (~2.5 actual points)
-const ELO_FATIGUE_PENALTY = 46; // Back-to-back penalty in Elo points
 const ELO_INITIAL = 1500;
 const ELO_TO_SPREAD = 28; // ~28 Elo points = 1 point spread
 
 // === Net Rating Parameters ===
 // Home court reduced from 2.5 to 2.0 per backtest (was overpredicting home by +1.3)
 const NR_HOME_ADVANTAGE = 2.0; // Points (was 2.5)
-// B2B penalty reduced from 3.0 to 1.5 per backtest (Hornets +9.8 actual on B2Bs)
-const NR_FATIGUE_PENALTY = 1.5; // Back-to-back penalty in points (was 3.0)
+// B2B penalty is asymmetric: home teams lose crowd/energy edge, away teams less affected
+// Per league-wide backtest (690 games): home B2B bias +3.4, away B2B bias +2.9 w/ flat 1.5
+const NR_FATIGUE_HOME_B2B = 3.0; // Home team on B2B (was flat 1.5)
+const NR_FATIGUE_AWAY_B2B = 1.0; // Away team on B2B (was flat 1.5)
+
+// === Vig Removal ===
+// Standard NBA overround is ~4-5%. Devig implied probability by dividing out the overround.
+const ESTIMATED_OVERROUND = 1.045;
 
 // === Blend Weights (optimized from backtest) ===
 const ELO_WEIGHT = 0.55; // Increased from 0.40 based on backtest
@@ -44,15 +49,6 @@ const WINDOW_WEIGHTS = {
   last10: 0.25,
   season: 0.20,
 };
-
-// Momentum multiplier
-// DISABLED per backtest: Rolling window weights (30% last4) already capture recent form.
-// Adding momentum on top was double-counting and HURT predictions:
-// - With momentum: 55.6% ATS, 64.0% Core 5 ATS
-// - Without momentum: 58.3% ATS, 68.0% Core 5 ATS
-// - Negative momentum games: Hornets bounce back 86% of the time
-// The momentum penalty was over-penalizing after bad games.
-const MOMENTUM_MULTIPLIER = 0.0;  // Was 0.4
 
 // Buzzing mode: window weights when using only healthy games
 const BUZZING_WINDOW_WEIGHTS = {
@@ -75,15 +71,6 @@ const ELITE_OPPONENT_PENALTY = -1.0;   // Additional penalty vs elite teams (was
 
 // === RISK ADJUSTMENTS (Per ChatGPT/Gemini Review) ===
 
-// Core 5 survivorship/schedule penalty
-// Reduced from -0.75 to -0.25 per backtest (was underpredicting Core 5 by 5.7 pts)
-// The Core 5 really IS that good - less penalty needed
-const CORE5_SURVIVORSHIP_PENALTY = -0.25;  // Points adjustment (was -0.75)
-
-// Bench minute penalty
-// Reduced from -0.5 to -0.25 per backtest findings
-const BENCH_MINUTE_PENALTY = -0.25;  // Partial bench penalty (was -0.5)
-
 // Mid vs Mid adjustment
 // League backtest showed +2.2 overpredict bias when both teams are mid-tier
 // Apply -1.0 pt adjustment when opponent is mid-tier
@@ -95,12 +82,8 @@ const MID_VS_MID_ADJUSTMENT = -1.0;
 // Most NBA games land within ±15 points; capping reduces MAE from outliers
 const PREDICTED_MARGIN_CAP = 15;
 
-// Pace adjustment - high-pace games have more variance
-// When combined pace is high, regress margin toward 0 (less certainty)
-// League average pace is ~100 possessions per game
-// Increased from 2% to 3% per backtest (high-pace MAE was 50% worse than normal)
+// League average pace (used as fallback for missing pace data)
 const LEAGUE_AVG_PACE = 100;
-const PACE_VARIANCE_FACTOR = 0.03; // Each point above avg pace reduces margin certainty by 3% (was 2%)
 
 // === CORE 5 TIME DECAY ===
 // Per ChatGPT review: Market adjusts to Core 5 performance over time
@@ -122,9 +105,6 @@ const HIGH_PACE_THRESHOLD = 205;   // Combined pace above this = high pace game
 // "This fixes why your biggest misses are positive blowouts"
 // σ_effective += δ × |predicted_margin| where δ ≈ 0.15-0.25
 const SIGMA_MARGIN_COEFFICIENT = 0.20;  // σ increases by 0.2 per point of |margin|
-
-// Per ChatGPT review: Increase max tail-risk haircut from 15 to 20 for high σ
-const TAIL_RISK_HAIRCUT_MAX = 20;       // Was 15, increased for σ > 17
 
 /**
  * Calculate days between two dates
@@ -472,8 +452,9 @@ function analyzeMoneyline(
   // Calculate model win probability from Elo difference
   const modelWinProb = eloToWinProbability(eloDiff);
 
-  // Get implied probability from moneyline
-  const impliedWinProb = moneylineToImpliedProb(moneyline);
+  // Get implied probability from moneyline, with vig removed
+  const rawImplied = moneylineToImpliedProb(moneyline);
+  const impliedWinProb = Math.min(0.99, Math.max(0.01, rawImplied / ESTIMATED_OVERROUND));
 
   // Calculate edge on moneyline
   const edge = modelWinProb - impliedWinProb;
@@ -525,14 +506,19 @@ function analyzeMoneyline(
 
 // Roster change adjustments (trade impacts)
 // Positive = opponent got better, Negative = opponent got worse
-const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string }> = {
+// expiresAfter: full adjustment until this date, then 50% decay, removed after +30 days
+const ROSTER_ADJUSTMENTS: Record<string, { adjustment: number; note: string; tradeDate?: string; expiresAfter?: string }> = {
   'Cleveland Cavaliers': {
     adjustment: 1.5,  // Harden acquisition is net positive short-term
     note: 'Harden trade (+1.5): Elite playmaker added, but integration period',
+    tradeDate: '2026-02-06',
+    expiresAfter: '2026-03-15',
   },
   'CLE': {
     adjustment: 1.5,
     note: 'Harden trade (+1.5): Elite playmaker added, but integration period',
+    tradeDate: '2026-02-06',
+    expiresAfter: '2026-03-15',
   },
 };
 
@@ -959,7 +945,17 @@ export function predictSpread(
 
   // Check for opponent roster adjustments (trades, injuries, etc.)
   const rosterAdj = ROSTER_ADJUSTMENTS[upcomingGame.opponent];
-  const rosterAdjustment = rosterAdj?.adjustment ?? 0;
+  let rosterAdjustment = rosterAdj?.adjustment ?? 0;
+  if (rosterAdj?.expiresAfter) {
+    const gameDate = new Date(upcomingGame.date);
+    const expiresDate = new Date(rosterAdj.expiresAfter);
+    const fullExpireDate = new Date(expiresDate.getTime() + 30 * 24 * 60 * 60 * 1000); // +30 days
+    if (gameDate > fullExpireDate) {
+      rosterAdjustment = 0; // Fully expired
+    } else if (gameDate > expiresDate) {
+      rosterAdjustment *= 0.5; // 50% decay after expiration date
+    }
+  }
 
   // Check for Hornets roster transition adjustment (trade deadline impact)
   let hornetsTradeAdjustment = 0;
@@ -973,29 +969,28 @@ export function predictSpread(
     }
   }
 
-  // === Fatigue Factor (Hornets) ===
+  // === Fatigue Factor (Hornets) — asymmetric by home/away ===
+  // League backtest: home B2B teams lose crowd/energy edge (-3.0), away B2B less affected (-1.0)
   let fatigueAdjustment = 0;
   if (upcomingGame.isBackToBack) {
-    fatigueAdjustment = -NR_FATIGUE_PENALTY;
+    fatigueAdjustment = upcomingGame.isHome ? -NR_FATIGUE_HOME_B2B : -NR_FATIGUE_AWAY_B2B;
   } else if (upcomingGame.restDays === 1) {
     fatigueAdjustment = -1.0;
   } else if (upcomingGame.restDays !== undefined && upcomingGame.restDays >= 3) {
     fatigueAdjustment = 0.5;
   }
 
-  // === Opponent Rest Differential ===
-  // If opponent is on B2B and we're not, that's an advantage
+  // === Opponent Rest Differential — asymmetric by opponent home/away ===
   let restDifferentialAdj = 0;
   if (upcomingGame.opponentIsBackToBack && !upcomingGame.isBackToBack) {
-    restDifferentialAdj = 1.5; // Opponent fatigued, we're fresh
-  } else if (!upcomingGame.opponentIsBackToBack && upcomingGame.isBackToBack) {
-    restDifferentialAdj = -0.5; // Already penalized via fatigueAdjustment, small extra
+    // Opponent fatigued: home B2B opponent (we're away) hurts them more
+    restDifferentialAdj = upcomingGame.isHome ? NR_FATIGUE_AWAY_B2B : NR_FATIGUE_HOME_B2B;
   }
 
   // === Common adjustments (applied to both Standard and Buzzing margins) ===
   const homeAdj = upcomingGame.isHome ? NR_HOME_ADVANTAGE : -NR_HOME_ADVANTAGE;
-  const momentumImpact = trend.momentum * MOMENTUM_MULTIPLIER;
-  const oppAdjustment = -actualOpponentStrength;
+  // Halved to reduce double-counting with Elo branch (opponent NR already in Elo diff)
+  const oppAdjustment = -actualOpponentStrength * 0.5;
   const isEliteOpponent = actualOpponentStrength >= ELITE_OPPONENT_THRESHOLD;
   const eliteOpponentPenalty = isEliteOpponent ? ELITE_OPPONENT_PENALTY : 0;
 
@@ -1031,7 +1026,7 @@ export function predictSpread(
     (rollingMetrics.last10.netRating * WINDOW_WEIGHTS.last10) +
     (rollingMetrics.season.netRating * WINDOW_WEIGHTS.season);
 
-  const standardNrPrediction = standardWeightedNR + homeAdj + momentumImpact +
+  const standardNrPrediction = standardWeightedNR + homeAdj +
     oppAdjustment + fatigueAdjustment + eliteOpponentPenalty + midVsMidAdjustment - rosterAdjustment + restDifferentialAdj + hornetsTradeAdjustment;
 
   // Complete Standard margin
@@ -1058,7 +1053,7 @@ export function predictSpread(
       (rollingMetrics.last10.netRating * BUZZING_WINDOW_WEIGHTS.last10) +
       (buzzingMetrics.netRating * BUZZING_WINDOW_WEIGHTS.season);
 
-    const buzzingNrPrediction = buzzingWeightedNR + homeAdj + momentumImpact +
+    const buzzingNrPrediction = buzzingWeightedNR + homeAdj +
       oppAdjustment + fatigueAdjustment + eliteOpponentPenalty + midVsMidAdjustment - rosterAdjustment + restDifferentialAdj + hornetsTradeAdjustment;
 
     // Complete Buzzing margin
@@ -1147,20 +1142,12 @@ export function predictSpread(
     impact: homeAdj * NR_WEIGHT,
   });
 
-  if (Math.abs(momentumImpact) > 0.5) {
-    factors.push({
-      name: `Momentum (${trend.direction})`,
-      value: trend.momentum,
-      impact: momentumImpact * NR_WEIGHT,
-    });
-  }
-
   // Opponent strength factor
   if (Math.abs(actualOpponentStrength) > 1) {
     factors.push({
       name: actualOpponentStrength > 0 ? 'Strong Opponent' : 'Weak Opponent',
       value: actualOpponentStrength,
-      impact: oppAdjustment * NR_WEIGHT,
+      impact: oppAdjustment * NR_WEIGHT, // Reflects 0.5x opponent strength (reduced double-counting)
     });
   }
 
@@ -1207,7 +1194,7 @@ export function predictSpread(
     factors.push({
       name: `${trend.streakLength}-Game ${trend.streakType === 'W' ? 'Win' : 'Losing'} Streak`,
       value: trend.streakLength,
-      impact: streakImpact * NR_WEIGHT,
+      impact: 0, // Informational only — streak not added to predictedMargin
     });
   }
 

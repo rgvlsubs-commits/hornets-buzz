@@ -1,0 +1,1321 @@
+{
+  "runDate": "2026-03-01T20:12:51.030Z",
+  "gamesAnalyzed": 51,
+  "gamesSkipped": 10,
+  "core5Games": 30,
+  "summary": {
+    "standard": {
+      "mae": 11.366666666666667,
+      "rmse": 15.809844289890657,
+      "bias": -4.625490196078432,
+      "atsW": 32,
+      "atsL": 19,
+      "pickCorrect": 32,
+      "total": 51
+    },
+    "bayesian": {
+      "mae": 11.33529411764706,
+      "rmse": 15.67415132017817,
+      "bias": -4.205882352941177,
+      "atsW": 34,
+      "atsL": 17,
+      "pickCorrect": 32,
+      "total": 51
+    },
+    "buzzing": {
+      "mae": 11.364705882352942,
+      "rmse": 15.260175004778635,
+      "bias": -2.5176470588235293,
+      "atsW": 33,
+      "atsL": 18,
+      "pickCorrect": 32,
+      "total": 51
+    },
+    "core5Bayesian": {
+      "mae": 14.463333333333336,
+      "rmse": 19.153407007631827,
+      "bias": -8.923333333333336,
+      "atsW": 19,
+      "atsL": 11,
+      "pickCorrect": 20,
+      "total": 30
+    }
+  },
+  "games": [
+    {
+      "date": "2025-11-12",
+      "opponent": "MIL",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -3.5,
+      "actualMargin": 5,
+      "spread": 4.1,
+      "predictions": {
+        "standard": {
+          "margin": 1.3,
+          "rawMargin": 1.3
+        },
+        "bayesian": {
+          "margin": 1.3,
+          "rawMargin": 1.3
+        },
+        "buzzing": {
+          "margin": 1.3,
+          "rawMargin": 1.3
+        }
+      }
+    },
+    {
+      "date": "2025-11-14",
+      "opponent": "MIL",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -3.5,
+      "actualMargin": -5,
+      "spread": 7,
+      "predictions": {
+        "standard": {
+          "margin": -2.9,
+          "rawMargin": -2.9
+        },
+        "bayesian": {
+          "margin": -2.9,
+          "rawMargin": -2.9
+        },
+        "buzzing": {
+          "margin": -2.9,
+          "rawMargin": -2.9
+        }
+      }
+    },
+    {
+      "date": "2025-11-15",
+      "opponent": "OKC",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": true,
+      "opponentTier": "elite",
+      "opponentNetRating": 11.3,
+      "actualMargin": -5,
+      "spread": 4,
+      "predictions": {
+        "standard": {
+          "margin": -7.2,
+          "rawMargin": -7.2
+        },
+        "bayesian": {
+          "margin": -7.2,
+          "rawMargin": -7.2
+        },
+        "buzzing": {
+          "margin": -7.2,
+          "rawMargin": -7.2
+        }
+      }
+    },
+    {
+      "date": "2025-11-17",
+      "opponent": "TOR",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": 2,
+      "actualMargin": -5,
+      "spread": 6.9,
+      "predictions": {
+        "standard": {
+          "margin": -6,
+          "rawMargin": -6
+        },
+        "bayesian": {
+          "margin": -6,
+          "rawMargin": -6
+        },
+        "buzzing": {
+          "margin": -6,
+          "rawMargin": -6
+        }
+      }
+    },
+    {
+      "date": "2025-11-19",
+      "opponent": "IND",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -8,
+      "actualMargin": -5,
+      "spread": 6.9,
+      "predictions": {
+        "standard": {
+          "margin": -1.5,
+          "rawMargin": -1.5
+        },
+        "bayesian": {
+          "margin": -1.4,
+          "rawMargin": -1.4
+        },
+        "buzzing": {
+          "margin": -1.5,
+          "rawMargin": -1.5
+        }
+      }
+    },
+    {
+      "date": "2025-11-22",
+      "opponent": "LAC",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": -0.6,
+      "actualMargin": -5,
+      "spread": 3.8,
+      "predictions": {
+        "standard": {
+          "margin": 0.4,
+          "rawMargin": 0.4
+        },
+        "bayesian": {
+          "margin": 0.4,
+          "rawMargin": 0.4
+        },
+        "buzzing": {
+          "margin": 0.4,
+          "rawMargin": 0.4
+        }
+      }
+    },
+    {
+      "date": "2025-11-23",
+      "opponent": "ATL",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": true,
+      "opponentTier": "mid",
+      "opponentNetRating": -0.5,
+      "actualMargin": -5,
+      "spread": 6.8,
+      "predictions": {
+        "standard": {
+          "margin": -5.4,
+          "rawMargin": -5.4
+        },
+        "bayesian": {
+          "margin": -5.3,
+          "rawMargin": -5.3
+        },
+        "buzzing": {
+          "margin": -5.4,
+          "rawMargin": -5.4
+        }
+      }
+    },
+    {
+      "date": "2025-11-26",
+      "opponent": "NYK",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "strong",
+      "opponentNetRating": 5.8,
+      "actualMargin": -5,
+      "spread": 3.7,
+      "predictions": {
+        "standard": {
+          "margin": -2.1,
+          "rawMargin": -2.1
+        },
+        "bayesian": {
+          "margin": -2.1,
+          "rawMargin": -2.1
+        },
+        "buzzing": {
+          "margin": -2.1,
+          "rawMargin": -2.1
+        }
+      }
+    },
+    {
+      "date": "2025-11-28",
+      "opponent": "CHI",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -4.7,
+      "actualMargin": 5,
+      "spread": 3.6,
+      "predictions": {
+        "standard": {
+          "margin": 1.2,
+          "rawMargin": 1.2
+        },
+        "bayesian": {
+          "margin": 1.2,
+          "rawMargin": 1.2
+        },
+        "buzzing": {
+          "margin": 1.2,
+          "rawMargin": 1.2
+        }
+      }
+    },
+    {
+      "date": "2025-11-29",
+      "opponent": "TOR",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": true,
+      "opponentTier": "mid",
+      "opponentNetRating": 2,
+      "actualMargin": 5,
+      "spread": 3.6,
+      "predictions": {
+        "standard": {
+          "margin": -3.8,
+          "rawMargin": -3.8
+        },
+        "bayesian": {
+          "margin": -3.7,
+          "rawMargin": -3.7
+        },
+        "buzzing": {
+          "margin": -2.8,
+          "rawMargin": -2.8
+        }
+      }
+    },
+    {
+      "date": "2025-12-01",
+      "opponent": "BKN",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -8.6,
+      "actualMargin": -14,
+      "spread": 6.5,
+      "predictions": {
+        "standard": {
+          "margin": -1.2,
+          "rawMargin": -1.2
+        },
+        "bayesian": {
+          "margin": -1.1,
+          "rawMargin": -1.1
+        },
+        "buzzing": {
+          "margin": 0,
+          "rawMargin": 0
+        }
+      }
+    },
+    {
+      "date": "2025-12-03",
+      "opponent": "NYK",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "strong",
+      "opponentNetRating": 5.8,
+      "actualMargin": -13,
+      "spread": 6.4,
+      "predictions": {
+        "standard": {
+          "margin": -7.5,
+          "rawMargin": -7.5
+        },
+        "bayesian": {
+          "margin": -7.3,
+          "rawMargin": -7.3
+        },
+        "buzzing": {
+          "margin": -6,
+          "rawMargin": -6
+        }
+      }
+    },
+    {
+      "date": "2025-12-05",
+      "opponent": "TOR",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": 2,
+      "actualMargin": 26,
+      "spread": 6.2,
+      "predictions": {
+        "standard": {
+          "margin": -6.5,
+          "rawMargin": -6.5
+        },
+        "bayesian": {
+          "margin": -6.3,
+          "rawMargin": -6.3
+        },
+        "buzzing": {
+          "margin": -4.9,
+          "rawMargin": -4.9
+        }
+      }
+    },
+    {
+      "date": "2025-12-07",
+      "opponent": "DEN",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "strong",
+      "opponentNetRating": 4.6,
+      "actualMargin": -9,
+      "spread": 3.1,
+      "predictions": {
+        "standard": {
+          "margin": -0.3,
+          "rawMargin": -0.3
+        },
+        "bayesian": {
+          "margin": -0.1,
+          "rawMargin": -0.1
+        },
+        "buzzing": {
+          "margin": 1.8,
+          "rawMargin": 1.8
+        }
+      }
+    },
+    {
+      "date": "2025-12-12",
+      "opponent": "CHI",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -4.7,
+      "actualMargin": -1,
+      "spread": 2.7,
+      "predictions": {
+        "standard": {
+          "margin": 5,
+          "rawMargin": 5
+        },
+        "bayesian": {
+          "margin": 5.2,
+          "rawMargin": 5.2
+        },
+        "buzzing": {
+          "margin": 7.2,
+          "rawMargin": 7.2
+        }
+      }
+    },
+    {
+      "date": "2025-12-14",
+      "opponent": "CLE",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "strong",
+      "opponentNetRating": 4.2,
+      "actualMargin": 7,
+      "spread": 5.6,
+      "predictions": {
+        "standard": {
+          "margin": -5.5,
+          "rawMargin": -5.5
+        },
+        "bayesian": {
+          "margin": -5.3,
+          "rawMargin": -5.3
+        },
+        "buzzing": {
+          "margin": -3.3,
+          "rawMargin": -3.3
+        }
+      }
+    },
+    {
+      "date": "2025-12-18",
+      "opponent": "ATL",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": -0.5,
+      "actualMargin": 7,
+      "spread": 2.2,
+      "predictions": {
+        "standard": {
+          "margin": 2.9,
+          "rawMargin": 2.9
+        },
+        "bayesian": {
+          "margin": 3.1,
+          "rawMargin": 3.1
+        },
+        "buzzing": {
+          "margin": 5,
+          "rawMargin": 5
+        }
+      }
+    },
+    {
+      "date": "2025-12-20",
+      "opponent": "DET",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "elite",
+      "opponentNetRating": 7.8,
+      "actualMargin": -27,
+      "spread": 5,
+      "predictions": {
+        "standard": {
+          "margin": -6.1,
+          "rawMargin": -6.1
+        },
+        "bayesian": {
+          "margin": -5.8,
+          "rawMargin": -5.8
+        },
+        "buzzing": {
+          "margin": -3.9,
+          "rawMargin": -3.9
+        }
+      }
+    },
+    {
+      "date": "2025-12-22",
+      "opponent": "CLE",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "strong",
+      "opponentNetRating": 4.2,
+      "actualMargin": -4,
+      "spread": 4.8,
+      "predictions": {
+        "standard": {
+          "margin": -7,
+          "rawMargin": -7
+        },
+        "bayesian": {
+          "margin": -6.7,
+          "rawMargin": -6.7
+        },
+        "buzzing": {
+          "margin": -5.4,
+          "rawMargin": -5.4
+        }
+      }
+    },
+    {
+      "date": "2025-12-23",
+      "opponent": "WAS",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": true,
+      "opponentTier": "weak",
+      "opponentNetRating": -10.8,
+      "actualMargin": 19,
+      "spread": 1.7,
+      "predictions": {
+        "standard": {
+          "margin": 2.2,
+          "rawMargin": 2.2
+        },
+        "bayesian": {
+          "margin": 2.4,
+          "rawMargin": 2.4
+        },
+        "buzzing": {
+          "margin": 3.6,
+          "rawMargin": 3.6
+        }
+      }
+    },
+    {
+      "date": "2025-12-26",
+      "opponent": "ORL",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": 0.4,
+      "actualMargin": 17,
+      "spread": 4.3,
+      "predictions": {
+        "standard": {
+          "margin": -3.8,
+          "rawMargin": -3.8
+        },
+        "bayesian": {
+          "margin": -3.5,
+          "rawMargin": -3.5
+        },
+        "buzzing": {
+          "margin": -2.2,
+          "rawMargin": -2.2
+        }
+      }
+    },
+    {
+      "date": "2025-12-29",
+      "opponent": "MIL",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -3.5,
+      "actualMargin": -7,
+      "spread": 1,
+      "predictions": {
+        "standard": {
+          "margin": 3.9,
+          "rawMargin": 3.9
+        },
+        "bayesian": {
+          "margin": 4.3,
+          "rawMargin": 4.3
+        },
+        "buzzing": {
+          "margin": 5.7,
+          "rawMargin": 5.7
+        }
+      }
+    },
+    {
+      "date": "2025-12-31",
+      "opponent": "GSW",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": 1.5,
+      "actualMargin": -6,
+      "spread": 0.9,
+      "predictions": {
+        "standard": {
+          "margin": 0.3,
+          "rawMargin": 0.3
+        },
+        "bayesian": {
+          "margin": 0.6,
+          "rawMargin": 0.6
+        },
+        "buzzing": {
+          "margin": 2.2,
+          "rawMargin": 2.2
+        }
+      }
+    },
+    {
+      "date": "2026-01-02",
+      "opponent": "MIL",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -3.5,
+      "actualMargin": 0,
+      "spread": 3.7,
+      "predictions": {
+        "standard": {
+          "margin": -1.8,
+          "rawMargin": -1.8
+        },
+        "bayesian": {
+          "margin": -1.5,
+          "rawMargin": -1.5
+        },
+        "buzzing": {
+          "margin": 0.2,
+          "rawMargin": 0.2
+        }
+      }
+    },
+    {
+      "date": "2026-01-03",
+      "opponent": "CHI",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": true,
+      "opponentTier": "weak",
+      "opponentNetRating": -4.7,
+      "actualMargin": 12,
+      "spread": 3.6,
+      "predictions": {
+        "standard": {
+          "margin": -1.4,
+          "rawMargin": -1.4
+        },
+        "bayesian": {
+          "margin": -1.1,
+          "rawMargin": -1.1
+        },
+        "buzzing": {
+          "margin": 0.7,
+          "rawMargin": 0.7
+        }
+      }
+    },
+    {
+      "date": "2026-01-05",
+      "opponent": "OKC",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "elite",
+      "opponentNetRating": 11.3,
+      "actualMargin": 27,
+      "spread": 3.5,
+      "predictions": {
+        "standard": {
+          "margin": -8.4,
+          "rawMargin": -8.4
+        },
+        "bayesian": {
+          "margin": -8.1,
+          "rawMargin": -8.1
+        },
+        "buzzing": {
+          "margin": -6.5,
+          "rawMargin": -6.5
+        }
+      }
+    },
+    {
+      "date": "2026-01-07",
+      "opponent": "TOR",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": 2,
+      "actualMargin": -1,
+      "spread": 0.4,
+      "predictions": {
+        "standard": {
+          "margin": 3,
+          "rawMargin": 3
+        },
+        "bayesian": {
+          "margin": 3.5,
+          "rawMargin": 3.5
+        },
+        "buzzing": {
+          "margin": 5.2,
+          "rawMargin": 5.2
+        }
+      }
+    },
+    {
+      "date": "2026-01-08",
+      "opponent": "IND",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": true,
+      "opponentTier": "weak",
+      "opponentNetRating": -8,
+      "actualMargin": -1,
+      "spread": 0.3,
+      "predictions": {
+        "standard": {
+          "margin": 5.6,
+          "rawMargin": 5.6
+        },
+        "bayesian": {
+          "margin": 6.1,
+          "rawMargin": 6.1
+        },
+        "buzzing": {
+          "margin": 7.8,
+          "rawMargin": 7.8
+        }
+      }
+    },
+    {
+      "date": "2026-01-10",
+      "opponent": "UTA",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -8,
+      "actualMargin": 57,
+      "spread": 3.1,
+      "predictions": {
+        "standard": {
+          "margin": 2.6,
+          "rawMargin": 2.6
+        },
+        "bayesian": {
+          "margin": 3,
+          "rawMargin": 3
+        },
+        "buzzing": {
+          "margin": 4.5,
+          "rawMargin": 4.5
+        }
+      }
+    },
+    {
+      "date": "2026-01-12",
+      "opponent": "LAC",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": -0.6,
+      "actualMargin": -7,
+      "spread": 3,
+      "predictions": {
+        "standard": {
+          "margin": 2.2,
+          "rawMargin": 2.2
+        },
+        "bayesian": {
+          "margin": 2.8,
+          "rawMargin": 2.8
+        },
+        "buzzing": {
+          "margin": 4.6,
+          "rawMargin": 4.6
+        }
+      }
+    },
+    {
+      "date": "2026-01-15",
+      "opponent": "LAL",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": 0.1,
+      "actualMargin": 20,
+      "spread": 2.6,
+      "predictions": {
+        "standard": {
+          "margin": 2.1,
+          "rawMargin": 2.1
+        },
+        "bayesian": {
+          "margin": 2.6,
+          "rawMargin": 2.6
+        },
+        "buzzing": {
+          "margin": 4.3,
+          "rawMargin": 4.3
+        }
+      }
+    },
+    {
+      "date": "2026-01-17",
+      "opponent": "GSW",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": 1.5,
+      "actualMargin": -19,
+      "spread": 2.3,
+      "predictions": {
+        "standard": {
+          "margin": 0.8,
+          "rawMargin": 0.8
+        },
+        "bayesian": {
+          "margin": 1.4,
+          "rawMargin": 1.4
+        },
+        "buzzing": {
+          "margin": 3.4,
+          "rawMargin": 3.4
+        }
+      }
+    },
+    {
+      "date": "2026-01-18",
+      "opponent": "DEN",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": true,
+      "opponentTier": "strong",
+      "opponentNetRating": 4.6,
+      "actualMargin": 23,
+      "spread": 2.1,
+      "predictions": {
+        "standard": {
+          "margin": -0.2,
+          "rawMargin": -0.2
+        },
+        "bayesian": {
+          "margin": 0.4,
+          "rawMargin": 0.4
+        },
+        "buzzing": {
+          "margin": 2.6,
+          "rawMargin": 2.6
+        }
+      }
+    },
+    {
+      "date": "2026-01-21",
+      "opponent": "CLE",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "strong",
+      "opponentNetRating": 4.2,
+      "actualMargin": -7,
+      "spread": -1.3,
+      "predictions": {
+        "standard": {
+          "margin": 6.4,
+          "rawMargin": 6.4
+        },
+        "bayesian": {
+          "margin": 7.1,
+          "rawMargin": 7.1
+        },
+        "buzzing": {
+          "margin": 9.6,
+          "rawMargin": 9.6
+        }
+      }
+    },
+    {
+      "date": "2026-01-22",
+      "opponent": "ORL",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": true,
+      "opponentTier": "mid",
+      "opponentNetRating": 0.4,
+      "actualMargin": 27,
+      "spread": 1.6,
+      "predictions": {
+        "standard": {
+          "margin": 0.2,
+          "rawMargin": 0.2
+        },
+        "bayesian": {
+          "margin": 1,
+          "rawMargin": 1
+        },
+        "buzzing": {
+          "margin": 3.5,
+          "rawMargin": 3.5
+        }
+      }
+    },
+    {
+      "date": "2026-01-24",
+      "opponent": "WAS",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -10.8,
+      "actualMargin": 7,
+      "spread": -1.7,
+      "predictions": {
+        "standard": {
+          "margin": 11.8,
+          "rawMargin": 11.8
+        },
+        "bayesian": {
+          "margin": 12.6,
+          "rawMargin": 12.6
+        },
+        "buzzing": {
+          "margin": 15,
+          "rawMargin": 15.2
+        }
+      }
+    },
+    {
+      "date": "2026-01-26",
+      "opponent": "PHI",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": 0.7,
+      "actualMargin": 39,
+      "spread": -2,
+      "predictions": {
+        "standard": {
+          "margin": 6.2,
+          "rawMargin": 6.2
+        },
+        "bayesian": {
+          "margin": 6.9,
+          "rawMargin": 6.9
+        },
+        "buzzing": {
+          "margin": 9.5,
+          "rawMargin": 9.5
+        }
+      }
+    },
+    {
+      "date": "2026-01-28",
+      "opponent": "MEM",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": -2.3,
+      "actualMargin": 5,
+      "spread": 0.3,
+      "predictions": {
+        "standard": {
+          "margin": 3.5,
+          "rawMargin": 3.5
+        },
+        "bayesian": {
+          "margin": 4.2,
+          "rawMargin": 4.2
+        },
+        "buzzing": {
+          "margin": 6.7,
+          "rawMargin": 6.7
+        }
+      }
+    },
+    {
+      "date": "2026-01-29",
+      "opponent": "DAL",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": true,
+      "opponentTier": "weak",
+      "opponentNetRating": -3.6,
+      "actualMargin": 1,
+      "spread": -0.1,
+      "predictions": {
+        "standard": {
+          "margin": 4.6,
+          "rawMargin": 4.6
+        },
+        "bayesian": {
+          "margin": 5.3,
+          "rawMargin": 5.3
+        },
+        "buzzing": {
+          "margin": 7.7,
+          "rawMargin": 7.7
+        }
+      }
+    },
+    {
+      "date": "2026-01-31",
+      "opponent": "SAS",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "elite",
+      "opponentNetRating": 6.7,
+      "actualMargin": 4,
+      "spread": -3.8,
+      "predictions": {
+        "standard": {
+          "margin": 3.2,
+          "rawMargin": 3.2
+        },
+        "bayesian": {
+          "margin": 4,
+          "rawMargin": 4
+        },
+        "buzzing": {
+          "margin": 6.9,
+          "rawMargin": 6.9
+        }
+      }
+    },
+    {
+      "date": "2026-02-02",
+      "opponent": "NOP",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -5,
+      "actualMargin": 6,
+      "spread": -4.5,
+      "predictions": {
+        "standard": {
+          "margin": 7.6,
+          "rawMargin": 7.6
+        },
+        "bayesian": {
+          "margin": 8.6,
+          "rawMargin": 8.6
+        },
+        "buzzing": {
+          "margin": 11.7,
+          "rawMargin": 11.7
+        }
+      }
+    },
+    {
+      "date": "2026-02-05",
+      "opponent": "HOU",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "strong",
+      "opponentNetRating": 5.3,
+      "actualMargin": 12,
+      "spread": -1.5,
+      "predictions": {
+        "standard": {
+          "margin": -0.9,
+          "rawMargin": -0.9
+        },
+        "bayesian": {
+          "margin": 0,
+          "rawMargin": 0
+        },
+        "buzzing": {
+          "margin": 3,
+          "rawMargin": 3
+        }
+      }
+    },
+    {
+      "date": "2026-02-07",
+      "opponent": "ATL",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": -0.5,
+      "actualMargin": 7,
+      "spread": -1.5,
+      "predictions": {
+        "standard": {
+          "margin": 0.2,
+          "rawMargin": 0.2
+        },
+        "bayesian": {
+          "margin": 1.1,
+          "rawMargin": 1.1
+        },
+        "buzzing": {
+          "margin": 3.9,
+          "rawMargin": 3.9
+        }
+      }
+    },
+    {
+      "date": "2026-02-09",
+      "opponent": "DET",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "elite",
+      "opponentNetRating": 7.8,
+      "actualMargin": -8,
+      "spread": -4.5,
+      "predictions": {
+        "standard": {
+          "margin": 1.4,
+          "rawMargin": 1.4
+        },
+        "bayesian": {
+          "margin": 2.1,
+          "rawMargin": 2.1
+        },
+        "buzzing": {
+          "margin": 4.7,
+          "rawMargin": 4.7
+        }
+      }
+    },
+    {
+      "date": "2026-02-11",
+      "opponent": "ATL",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": -0.5,
+      "actualMargin": 2,
+      "spread": -4.5,
+      "predictions": {
+        "standard": {
+          "margin": 3.5,
+          "rawMargin": 3.5
+        },
+        "bayesian": {
+          "margin": 4.3,
+          "rawMargin": 4.3
+        },
+        "buzzing": {
+          "margin": 6.7,
+          "rawMargin": 6.7
+        }
+      }
+    },
+    {
+      "date": "2026-02-19",
+      "opponent": "HOU",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "strong",
+      "opponentNetRating": 5.3,
+      "actualMargin": -4,
+      "spread": -4.5,
+      "predictions": {
+        "standard": {
+          "margin": 3.4,
+          "rawMargin": 3.4
+        },
+        "bayesian": {
+          "margin": 4,
+          "rawMargin": 4
+        },
+        "buzzing": {
+          "margin": 6.6,
+          "rawMargin": 6.6
+        }
+      }
+    },
+    {
+      "date": "2026-02-20",
+      "opponent": "CLE",
+      "isHome": true,
+      "isQualified": false,
+      "isBackToBack": true,
+      "opponentTier": "strong",
+      "opponentNetRating": 4.2,
+      "actualMargin": -6,
+      "spread": -4.5,
+      "predictions": {
+        "standard": {
+          "margin": -0.4,
+          "rawMargin": -0.4
+        },
+        "bayesian": {
+          "margin": 0.2,
+          "rawMargin": 0.2
+        },
+        "buzzing": {
+          "margin": 2.9,
+          "rawMargin": 2.9
+        }
+      }
+    },
+    {
+      "date": "2026-02-22",
+      "opponent": "WAS",
+      "isHome": false,
+      "isQualified": false,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -10.8,
+      "actualMargin": 16,
+      "spread": -1.5,
+      "predictions": {
+        "standard": {
+          "margin": 4,
+          "rawMargin": 4
+        },
+        "bayesian": {
+          "margin": 4.6,
+          "rawMargin": 4.6
+        },
+        "buzzing": {
+          "margin": 7.3,
+          "rawMargin": 7.3
+        }
+      }
+    },
+    {
+      "date": "2026-02-24",
+      "opponent": "CHI",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -4.7,
+      "actualMargin": 31,
+      "spread": -1.5,
+      "predictions": {
+        "standard": {
+          "margin": 1.5,
+          "rawMargin": 1.5
+        },
+        "bayesian": {
+          "margin": 2.1,
+          "rawMargin": 2.1
+        },
+        "buzzing": {
+          "margin": 4.8,
+          "rawMargin": 4.8
+        }
+      }
+    },
+    {
+      "date": "2026-02-26",
+      "opponent": "IND",
+      "isHome": false,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "weak",
+      "opponentNetRating": -8,
+      "actualMargin": 26,
+      "spread": -1.5,
+      "predictions": {
+        "standard": {
+          "margin": 4.5,
+          "rawMargin": 4.5
+        },
+        "bayesian": {
+          "margin": 5.1,
+          "rawMargin": 5.1
+        },
+        "buzzing": {
+          "margin": 7.3,
+          "rawMargin": 7.3
+        }
+      }
+    },
+    {
+      "date": "2026-02-28",
+      "opponent": "POR",
+      "isHome": true,
+      "isQualified": true,
+      "isBackToBack": false,
+      "opponentTier": "mid",
+      "opponentNetRating": -2.6,
+      "actualMargin": 15,
+      "spread": -4.5,
+      "predictions": {
+        "standard": {
+          "margin": 7.5,
+          "rawMargin": 7.5
+        },
+        "bayesian": {
+          "margin": 8.4,
+          "rawMargin": 8.4
+        },
+        "buzzing": {
+          "margin": 11.2,
+          "rawMargin": 11.2
+        }
+      }
+    }
+  ]
+}
