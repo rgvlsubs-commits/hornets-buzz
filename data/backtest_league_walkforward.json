@@ -1,5 +1,5 @@
 {
-  "runDate": "2026-03-01T20:39:12.991Z",
+  "runDate": "2026-03-01T21:11:35.450Z",
   "metadata": {
     "season": "2025-26",
     "generatedAt": "2026-03-01T14:59:15.010135",
@@ -8,6 +8,9 @@
     "hornetsGames": 51,
     "nonHornetsGames": 690,
     "minPriorGames": 10,
+    "closingLinesAdded": "2026-03-01T21:09:35.365913Z",
+    "closingLinesMatched": 708,
+    "closingLinesMissed": 33,
     "modelParams": {
       "eloWeight": 0.6,
       "nrWeight": 0.4,
@@ -32,7 +35,12 @@
       "bias": 1.0927125506072881,
       "suCorrect": 471,
       "total": 741,
-      "suPct": 63.56275303643725
+      "suPct": 63.56275303643725,
+      "atsW": 347,
+      "atsL": 361,
+      "atsPush": 0,
+      "atsPct": 49.01129943502825,
+      "atsTotal": 708
     },
     "nonHornets": {
       "mae": 11.315797101449279,
@@ -40,7 +48,12 @@
       "bias": 0.7827536231884055,
       "suCorrect": 441,
       "total": 690,
-      "suPct": 63.91304347826087
+      "suPct": 63.91304347826087,
+      "atsW": 326,
+      "atsL": 338,
+      "atsPush": 0,
+      "atsPct": 49.096385542168676,
+      "atsTotal": 664
     },
     "hornetsOnly": {
       "mae": 12.811764705882347,
@@ -48,7 +61,12 @@
       "bias": 5.286274509803922,
       "suCorrect": 30,
       "total": 51,
-      "suPct": 58.82352941176471
+      "suPct": 58.82352941176471,
+      "atsW": 21,
+      "atsL": 23,
+      "atsPush": 0,
+      "atsPct": 47.72727272727273,
+      "atsTotal": 44
     }
   },
   "buckets": {
@@ -58,7 +76,12 @@
       "bias": -0.05190311418685119,
       "suCorrect": 210,
       "total": 289,
-      "suPct": 72.66435986159169
+      "suPct": 72.66435986159169,
+      "atsW": 129,
+      "atsL": 148,
+      "atsPush": 0,
+      "atsPct": 46.57039711191336,
+      "atsTotal": 277
     },
     "tossUp": {
       "mae": 11.918110236220475,
@@ -66,7 +89,12 @@
       "bias": 2.380314960629922,
       "suCorrect": 129,
       "total": 254,
-      "suPct": 50.78740157480315
+      "suPct": 50.78740157480315,
+      "atsW": 125,
+      "atsL": 122,
+      "atsPush": 0,
+      "atsPct": 50.607287449392715,
+      "atsTotal": 247
     },
     "homeUnderdog": {
       "mae": 10.340816326530609,
@@ -74,7 +102,12 @@
       "bias": -0.33673469387755095,
       "suCorrect": 102,
       "total": 147,
-      "suPct": 69.38775510204081
+      "suPct": 69.38775510204081,
+      "atsW": 72,
+      "atsL": 68,
+      "atsPush": 0,
+      "atsPct": 51.42857142857142,
+      "atsTotal": 140
     },
     "eliteVsElite": {
       "mae": 11.528571428571427,
@@ -82,7 +115,12 @@
       "bias": 0.8714285714285702,
       "suCorrect": 16,
       "total": 28,
-      "suPct": 57.14285714285714
+      "suPct": 57.14285714285714,
+      "atsW": 12,
+      "atsL": 12,
+      "atsPush": 0,
+      "atsPct": 50,
+      "atsTotal": 24
     },
     "eliteVsWeak": {
       "mae": 10.115217391304352,
@@ -90,7 +128,12 @@
       "bias": -0.2195652173913043,
       "suCorrect": 70,
       "total": 92,
-      "suPct": 76.08695652173914
+      "suPct": 76.08695652173914,
+      "atsW": 39,
+      "atsL": 51,
+      "atsPush": 0,
+      "atsPct": 43.333333333333336,
+      "atsTotal": 90
     },
     "midVsMid": {
       "mae": 12.828985507246378,
@@ -98,7 +141,12 @@
       "bias": 1.9623188405797107,
       "suCorrect": 42,
       "total": 69,
-      "suPct": 60.86956521739131
+      "suPct": 60.86956521739131,
+      "atsW": 35,
+      "atsL": 33,
+      "atsPush": 0,
+      "atsPct": 51.470588235294116,
+      "atsTotal": 68
     },
     "b2b": {
       "mae": 12.933663366336633,
@@ -106,7 +154,12 @@
       "bias": 1.5891089108910883,
       "suCorrect": 121,
       "total": 202,
-      "suPct": 59.900990099009896
+      "suPct": 59.900990099009896,
+      "atsW": 87,
+      "atsL": 114,
+      "atsPush": 0,
+      "atsPct": 43.28358208955223,
+      "atsTotal": 201
     },
     "noB2b": {
       "mae": 10.646106557377049,
@@ -114,7 +167,12 @@
       "bias": 0.44897540983606576,
       "suCorrect": 320,
       "total": 488,
-      "suPct": 65.57377049180327
+      "suPct": 65.57377049180327,
+      "atsW": 239,
+      "atsL": 224,
+      "atsPush": 0,
+      "atsPct": 51.61987041036718,
+      "atsTotal": 463
     }
   },
   "games": [
@@ -133,7 +191,8 @@
       "homeWeightedNR": -4.5,
       "awayWeightedNR": 15.4,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500203",
@@ -150,7 +209,8 @@
       "homeWeightedNR": -5.5,
       "awayWeightedNR": -0.3,
       "predictedWinner": "MIL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500199",
@@ -167,7 +227,8 @@
       "homeWeightedNR": 6.8,
       "awayWeightedNR": -18,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500201",
@@ -184,7 +245,8 @@
       "homeWeightedNR": 4.2,
       "awayWeightedNR": 6.7,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500211",
@@ -201,7 +263,8 @@
       "homeWeightedNR": -10,
       "awayWeightedNR": -12.4,
       "predictedWinner": "UTA",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500210",
@@ -218,7 +281,8 @@
       "homeWeightedNR": 14.7,
       "awayWeightedNR": 2.8,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500207",
@@ -235,7 +299,8 @@
       "homeWeightedNR": -15.7,
       "awayWeightedNR": 4.2,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500209",
@@ -252,7 +317,8 @@
       "homeWeightedNR": 3,
       "awayWeightedNR": 3.1,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500216",
@@ -269,7 +335,8 @@
       "homeWeightedNR": 2.5,
       "awayWeightedNR": -5.7,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500221",
@@ -286,7 +353,8 @@
       "homeWeightedNR": -4.2,
       "awayWeightedNR": 4.6,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500219",
@@ -303,7 +371,8 @@
       "homeWeightedNR": -11.8,
       "awayWeightedNR": 0.7,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500220",
@@ -320,7 +389,8 @@
       "homeWeightedNR": 5.9,
       "awayWeightedNR": -1.9,
       "predictedWinner": "SAS",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500213",
@@ -337,7 +407,8 @@
       "homeWeightedNR": -3.4,
       "awayWeightedNR": -0.8,
       "predictedWinner": "MIL",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500223",
@@ -354,7 +425,8 @@
       "homeWeightedNR": -10.7,
       "awayWeightedNR": 3.1,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500215",
@@ -371,7 +443,8 @@
       "homeWeightedNR": 12.7,
       "awayWeightedNR": 0.4,
       "predictedWinner": "NYK",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500222",
@@ -388,7 +461,8 @@
       "homeWeightedNR": 16.4,
       "awayWeightedNR": 1.3,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500217",
@@ -405,7 +479,8 @@
       "homeWeightedNR": 3.4,
       "awayWeightedNR": 5.8,
       "predictedWinner": "MIA",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500214",
@@ -422,7 +497,8 @@
       "homeWeightedNR": 7.3,
       "awayWeightedNR": -1.4,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500224",
@@ -439,7 +515,8 @@
       "homeWeightedNR": -7.2,
       "awayWeightedNR": 14.4,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500227",
@@ -456,7 +533,8 @@
       "homeWeightedNR": -7.3,
       "awayWeightedNR": 6,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500225",
@@ -473,7 +551,8 @@
       "homeWeightedNR": 7.4,
       "awayWeightedNR": 4.7,
       "predictedWinner": "CLE",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500226",
@@ -490,7 +569,8 @@
       "homeWeightedNR": 7.1,
       "awayWeightedNR": -14.7,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500045",
@@ -507,7 +587,8 @@
       "homeWeightedNR": -11.4,
       "awayWeightedNR": -3.6,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500043",
@@ -524,7 +605,8 @@
       "homeWeightedNR": -1.2,
       "awayWeightedNR": -2.8,
       "predictedWinner": "MIL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500046",
@@ -541,7 +623,8 @@
       "homeWeightedNR": -4.9,
       "awayWeightedNR": -7.2,
       "predictedWinner": "DAL",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500039",
@@ -558,7 +641,8 @@
       "homeWeightedNR": 9.6,
       "awayWeightedNR": 1.4,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500041",
@@ -575,7 +659,8 @@
       "homeWeightedNR": 7.4,
       "awayWeightedNR": 3,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500044",
@@ -592,7 +677,8 @@
       "homeWeightedNR": 7,
       "awayWeightedNR": -14.2,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500042",
@@ -609,7 +695,8 @@
       "homeWeightedNR": 11.4,
       "awayWeightedNR": 1.6,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500040",
@@ -626,7 +713,8 @@
       "homeWeightedNR": 3.9,
       "awayWeightedNR": -14.4,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500047",
@@ -643,7 +731,8 @@
       "homeWeightedNR": 4,
       "awayWeightedNR": -0.6,
       "predictedWinner": "SAS",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500230",
@@ -660,7 +749,8 @@
       "homeWeightedNR": -17.3,
       "awayWeightedNR": 5.6,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500232",
@@ -677,7 +767,8 @@
       "homeWeightedNR": 10.5,
       "awayWeightedNR": 14.8,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500229",
@@ -694,7 +785,8 @@
       "homeWeightedNR": -4.1,
       "awayWeightedNR": 18.9,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 17.5
     },
     {
       "gameId": "0022500231",
@@ -711,7 +803,8 @@
       "homeWeightedNR": 0.2,
       "awayWeightedNR": -2,
       "predictedWinner": "MIL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500228",
@@ -728,7 +821,8 @@
       "homeWeightedNR": 4.2,
       "awayWeightedNR": -10.3,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500233",
@@ -745,7 +839,8 @@
       "homeWeightedNR": 5.9,
       "awayWeightedNR": -6.4,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500235",
@@ -762,7 +857,8 @@
       "homeWeightedNR": -17.5,
       "awayWeightedNR": -15.2,
       "predictedWinner": "WAS",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500239",
@@ -779,7 +875,8 @@
       "homeWeightedNR": 10.8,
       "awayWeightedNR": 7.7,
       "predictedWinner": "PHX",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500234",
@@ -796,7 +893,8 @@
       "homeWeightedNR": 2.9,
       "awayWeightedNR": -14.3,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500236",
@@ -813,7 +911,8 @@
       "homeWeightedNR": 13,
       "awayWeightedNR": 4,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500237",
@@ -830,7 +929,8 @@
       "homeWeightedNR": -13,
       "awayWeightedNR": 0.8,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500238",
@@ -847,7 +947,8 @@
       "homeWeightedNR": -4.6,
       "awayWeightedNR": -2.1,
       "predictedWinner": "POR",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500240",
@@ -864,7 +965,8 @@
       "homeWeightedNR": -7.1,
       "awayWeightedNR": -3.5,
       "predictedWinner": "CHI",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500243",
@@ -881,7 +983,8 @@
       "homeWeightedNR": 2,
       "awayWeightedNR": -6.3,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500242",
@@ -898,7 +1001,8 @@
       "homeWeightedNR": 7.2,
       "awayWeightedNR": -18.3,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500246",
@@ -915,7 +1019,8 @@
       "homeWeightedNR": 6.7,
       "awayWeightedNR": -3.7,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500247",
@@ -932,7 +1037,8 @@
       "homeWeightedNR": -13,
       "awayWeightedNR": 17.6,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 17.5
     },
     {
       "gameId": "0022500245",
@@ -949,7 +1055,8 @@
       "homeWeightedNR": 7.2,
       "awayWeightedNR": -5.1,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500244",
@@ -966,7 +1073,8 @@
       "homeWeightedNR": -0.3,
       "awayWeightedNR": 9.2,
       "predictedWinner": "NYK",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500248",
@@ -983,7 +1091,8 @@
       "homeWeightedNR": 13.9,
       "awayWeightedNR": -3.7,
       "predictedWinner": "DEN",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500241",
@@ -1000,7 +1109,8 @@
       "homeWeightedNR": 4.1,
       "awayWeightedNR": -3.2,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500250",
@@ -1017,7 +1127,8 @@
       "homeWeightedNR": -10.1,
       "awayWeightedNR": 6.8,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500249",
@@ -1034,7 +1145,8 @@
       "homeWeightedNR": 2.9,
       "awayWeightedNR": 0.7,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500253",
@@ -1051,7 +1163,8 @@
       "homeWeightedNR": 2.7,
       "awayWeightedNR": -4.1,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500251",
@@ -1068,7 +1181,8 @@
       "homeWeightedNR": 7.1,
       "awayWeightedNR": 9.2,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500254",
@@ -1085,7 +1199,8 @@
       "homeWeightedNR": -2.4,
       "awayWeightedNR": 9.6,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500252",
@@ -1102,7 +1217,8 @@
       "homeWeightedNR": 3.9,
       "awayWeightedNR": -11,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500262",
@@ -1119,7 +1235,8 @@
       "homeWeightedNR": -6.3,
       "awayWeightedNR": 6.8,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500263",
@@ -1136,7 +1253,8 @@
       "homeWeightedNR": -4.5,
       "awayWeightedNR": -2.5,
       "predictedWinner": "CHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500261",
@@ -1153,7 +1271,8 @@
       "homeWeightedNR": 18.1,
       "awayWeightedNR": -13.8,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -18.5
     },
     {
       "gameId": "0022500255",
@@ -1170,7 +1289,8 @@
       "homeWeightedNR": 5.8,
       "awayWeightedNR": 13,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500257",
@@ -1187,7 +1307,8 @@
       "homeWeightedNR": -1.1,
       "awayWeightedNR": 1.5,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500256",
@@ -1204,7 +1325,8 @@
       "homeWeightedNR": -18.2,
       "awayWeightedNR": -5.1,
       "predictedWinner": "CHA",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500259",
@@ -1221,7 +1343,8 @@
       "homeWeightedNR": 7.9,
       "awayWeightedNR": -17,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -16.5
     },
     {
       "gameId": "0022500260",
@@ -1238,7 +1361,8 @@
       "homeWeightedNR": -13,
       "awayWeightedNR": 11.4,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500258",
@@ -1255,7 +1379,8 @@
       "homeWeightedNR": 0.8,
       "awayWeightedNR": 8.1,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500264",
@@ -1272,7 +1397,8 @@
       "homeWeightedNR": 4.5,
       "awayWeightedNR": -5.4,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500266",
@@ -1289,7 +1415,8 @@
       "homeWeightedNR": -4.2,
       "awayWeightedNR": -0.5,
       "predictedWinner": "MIL",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500267",
@@ -1306,7 +1433,8 @@
       "homeWeightedNR": 4.5,
       "awayWeightedNR": 5.8,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500265",
@@ -1323,7 +1451,8 @@
       "homeWeightedNR": -11.3,
       "awayWeightedNR": -14.3,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500048",
@@ -1340,7 +1469,8 @@
       "homeWeightedNR": 3.2,
       "awayWeightedNR": -14.8,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500056",
@@ -1357,7 +1487,8 @@
       "homeWeightedNR": 0.5,
       "awayWeightedNR": -5.4,
       "predictedWinner": "GSW",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500054",
@@ -1374,7 +1505,8 @@
       "homeWeightedNR": 12.6,
       "awayWeightedNR": 10.4,
       "predictedWinner": "HOU",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500049",
@@ -1391,7 +1523,8 @@
       "homeWeightedNR": 7.9,
       "awayWeightedNR": -8.6,
       "predictedWinner": "BOS",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500051",
@@ -1408,7 +1541,8 @@
       "homeWeightedNR": -2.2,
       "awayWeightedNR": 0.9,
       "predictedWinner": "CHI",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500055",
@@ -1425,7 +1559,8 @@
       "homeWeightedNR": -5.3,
       "awayWeightedNR": 17.7,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 16.5
     },
     {
       "gameId": "0022500053",
@@ -1442,7 +1577,8 @@
       "homeWeightedNR": 10.9,
       "awayWeightedNR": 9.5,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500052",
@@ -1459,7 +1595,8 @@
       "homeWeightedNR": -5,
       "awayWeightedNR": -13.3,
       "predictedWinner": "DAL",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500050",
@@ -1476,7 +1613,8 @@
       "homeWeightedNR": 8.3,
       "awayWeightedNR": -17,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500271",
@@ -1493,7 +1631,8 @@
       "homeWeightedNR": -5.9,
       "awayWeightedNR": -18.6,
       "predictedWinner": "CHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500268",
@@ -1527,7 +1666,8 @@
       "homeWeightedNR": -5.2,
       "awayWeightedNR": 8.7,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500273",
@@ -1544,7 +1684,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": -4.9,
       "predictedWinner": "DAL",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500274",
@@ -1561,7 +1702,8 @@
       "homeWeightedNR": 9,
       "awayWeightedNR": -16.9,
       "predictedWinner": "DEN",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500270",
@@ -1578,7 +1720,8 @@
       "homeWeightedNR": -11.5,
       "awayWeightedNR": 3.2,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500269",
@@ -1595,7 +1738,8 @@
       "homeWeightedNR": 6.2,
       "awayWeightedNR": 5.7,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500275",
@@ -1629,7 +1773,8 @@
       "homeWeightedNR": 18.1,
       "awayWeightedNR": -3.8,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500277",
@@ -1646,7 +1791,8 @@
       "homeWeightedNR": 5.9,
       "awayWeightedNR": 6.7,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500279",
@@ -1663,7 +1809,8 @@
       "homeWeightedNR": 10.4,
       "awayWeightedNR": -7,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500281",
@@ -1680,7 +1827,8 @@
       "homeWeightedNR": 9.6,
       "awayWeightedNR": 5.2,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500278",
@@ -1697,7 +1845,8 @@
       "homeWeightedNR": 4.4,
       "awayWeightedNR": -5.4,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500282",
@@ -1714,7 +1863,8 @@
       "homeWeightedNR": -9.3,
       "awayWeightedNR": 3.5,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500276",
@@ -1731,7 +1881,8 @@
       "homeWeightedNR": 4.1,
       "awayWeightedNR": -6.3,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500289",
@@ -1748,7 +1899,8 @@
       "homeWeightedNR": -11.7,
       "awayWeightedNR": -5.2,
       "predictedWinner": "CHI",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500283",
@@ -1765,7 +1917,8 @@
       "homeWeightedNR": -13.3,
       "awayWeightedNR": 8.9,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500284",
@@ -1782,7 +1935,8 @@
       "homeWeightedNR": 10.4,
       "awayWeightedNR": 5.4,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500286",
@@ -1799,7 +1953,8 @@
       "homeWeightedNR": 7,
       "awayWeightedNR": -5.1,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500288",
@@ -1816,7 +1971,8 @@
       "homeWeightedNR": -7.5,
       "awayWeightedNR": -6.7,
       "predictedWinner": "MIL",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500285",
@@ -1833,7 +1989,8 @@
       "homeWeightedNR": -6.5,
       "awayWeightedNR": 4.3,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 12.5
     },
     {
       "gameId": "0022500291",
@@ -1850,7 +2007,8 @@
       "homeWeightedNR": -1.1,
       "awayWeightedNR": -7.5,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500290",
@@ -1867,7 +2025,8 @@
       "homeWeightedNR": 8,
       "awayWeightedNR": 9.9,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500292",
@@ -1884,7 +2043,8 @@
       "homeWeightedNR": -14.3,
       "awayWeightedNR": 6.9,
       "predictedWinner": "MIN",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500287",
@@ -1901,7 +2061,8 @@
       "homeWeightedNR": -2.1,
       "awayWeightedNR": 6.8,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500058",
@@ -1918,7 +2079,8 @@
       "homeWeightedNR": -0.7,
       "awayWeightedNR": 6.1,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500057",
@@ -1935,7 +2097,8 @@
       "homeWeightedNR": -15.4,
       "awayWeightedNR": 4,
       "predictedWinner": "ATL",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500059",
@@ -1952,7 +2115,8 @@
       "homeWeightedNR": 5.1,
       "awayWeightedNR": -6.5,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500061",
@@ -1969,7 +2133,8 @@
       "homeWeightedNR": -6.3,
       "awayWeightedNR": 4,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500064",
@@ -1986,7 +2151,8 @@
       "homeWeightedNR": 19.7,
       "awayWeightedNR": 5.7,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500060",
@@ -2003,7 +2169,8 @@
       "homeWeightedNR": 6.2,
       "awayWeightedNR": 8.5,
       "predictedWinner": "DET",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500062",
@@ -2020,7 +2187,8 @@
       "homeWeightedNR": 7.7,
       "awayWeightedNR": -7,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500067",
@@ -2037,7 +2205,8 @@
       "homeWeightedNR": -4.6,
       "awayWeightedNR": 4.4,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500063",
@@ -2054,7 +2223,8 @@
       "homeWeightedNR": 10.3,
       "awayWeightedNR": -11.7,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500068",
@@ -2071,7 +2241,8 @@
       "homeWeightedNR": -12.7,
       "awayWeightedNR": 4.6,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500065",
@@ -2088,7 +2259,8 @@
       "homeWeightedNR": -8.7,
       "awayWeightedNR": -2.5,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500066",
@@ -2105,7 +2277,8 @@
       "homeWeightedNR": 0.7,
       "awayWeightedNR": 11.3,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500077",
@@ -2122,7 +2295,8 @@
       "homeWeightedNR": -9.4,
       "awayWeightedNR": -11.8,
       "predictedWinner": "UTA",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500071",
@@ -2139,7 +2313,8 @@
       "homeWeightedNR": -9.6,
       "awayWeightedNR": -7,
       "predictedWinner": "CHI",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500074",
@@ -2156,7 +2331,8 @@
       "homeWeightedNR": 6.5,
       "awayWeightedNR": -6.5,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500076",
@@ -2173,7 +2349,8 @@
       "homeWeightedNR": 7.6,
       "awayWeightedNR": 5.1,
       "predictedWinner": "DEN",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500075",
@@ -2190,7 +2367,8 @@
       "homeWeightedNR": 18.7,
       "awayWeightedNR": 4.6,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500078",
@@ -2207,7 +2385,8 @@
       "homeWeightedNR": 6.5,
       "awayWeightedNR": -4,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500073",
@@ -2224,7 +2403,8 @@
       "homeWeightedNR": -10.1,
       "awayWeightedNR": -11.1,
       "predictedWinner": "IND",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500072",
@@ -2241,7 +2421,8 @@
       "homeWeightedNR": 6.9,
       "awayWeightedNR": 9.9,
       "predictedWinner": "DET",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500079",
@@ -2258,7 +2439,8 @@
       "homeWeightedNR": -7.2,
       "awayWeightedNR": -0.7,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500069",
@@ -2275,7 +2457,8 @@
       "homeWeightedNR": 1.4,
       "awayWeightedNR": 2.4,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500070",
@@ -2292,7 +2475,8 @@
       "homeWeightedNR": -7.5,
       "awayWeightedNR": -5.9,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500300",
@@ -2309,7 +2493,8 @@
       "homeWeightedNR": -6.1,
       "awayWeightedNR": -5.4,
       "predictedWinner": "LAC",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500293",
@@ -2326,7 +2511,8 @@
       "homeWeightedNR": 4.1,
       "awayWeightedNR": 6.2,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500299",
@@ -2343,7 +2529,8 @@
       "homeWeightedNR": 2.6,
       "awayWeightedNR": 5.9,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500297",
@@ -2360,7 +2547,8 @@
       "homeWeightedNR": -7.2,
       "awayWeightedNR": -7.9,
       "predictedWinner": "MIL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500296",
@@ -2377,7 +2565,8 @@
       "homeWeightedNR": 7.1,
       "awayWeightedNR": 5.5,
       "predictedWinner": "MIA",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500295",
@@ -2394,7 +2583,8 @@
       "homeWeightedNR": -4.7,
       "awayWeightedNR": -7.1,
       "predictedWinner": "CHI",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500298",
@@ -2411,7 +2601,8 @@
       "homeWeightedNR": 1,
       "awayWeightedNR": -7.9,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500294",
@@ -2428,7 +2619,8 @@
       "homeWeightedNR": -7.6,
       "awayWeightedNR": 9.3,
       "predictedWinner": "TOR",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500301",
@@ -2462,7 +2654,8 @@
       "homeWeightedNR": 2.7,
       "awayWeightedNR": 4.4,
       "predictedWinner": "SAS",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500302",
@@ -2479,7 +2672,8 @@
       "homeWeightedNR": 2.3,
       "awayWeightedNR": 4.2,
       "predictedWinner": "CLE",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500305",
@@ -2496,7 +2690,8 @@
       "homeWeightedNR": -5.1,
       "awayWeightedNR": 16.7,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 11.5
     },
     {
       "gameId": "0022500303",
@@ -2513,7 +2708,8 @@
       "homeWeightedNR": 7.3,
       "awayWeightedNR": 6.6,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500308",
@@ -2530,7 +2726,8 @@
       "homeWeightedNR": 6.1,
       "awayWeightedNR": -7.4,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500307",
@@ -2547,7 +2744,8 @@
       "homeWeightedNR": -9.6,
       "awayWeightedNR": -1.5,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500304",
@@ -2564,7 +2762,8 @@
       "homeWeightedNR": -3.9,
       "awayWeightedNR": 1.7,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500313",
@@ -2581,7 +2780,8 @@
       "homeWeightedNR": 5,
       "awayWeightedNR": -7.2,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500317",
@@ -2598,7 +2798,8 @@
       "homeWeightedNR": 7.7,
       "awayWeightedNR": -0.6,
       "predictedWinner": "LAL",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500309",
@@ -2615,7 +2816,8 @@
       "homeWeightedNR": 4.7,
       "awayWeightedNR": 1.6,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500316",
@@ -2632,7 +2834,8 @@
       "homeWeightedNR": -8.4,
       "awayWeightedNR": 12.5,
       "predictedWinner": "HOU",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 11.5
     },
     {
       "gameId": "0022500310",
@@ -2649,7 +2852,8 @@
       "homeWeightedNR": -2.4,
       "awayWeightedNR": 1.2,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500315",
@@ -2666,7 +2870,8 @@
       "homeWeightedNR": 7.2,
       "awayWeightedNR": -4.9,
       "predictedWinner": "DEN",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500311",
@@ -2683,7 +2888,8 @@
       "homeWeightedNR": -13.6,
       "awayWeightedNR": -3.7,
       "predictedWinner": "MIL",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500314",
@@ -2700,7 +2906,8 @@
       "homeWeightedNR": 8.6,
       "awayWeightedNR": -5.5,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500312",
@@ -2717,7 +2924,8 @@
       "homeWeightedNR": -9.6,
       "awayWeightedNR": -5.2,
       "predictedWinner": "CHA",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500323",
@@ -2734,7 +2942,8 @@
       "homeWeightedNR": 1.7,
       "awayWeightedNR": 15.1,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 11.5
     },
     {
       "gameId": "0022500321",
@@ -2751,7 +2960,8 @@
       "homeWeightedNR": -7.3,
       "awayWeightedNR": 4.2,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 12.5
     },
     {
       "gameId": "0022500322",
@@ -2768,7 +2978,8 @@
       "homeWeightedNR": 2,
       "awayWeightedNR": -0.2,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500318",
@@ -2785,7 +2996,8 @@
       "homeWeightedNR": -5.1,
       "awayWeightedNR": -10.3,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500320",
@@ -2802,7 +3014,8 @@
       "homeWeightedNR": 4.2,
       "awayWeightedNR": 9.3,
       "predictedWinner": "NYK",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500319",
@@ -2819,7 +3032,8 @@
       "homeWeightedNR": 3.1,
       "awayWeightedNR": -5.9,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500329",
@@ -2836,7 +3050,8 @@
       "homeWeightedNR": -6,
       "awayWeightedNR": -6.8,
       "predictedWinner": "CHI",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500325",
@@ -2853,7 +3068,8 @@
       "homeWeightedNR": -3,
       "awayWeightedNR": 6.1,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500327",
@@ -2870,7 +3086,8 @@
       "homeWeightedNR": 0.7,
       "awayWeightedNR": -7.9,
       "predictedWinner": "ATL",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500330",
@@ -2887,7 +3104,8 @@
       "homeWeightedNR": 11.2,
       "awayWeightedNR": -10,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500328",
@@ -2904,7 +3122,8 @@
       "homeWeightedNR": 7.2,
       "awayWeightedNR": -6.8,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500324",
@@ -2921,7 +3140,8 @@
       "homeWeightedNR": 1.7,
       "awayWeightedNR": -4.8,
       "predictedWinner": "CLE",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500326",
@@ -2938,7 +3158,8 @@
       "homeWeightedNR": 8.5,
       "awayWeightedNR": 2.9,
       "predictedWinner": "ORL",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500332",
@@ -2955,7 +3176,8 @@
       "homeWeightedNR": -2.7,
       "awayWeightedNR": 6.4,
       "predictedWinner": "MIA",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500331",
@@ -2972,7 +3194,8 @@
       "homeWeightedNR": -2.7,
       "awayWeightedNR": 4,
       "predictedWinner": "DET",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500334",
@@ -2989,7 +3212,8 @@
       "homeWeightedNR": -11.8,
       "awayWeightedNR": 4.4,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500333",
@@ -3006,7 +3230,8 @@
       "homeWeightedNR": -2.1,
       "awayWeightedNR": 0.5,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500336",
@@ -3023,7 +3248,8 @@
       "homeWeightedNR": 2.5,
       "awayWeightedNR": 5.7,
       "predictedWinner": "TOR",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500335",
@@ -3040,7 +3266,8 @@
       "homeWeightedNR": -4.2,
       "awayWeightedNR": -7.3,
       "predictedWinner": "BKN",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500337",
@@ -3057,7 +3284,8 @@
       "homeWeightedNR": -7.8,
       "awayWeightedNR": 4.2,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 12.5
     },
     {
       "gameId": "0022500339",
@@ -3074,7 +3302,8 @@
       "homeWeightedNR": 7.9,
       "awayWeightedNR": 4.6,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500348",
@@ -3091,7 +3320,8 @@
       "homeWeightedNR": -2.3,
       "awayWeightedNR": 0.4,
       "predictedWinner": "MIL",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500344",
@@ -3108,7 +3338,8 @@
       "homeWeightedNR": 0.6,
       "awayWeightedNR": -6.5,
       "predictedWinner": "TOR",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500338",
@@ -3125,7 +3356,8 @@
       "homeWeightedNR": 9.7,
       "awayWeightedNR": 4.4,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500341",
@@ -3142,7 +3374,8 @@
       "homeWeightedNR": 1.1,
       "awayWeightedNR": 2.5,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500347",
@@ -3159,7 +3392,8 @@
       "homeWeightedNR": 0,
       "awayWeightedNR": -3.6,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500340",
@@ -3176,7 +3410,8 @@
       "homeWeightedNR": -1.1,
       "awayWeightedNR": 6.6,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500346",
@@ -3193,7 +3428,8 @@
       "homeWeightedNR": 12.6,
       "awayWeightedNR": 1.9,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500343",
@@ -3210,7 +3446,8 @@
       "homeWeightedNR": 7.9,
       "awayWeightedNR": -4.9,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500345",
@@ -3227,7 +3464,8 @@
       "homeWeightedNR": -6.3,
       "awayWeightedNR": -3.9,
       "predictedWinner": "CHI",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500349",
@@ -3244,7 +3482,8 @@
       "homeWeightedNR": 13.8,
       "awayWeightedNR": -0.8,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500342",
@@ -3261,7 +3500,8 @@
       "homeWeightedNR": 3.3,
       "awayWeightedNR": -3.1,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500354",
@@ -3278,7 +3518,8 @@
       "homeWeightedNR": 3.4,
       "awayWeightedNR": -12.1,
       "predictedWinner": "MIA",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500353",
@@ -3295,7 +3536,8 @@
       "homeWeightedNR": 3.2,
       "awayWeightedNR": -2.5,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500350",
@@ -3312,7 +3554,8 @@
       "homeWeightedNR": -5.2,
       "awayWeightedNR": -7.7,
       "predictedWinner": "BKN",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500351",
@@ -3329,7 +3572,8 @@
       "homeWeightedNR": -18,
       "awayWeightedNR": -1.7,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500355",
@@ -3346,7 +3590,8 @@
       "homeWeightedNR": 4.6,
       "awayWeightedNR": -4.8,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500352",
@@ -3363,7 +3608,8 @@
       "homeWeightedNR": 2.4,
       "awayWeightedNR": -0.5,
       "predictedWinner": "CLE",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500356",
@@ -3380,7 +3626,8 @@
       "homeWeightedNR": -2.7,
       "awayWeightedNR": 13.4,
       "predictedWinner": "HOU",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500361",
@@ -3397,7 +3644,8 @@
       "homeWeightedNR": -6.9,
       "awayWeightedNR": 0.6,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500362",
@@ -3414,7 +3662,8 @@
       "homeWeightedNR": 1.5,
       "awayWeightedNR": 1.2,
       "predictedWinner": "PHI",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500360",
@@ -3431,7 +3680,8 @@
       "homeWeightedNR": 0.8,
       "awayWeightedNR": -3,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500358",
@@ -3448,7 +3698,8 @@
       "homeWeightedNR": -2.3,
       "awayWeightedNR": 12,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500357",
@@ -3482,7 +3733,8 @@
       "homeWeightedNR": -8.1,
       "awayWeightedNR": 14.5,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 11.5
     },
     {
       "gameId": "0022500359",
@@ -3499,7 +3751,8 @@
       "homeWeightedNR": -3.1,
       "awayWeightedNR": 6,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500365",
@@ -3516,7 +3769,8 @@
       "homeWeightedNR": 5.3,
       "awayWeightedNR": -1.9,
       "predictedWinner": "MIN",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500366",
@@ -3533,7 +3787,8 @@
       "homeWeightedNR": -8.6,
       "awayWeightedNR": 0.7,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500364",
@@ -3550,7 +3805,8 @@
       "homeWeightedNR": -2.7,
       "awayWeightedNR": -8,
       "predictedWinner": "IND",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022501201",
@@ -3567,7 +3823,8 @@
       "homeWeightedNR": 3.9,
       "awayWeightedNR": 1.4,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022501202",
@@ -3584,7 +3841,8 @@
       "homeWeightedNR": -2.8,
       "awayWeightedNR": 10.7,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022501204",
@@ -3601,7 +3859,8 @@
       "homeWeightedNR": 0.6,
       "awayWeightedNR": 1.8,
       "predictedWinner": "LAL",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022501203",
@@ -3618,7 +3877,8 @@
       "homeWeightedNR": 16.5,
       "awayWeightedNR": -1.4,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022501205",
@@ -3635,7 +3895,8 @@
       "homeWeightedNR": 9.6,
       "awayWeightedNR": -4.7,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022501207",
@@ -3652,7 +3913,8 @@
       "homeWeightedNR": -8.6,
       "awayWeightedNR": -4.1,
       "predictedWinner": "POR",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022501208",
@@ -3669,7 +3931,8 @@
       "homeWeightedNR": -8.8,
       "awayWeightedNR": 6.3,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022501206",
@@ -3686,7 +3949,8 @@
       "homeWeightedNR": -4,
       "awayWeightedNR": 12.3,
       "predictedWinner": "BOS",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022501211",
@@ -3703,7 +3967,8 @@
       "homeWeightedNR": 1.5,
       "awayWeightedNR": -0.9,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022501214",
@@ -3720,7 +3985,8 @@
       "homeWeightedNR": -0.4,
       "awayWeightedNR": -2.2,
       "predictedWinner": "DAL",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022501210",
@@ -3737,7 +4003,8 @@
       "homeWeightedNR": 3.9,
       "awayWeightedNR": -0.4,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022501209",
@@ -3754,7 +4021,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": -10.9,
       "predictedWinner": "CHA",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022501215",
@@ -3771,7 +4039,8 @@
       "homeWeightedNR": 4,
       "awayWeightedNR": 3.6,
       "predictedWinner": "GSW",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022501213",
@@ -3788,7 +4057,8 @@
       "homeWeightedNR": 3.3,
       "awayWeightedNR": -10.3,
       "predictedWinner": "MEM",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022501212",
@@ -3805,7 +4075,8 @@
       "homeWeightedNR": -16.2,
       "awayWeightedNR": 1.2,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 15.5
     },
     {
       "gameId": "0022501230",
@@ -3839,7 +4110,8 @@
       "homeWeightedNR": 4.9,
       "awayWeightedNR": 12.2,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022501219",
@@ -3856,7 +4128,8 @@
       "homeWeightedNR": -2.7,
       "awayWeightedNR": -1.8,
       "predictedWinner": "MIL",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022501218",
@@ -3873,7 +4146,8 @@
       "homeWeightedNR": 1.5,
       "awayWeightedNR": -2.7,
       "predictedWinner": "CLE",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022501228",
@@ -3890,7 +4164,8 @@
       "homeWeightedNR": -5.5,
       "awayWeightedNR": -1.3,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022501216",
@@ -3924,7 +4199,8 @@
       "homeWeightedNR": -10.1,
       "awayWeightedNR": -5.8,
       "predictedWinner": "CHI",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022501221",
@@ -3941,7 +4217,8 @@
       "homeWeightedNR": -6.3,
       "awayWeightedNR": 3.7,
       "predictedWinner": "GSW",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022501220",
@@ -3958,7 +4235,8 @@
       "homeWeightedNR": 3.7,
       "awayWeightedNR": -11.8,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022501217",
@@ -3975,7 +4253,8 @@
       "homeWeightedNR": -2.9,
       "awayWeightedNR": 3.2,
       "predictedWinner": "PHI",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022501225",
@@ -3992,7 +4271,8 @@
       "homeWeightedNR": 9.8,
       "awayWeightedNR": 9,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022501224",
@@ -4009,7 +4289,8 @@
       "homeWeightedNR": -9.2,
       "awayWeightedNR": 0,
       "predictedWinner": "DAL",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022501227",
@@ -4026,7 +4307,8 @@
       "homeWeightedNR": -1,
       "awayWeightedNR": -5.8,
       "predictedWinner": "MIA",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022501226",
@@ -4043,7 +4325,8 @@
       "homeWeightedNR": -2.8,
       "awayWeightedNR": 3,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022501222",
@@ -4060,7 +4343,8 @@
       "homeWeightedNR": 9.5,
       "awayWeightedNR": 6.9,
       "predictedWinner": "BOS",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500367",
@@ -4077,7 +4361,8 @@
       "homeWeightedNR": -9.7,
       "awayWeightedNR": 1.4,
       "predictedWinner": "CLE",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500368",
@@ -4094,7 +4379,8 @@
       "homeWeightedNR": 4.9,
       "awayWeightedNR": 4.4,
       "predictedWinner": "MIN",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500378",
@@ -4111,7 +4397,8 @@
       "homeWeightedNR": -7.2,
       "awayWeightedNR": 4,
       "predictedWinner": "GSW",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500380",
@@ -4128,7 +4415,8 @@
       "homeWeightedNR": -6.4,
       "awayWeightedNR": -10.6,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500374",
@@ -4145,7 +4433,8 @@
       "homeWeightedNR": -6.7,
       "awayWeightedNR": -4.3,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500371",
@@ -4162,7 +4451,8 @@
       "homeWeightedNR": -1,
       "awayWeightedNR": -1.9,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500379",
@@ -4179,7 +4469,8 @@
       "homeWeightedNR": -8.5,
       "awayWeightedNR": -1.7,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500369",
@@ -4196,7 +4487,8 @@
       "homeWeightedNR": 18.4,
       "awayWeightedNR": -6.3,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -16.5
     },
     {
       "gameId": "0022500375",
@@ -4213,7 +4505,8 @@
       "homeWeightedNR": -3.6,
       "awayWeightedNR": 6.8,
       "predictedWinner": "HOU",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500377",
@@ -4230,7 +4523,8 @@
       "homeWeightedNR": 9.2,
       "awayWeightedNR": 2,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500376",
@@ -4247,7 +4541,8 @@
       "homeWeightedNR": -1,
       "awayWeightedNR": 7.3,
       "predictedWinner": "DET",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500373",
@@ -4264,7 +4559,8 @@
       "homeWeightedNR": 2.4,
       "awayWeightedNR": -2.7,
       "predictedWinner": "BKN",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500370",
@@ -4281,7 +4577,8 @@
       "homeWeightedNR": 2.2,
       "awayWeightedNR": -12.8,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500372",
@@ -4298,7 +4595,8 @@
       "homeWeightedNR": -3.7,
       "awayWeightedNR": 12.7,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500381",
@@ -4315,7 +4613,8 @@
       "homeWeightedNR": 6.7,
       "awayWeightedNR": -1.6,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500384",
@@ -4332,7 +4631,8 @@
       "homeWeightedNR": -1.3,
       "awayWeightedNR": -6.8,
       "predictedWinner": "CLE",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500382",
@@ -4349,7 +4649,8 @@
       "homeWeightedNR": 10.1,
       "awayWeightedNR": 2.1,
       "predictedWinner": "NYK",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500385",
@@ -4366,7 +4667,8 @@
       "homeWeightedNR": 3.6,
       "awayWeightedNR": 18.6,
       "predictedWinner": "OKC",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500383",
@@ -4383,7 +4685,8 @@
       "homeWeightedNR": -3,
       "awayWeightedNR": 6.5,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500393",
@@ -4400,7 +4703,8 @@
       "homeWeightedNR": -6.9,
       "awayWeightedNR": 0.1,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500391",
@@ -4417,7 +4721,8 @@
       "homeWeightedNR": 4.4,
       "awayWeightedNR": -11.6,
       "predictedWinner": "MEM",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500392",
@@ -4434,7 +4739,8 @@
       "homeWeightedNR": 3.3,
       "awayWeightedNR": -6.1,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500388",
@@ -4451,7 +4757,8 @@
       "homeWeightedNR": -2,
       "awayWeightedNR": 6.5,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500386",
@@ -4468,7 +4775,8 @@
       "homeWeightedNR": 10.1,
       "awayWeightedNR": 4.5,
       "predictedWinner": "DEN",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500389",
@@ -4485,7 +4793,8 @@
       "homeWeightedNR": -2,
       "awayWeightedNR": -4.6,
       "predictedWinner": "NOP",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500395",
@@ -4502,7 +4811,8 @@
       "homeWeightedNR": -7.5,
       "awayWeightedNR": 0,
       "predictedWinner": "LAL",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500394",
@@ -4519,7 +4829,8 @@
       "homeWeightedNR": -11.1,
       "awayWeightedNR": -5.2,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500387",
@@ -4536,7 +4847,8 @@
       "homeWeightedNR": 2.9,
       "awayWeightedNR": 0.1,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500390",
@@ -4553,7 +4865,8 @@
       "homeWeightedNR": 6.8,
       "awayWeightedNR": -1.5,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500401",
@@ -4570,7 +4883,8 @@
       "homeWeightedNR": -10.7,
       "awayWeightedNR": 6.2,
       "predictedWinner": "HOU",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": 11.5
     },
     {
       "gameId": "0022500397",
@@ -4587,7 +4901,8 @@
       "homeWeightedNR": 2.7,
       "awayWeightedNR": -4.3,
       "predictedWinner": "BKN",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500399",
@@ -4604,7 +4919,8 @@
       "homeWeightedNR": -10,
       "awayWeightedNR": 8.6,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 16.5
     },
     {
       "gameId": "0022500396",
@@ -4621,7 +4937,8 @@
       "homeWeightedNR": -6.1,
       "awayWeightedNR": -3.3,
       "predictedWinner": "ATL",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500398",
@@ -4638,7 +4955,8 @@
       "homeWeightedNR": 8.1,
       "awayWeightedNR": -2.8,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500400",
@@ -4655,7 +4973,8 @@
       "homeWeightedNR": 4.4,
       "awayWeightedNR": -6.8,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500402",
@@ -4672,7 +4991,8 @@
       "homeWeightedNR": -2.5,
       "awayWeightedNR": -3,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500404",
@@ -4689,7 +5009,8 @@
       "homeWeightedNR": 0.5,
       "awayWeightedNR": -1.3,
       "predictedWinner": "NOP",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500406",
@@ -4706,7 +5027,8 @@
       "homeWeightedNR": 15.4,
       "awayWeightedNR": 2.5,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500405",
@@ -4723,7 +5045,8 @@
       "homeWeightedNR": 8,
       "awayWeightedNR": -5.1,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500407",
@@ -4740,7 +5063,8 @@
       "homeWeightedNR": 1.8,
       "awayWeightedNR": 0.6,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500403",
@@ -4757,7 +5081,8 @@
       "homeWeightedNR": 8.1,
       "awayWeightedNR": -6.6,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500408",
@@ -4774,7 +5099,8 @@
       "homeWeightedNR": -3.7,
       "awayWeightedNR": 9.2,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500421",
@@ -4791,7 +5117,8 @@
       "homeWeightedNR": -8,
       "awayWeightedNR": 8.7,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500418",
@@ -4808,7 +5135,8 @@
       "homeWeightedNR": -5.5,
       "awayWeightedNR": -1.9,
       "predictedWinner": "LAL",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500413",
@@ -4825,7 +5153,8 @@
       "homeWeightedNR": -7.1,
       "awayWeightedNR": -6.5,
       "predictedWinner": "MIL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500414",
@@ -4842,7 +5171,8 @@
       "homeWeightedNR": -2.9,
       "awayWeightedNR": -5,
       "predictedWinner": "MIA",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500409",
@@ -4859,7 +5189,8 @@
       "homeWeightedNR": -3.1,
       "awayWeightedNR": -11,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500417",
@@ -4876,7 +5207,8 @@
       "homeWeightedNR": 9.3,
       "awayWeightedNR": 14.2,
       "predictedWinner": "OKC",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500411",
@@ -4893,7 +5225,8 @@
       "homeWeightedNR": -4.4,
       "awayWeightedNR": -2.7,
       "predictedWinner": "ATL",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500422",
@@ -4910,7 +5243,8 @@
       "homeWeightedNR": -4.6,
       "awayWeightedNR": 5.2,
       "predictedWinner": "HOU",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500410",
@@ -4927,7 +5261,8 @@
       "homeWeightedNR": 4.1,
       "awayWeightedNR": 3.7,
       "predictedWinner": "PHI",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500416",
@@ -4944,7 +5279,8 @@
       "homeWeightedNR": 4.2,
       "awayWeightedNR": 7.5,
       "predictedWinner": "NYK",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500412",
@@ -4961,7 +5297,8 @@
       "homeWeightedNR": -1.7,
       "awayWeightedNR": 0.7,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500420",
@@ -4978,7 +5315,8 @@
       "homeWeightedNR": -3.7,
       "awayWeightedNR": -3.6,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500415",
@@ -4995,7 +5333,8 @@
       "homeWeightedNR": -2.3,
       "awayWeightedNR": 8.5,
       "predictedWinner": "DEN",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500419",
@@ -5012,7 +5351,8 @@
       "homeWeightedNR": -8.5,
       "awayWeightedNR": 1.2,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500010",
@@ -5046,7 +5386,8 @@
       "homeWeightedNR": -4.8,
       "awayWeightedNR": 1.4,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500009",
@@ -5080,7 +5421,8 @@
       "homeWeightedNR": 4.9,
       "awayWeightedNR": -1.2,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500013",
@@ -5097,7 +5439,8 @@
       "homeWeightedNR": 7.5,
       "awayWeightedNR": 4,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500430",
@@ -5114,7 +5457,8 @@
       "homeWeightedNR": -8.1,
       "awayWeightedNR": 9.2,
       "predictedWinner": "DET",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500431",
@@ -5131,7 +5475,8 @@
       "homeWeightedNR": -3.8,
       "awayWeightedNR": -2.4,
       "predictedWinner": "POR",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500423",
@@ -5148,7 +5493,8 @@
       "homeWeightedNR": -5,
       "awayWeightedNR": -5,
       "predictedWinner": "ATL",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500429",
@@ -5165,7 +5511,8 @@
       "homeWeightedNR": -1.2,
       "awayWeightedNR": -0.9,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500428",
@@ -5182,7 +5529,8 @@
       "homeWeightedNR": 0.9,
       "awayWeightedNR": -5.1,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500424",
@@ -5199,7 +5547,8 @@
       "homeWeightedNR": -2.8,
       "awayWeightedNR": -2,
       "predictedWinner": "ORL",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500427",
@@ -5216,7 +5565,8 @@
       "homeWeightedNR": -1.4,
       "awayWeightedNR": 2.2,
       "predictedWinner": "PHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500426",
@@ -5233,7 +5583,8 @@
       "homeWeightedNR": -8.6,
       "awayWeightedNR": 8.3,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500425",
@@ -5250,7 +5601,8 @@
       "homeWeightedNR": -11.8,
       "awayWeightedNR": -1.6,
       "predictedWinner": "TOR",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500436",
@@ -5267,7 +5619,8 @@
       "homeWeightedNR": -4,
       "awayWeightedNR": -10.6,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500440",
@@ -5284,7 +5637,8 @@
       "homeWeightedNR": 12.6,
       "awayWeightedNR": -6.5,
       "predictedWinner": "SAS",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500439",
@@ -5301,7 +5655,8 @@
       "homeWeightedNR": 4,
       "awayWeightedNR": 4.9,
       "predictedWinner": "MIN",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500432",
@@ -5318,7 +5673,8 @@
       "homeWeightedNR": -8.4,
       "awayWeightedNR": -3,
       "predictedWinner": "DAL",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500435",
@@ -5335,7 +5691,8 @@
       "homeWeightedNR": -6.5,
       "awayWeightedNR": 4.4,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500434",
@@ -5352,7 +5709,8 @@
       "homeWeightedNR": -1.9,
       "awayWeightedNR": 0.7,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500433",
@@ -5369,7 +5727,8 @@
       "homeWeightedNR": -4.1,
       "awayWeightedNR": 6.9,
       "predictedWinner": "DEN",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500438",
@@ -5386,7 +5745,8 @@
       "homeWeightedNR": 5.1,
       "awayWeightedNR": 1,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500437",
@@ -5403,7 +5763,8 @@
       "homeWeightedNR": -0.4,
       "awayWeightedNR": -5.3,
       "predictedWinner": "CHI",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500442",
@@ -5420,7 +5781,8 @@
       "homeWeightedNR": 6.7,
       "awayWeightedNR": 1.6,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -24.5
     },
     {
       "gameId": "0022500445",
@@ -5437,7 +5799,8 @@
       "homeWeightedNR": 1.3,
       "awayWeightedNR": 8.5,
       "predictedWinner": "DET",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500446",
@@ -5454,7 +5817,8 @@
       "homeWeightedNR": -7.5,
       "awayWeightedNR": -7.2,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500443",
@@ -5471,7 +5835,8 @@
       "homeWeightedNR": -7.5,
       "awayWeightedNR": 2.3,
       "predictedWinner": "MEM",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500441",
@@ -5488,7 +5853,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": 5.8,
       "predictedWinner": "GSW",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500444",
@@ -5505,7 +5871,8 @@
       "homeWeightedNR": -5.3,
       "awayWeightedNR": 9.8,
       "predictedWinner": "BOS",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500449",
@@ -5522,7 +5889,8 @@
       "homeWeightedNR": 5.7,
       "awayWeightedNR": 3.8,
       "predictedWinner": "BKN",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500453",
@@ -5539,7 +5907,8 @@
       "homeWeightedNR": 5.4,
       "awayWeightedNR": -11.6,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500454",
@@ -5556,7 +5925,8 @@
       "homeWeightedNR": -4.1,
       "awayWeightedNR": 4.2,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500452",
@@ -5573,7 +5943,8 @@
       "homeWeightedNR": -2,
       "awayWeightedNR": 1.3,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500447",
@@ -5590,7 +5961,8 @@
       "homeWeightedNR": 0.2,
       "awayWeightedNR": -3.3,
       "predictedWinner": "CHA",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500448",
@@ -5607,7 +5979,8 @@
       "homeWeightedNR": -6.5,
       "awayWeightedNR": 2,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500450",
@@ -5624,7 +5997,8 @@
       "homeWeightedNR": -0.1,
       "awayWeightedNR": 6.1,
       "predictedWinner": "DEN",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500451",
@@ -5641,7 +6015,8 @@
       "homeWeightedNR": -1.2,
       "awayWeightedNR": -4.2,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500457",
@@ -5658,7 +6033,8 @@
       "homeWeightedNR": -4.7,
       "awayWeightedNR": -3.7,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500455",
@@ -5675,7 +6051,8 @@
       "homeWeightedNR": 7.9,
       "awayWeightedNR": -4.2,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -17.5
     },
     {
       "gameId": "0022500456",
@@ -5692,7 +6069,8 @@
       "homeWeightedNR": 9.4,
       "awayWeightedNR": -0.1,
       "predictedWinner": "SAS",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500458",
@@ -5709,7 +6087,8 @@
       "homeWeightedNR": 2.5,
       "awayWeightedNR": -2.1,
       "predictedWinner": "MEM",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500460",
@@ -5726,7 +6105,8 @@
       "homeWeightedNR": -5,
       "awayWeightedNR": 4.9,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500461",
@@ -5743,7 +6123,8 @@
       "homeWeightedNR": 4.3,
       "awayWeightedNR": -7.9,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500459",
@@ -5760,7 +6141,8 @@
       "homeWeightedNR": -5.5,
       "awayWeightedNR": 8.2,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500465",
@@ -5777,7 +6159,8 @@
       "homeWeightedNR": 0.9,
       "awayWeightedNR": 4.7,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500466",
@@ -5794,7 +6177,8 @@
       "homeWeightedNR": -5.1,
       "awayWeightedNR": -4.7,
       "predictedWinner": "CHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500463",
@@ -5845,7 +6229,8 @@
       "homeWeightedNR": 0,
       "awayWeightedNR": 2.1,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500469",
@@ -5862,7 +6247,8 @@
       "homeWeightedNR": -2.7,
       "awayWeightedNR": -6.7,
       "predictedWinner": "MIL",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500464",
@@ -5896,7 +6282,8 @@
       "homeWeightedNR": 7.8,
       "awayWeightedNR": -3.8,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500467",
@@ -5913,7 +6300,8 @@
       "homeWeightedNR": 7.5,
       "awayWeightedNR": 3.2,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500471",
@@ -5930,7 +6318,8 @@
       "homeWeightedNR": 3.6,
       "awayWeightedNR": 5.7,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500474",
@@ -5947,7 +6336,8 @@
       "homeWeightedNR": -12.6,
       "awayWeightedNR": 7.4,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500475",
@@ -5964,7 +6354,8 @@
       "homeWeightedNR": 7.9,
       "awayWeightedNR": -4.8,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500473",
@@ -5981,7 +6372,8 @@
       "homeWeightedNR": -3.2,
       "awayWeightedNR": -2.1,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500472",
@@ -5998,7 +6390,8 @@
       "homeWeightedNR": 6.9,
       "awayWeightedNR": 3.3,
       "predictedWinner": "DET",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500478",
@@ -6015,7 +6408,8 @@
       "homeWeightedNR": 2.4,
       "awayWeightedNR": 2.1,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500483",
@@ -6032,7 +6426,8 @@
       "homeWeightedNR": 2,
       "awayWeightedNR": -13.6,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500484",
@@ -6049,7 +6444,8 @@
       "homeWeightedNR": 5,
       "awayWeightedNR": 10.6,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500481",
@@ -6066,7 +6462,8 @@
       "homeWeightedNR": -2.1,
       "awayWeightedNR": -0.3,
       "predictedWinner": "MIL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500480",
@@ -6083,7 +6480,8 @@
       "homeWeightedNR": -2.8,
       "awayWeightedNR": -2.4,
       "predictedWinner": "CHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500482",
@@ -6100,7 +6498,8 @@
       "homeWeightedNR": -5.5,
       "awayWeightedNR": -6.2,
       "predictedWinner": "NOP",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500479",
@@ -6117,7 +6516,8 @@
       "homeWeightedNR": 3.2,
       "awayWeightedNR": -2.6,
       "predictedWinner": "NYK",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500476",
@@ -6134,7 +6534,8 @@
       "homeWeightedNR": -11.4,
       "awayWeightedNR": 5.8,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500485",
@@ -6151,7 +6552,8 @@
       "homeWeightedNR": -6.7,
       "awayWeightedNR": 1.9,
       "predictedWinner": "MEM",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500477",
@@ -6168,7 +6570,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": 0,
       "predictedWinner": "BKN",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500489",
@@ -6185,7 +6588,8 @@
       "homeWeightedNR": -2.5,
       "awayWeightedNR": -1.3,
       "predictedWinner": "CHI",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500486",
@@ -6202,7 +6606,8 @@
       "homeWeightedNR": 5.1,
       "awayWeightedNR": 1.1,
       "predictedWinner": "MIA",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500487",
@@ -6219,7 +6624,8 @@
       "homeWeightedNR": 1.6,
       "awayWeightedNR": 0,
       "predictedWinner": "NYK",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500492",
@@ -6236,7 +6642,8 @@
       "homeWeightedNR": -0.4,
       "awayWeightedNR": -5.3,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500490",
@@ -6253,7 +6660,8 @@
       "homeWeightedNR": 4.8,
       "awayWeightedNR": -3.4,
       "predictedWinner": "SAS",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500491",
@@ -6270,7 +6678,8 @@
       "homeWeightedNR": -5.6,
       "awayWeightedNR": 10,
       "predictedWinner": "HOU",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500493",
@@ -6287,7 +6696,8 @@
       "homeWeightedNR": 9.5,
       "awayWeightedNR": 8.4,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500488",
@@ -6304,7 +6714,8 @@
       "homeWeightedNR": -1.6,
       "awayWeightedNR": 0.8,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500496",
@@ -6321,7 +6732,8 @@
       "homeWeightedNR": -3.6,
       "awayWeightedNR": 0.7,
       "predictedWinner": "DEN",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500499",
@@ -6338,7 +6750,8 @@
       "homeWeightedNR": 4.2,
       "awayWeightedNR": 14.3,
       "predictedWinner": "OKC",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500495",
@@ -6372,7 +6785,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": 0.1,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500500",
@@ -6389,7 +6803,8 @@
       "homeWeightedNR": -15.5,
       "awayWeightedNR": -0.4,
       "predictedWinner": "MIL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500498",
@@ -6406,7 +6821,8 @@
       "homeWeightedNR": -2.9,
       "awayWeightedNR": 2.1,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 11.5
     },
     {
       "gameId": "0022500494",
@@ -6440,7 +6856,8 @@
       "homeWeightedNR": 3.8,
       "awayWeightedNR": -7.5,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500508",
@@ -6457,7 +6874,8 @@
       "homeWeightedNR": 5.2,
       "awayWeightedNR": 1,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500506",
@@ -6474,7 +6892,8 @@
       "homeWeightedNR": 12.3,
       "awayWeightedNR": 0.1,
       "predictedWinner": "OKC",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500505",
@@ -6491,7 +6910,8 @@
       "homeWeightedNR": 7.8,
       "awayWeightedNR": 5.3,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500504",
@@ -6508,7 +6928,8 @@
       "homeWeightedNR": 2.4,
       "awayWeightedNR": -1,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500509",
@@ -6525,7 +6946,8 @@
       "homeWeightedNR": -2.7,
       "awayWeightedNR": -6.3,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500503",
@@ -6542,7 +6964,8 @@
       "homeWeightedNR": 10.8,
       "awayWeightedNR": -3,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500507",
@@ -6559,7 +6982,8 @@
       "homeWeightedNR": 1,
       "awayWeightedNR": -1.3,
       "predictedWinner": "PHI",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500502",
@@ -6576,7 +7000,8 @@
       "homeWeightedNR": 4.7,
       "awayWeightedNR": -0.1,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500515",
@@ -6593,7 +7018,8 @@
       "homeWeightedNR": -15.9,
       "awayWeightedNR": -4.6,
       "predictedWinner": "DAL",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500514",
@@ -6610,7 +7036,8 @@
       "homeWeightedNR": -9.4,
       "awayWeightedNR": -2.7,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500513",
@@ -6627,7 +7054,8 @@
       "homeWeightedNR": 5.4,
       "awayWeightedNR": 5.2,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500512",
@@ -6644,7 +7072,8 @@
       "homeWeightedNR": -1.3,
       "awayWeightedNR": 4.2,
       "predictedWinner": "SAS",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500511",
@@ -6661,7 +7090,8 @@
       "homeWeightedNR": -6,
       "awayWeightedNR": -1.1,
       "predictedWinner": "ORL",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500510",
@@ -6678,7 +7108,8 @@
       "homeWeightedNR": -9.6,
       "awayWeightedNR": 3.9,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500521",
@@ -6695,7 +7126,8 @@
       "homeWeightedNR": -3.5,
       "awayWeightedNR": -1.4,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500516",
@@ -6712,7 +7144,8 @@
       "homeWeightedNR": 3.6,
       "awayWeightedNR": 4.1,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500524",
@@ -6729,7 +7162,8 @@
       "homeWeightedNR": -1,
       "awayWeightedNR": 3.6,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500523",
@@ -6746,7 +7180,8 @@
       "homeWeightedNR": 3.4,
       "awayWeightedNR": -2.1,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500517",
@@ -6763,7 +7198,8 @@
       "homeWeightedNR": 8.9,
       "awayWeightedNR": -3.3,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500518",
@@ -6780,7 +7216,8 @@
       "homeWeightedNR": 1.5,
       "awayWeightedNR": -3.4,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -16.5
     },
     {
       "gameId": "0022500525",
@@ -6797,7 +7234,8 @@
       "homeWeightedNR": 8.6,
       "awayWeightedNR": -8.5,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -18.5
     },
     {
       "gameId": "0022500527",
@@ -6814,7 +7252,8 @@
       "homeWeightedNR": -0.6,
       "awayWeightedNR": 7.4,
       "predictedWinner": "HOU",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500519",
@@ -6831,7 +7270,8 @@
       "homeWeightedNR": -2.4,
       "awayWeightedNR": -9.6,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500520",
@@ -6848,7 +7288,8 @@
       "homeWeightedNR": 12.3,
       "awayWeightedNR": -0.2,
       "predictedWinner": "BOS",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500522",
@@ -6865,7 +7306,8 @@
       "homeWeightedNR": -4,
       "awayWeightedNR": 4.5,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500526",
@@ -6882,7 +7324,8 @@
       "homeWeightedNR": -0.6,
       "awayWeightedNR": 0.7,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500528",
@@ -6899,7 +7342,8 @@
       "homeWeightedNR": 3.1,
       "awayWeightedNR": -9.2,
       "predictedWinner": "CHA",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500530",
@@ -6916,7 +7360,8 @@
       "homeWeightedNR": 6.4,
       "awayWeightedNR": 3.6,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500531",
@@ -6933,7 +7378,8 @@
       "homeWeightedNR": -7.8,
       "awayWeightedNR": -3.7,
       "predictedWinner": "DAL",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500538",
@@ -6950,7 +7396,8 @@
       "homeWeightedNR": 6.3,
       "awayWeightedNR": -2.6,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500533",
@@ -6967,7 +7414,8 @@
       "homeWeightedNR": -1.2,
       "awayWeightedNR": 4.1,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500540",
@@ -6984,7 +7432,8 @@
       "homeWeightedNR": 1.3,
       "awayWeightedNR": 7.7,
       "predictedWinner": "HOU",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500541",
@@ -7001,7 +7450,8 @@
       "homeWeightedNR": -2.3,
       "awayWeightedNR": 0.4,
       "predictedWinner": "LAL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500537",
@@ -7018,7 +7468,8 @@
       "homeWeightedNR": 0.2,
       "awayWeightedNR": -0.8,
       "predictedWinner": "DEN",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500535",
@@ -7035,7 +7486,8 @@
       "homeWeightedNR": -2.9,
       "awayWeightedNR": 1,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500534",
@@ -7052,7 +7504,8 @@
       "homeWeightedNR": -6.6,
       "awayWeightedNR": -10.8,
       "predictedWinner": "WAS",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500539",
@@ -7069,7 +7522,8 @@
       "homeWeightedNR": -0.7,
       "awayWeightedNR": -13.8,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500536",
@@ -7086,7 +7540,8 @@
       "homeWeightedNR": -3.3,
       "awayWeightedNR": 8,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500532",
@@ -7103,7 +7558,8 @@
       "homeWeightedNR": 11.4,
       "awayWeightedNR": 3.3,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500544",
@@ -7120,7 +7576,8 @@
       "homeWeightedNR": 9.2,
       "awayWeightedNR": 2,
       "predictedWinner": "DET",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500543",
@@ -7137,7 +7594,8 @@
       "homeWeightedNR": -7.9,
       "awayWeightedNR": 1.6,
       "predictedWinner": "MIA",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500547",
@@ -7154,7 +7612,8 @@
       "homeWeightedNR": -6.7,
       "awayWeightedNR": 3.2,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500545",
@@ -7171,7 +7630,8 @@
       "homeWeightedNR": 10.8,
       "awayWeightedNR": 4.1,
       "predictedWinner": "BOS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500542",
@@ -7205,7 +7665,8 @@
       "homeWeightedNR": -6.3,
       "awayWeightedNR": -3.7,
       "predictedWinner": "CHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500556",
@@ -7222,7 +7683,8 @@
       "homeWeightedNR": 5.3,
       "awayWeightedNR": 1.3,
       "predictedWinner": "GSW",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500555",
@@ -7239,7 +7701,8 @@
       "homeWeightedNR": 5.7,
       "awayWeightedNR": -9.4,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500552",
@@ -7256,7 +7719,8 @@
       "homeWeightedNR": 7,
       "awayWeightedNR": 4.4,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500550",
@@ -7273,7 +7737,8 @@
       "homeWeightedNR": 3.5,
       "awayWeightedNR": 4.4,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500551",
@@ -7290,7 +7755,8 @@
       "homeWeightedNR": 1.4,
       "awayWeightedNR": -3.1,
       "predictedWinner": "POR",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500553",
@@ -7307,7 +7773,8 @@
       "homeWeightedNR": 5.2,
       "awayWeightedNR": -1.2,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500554",
@@ -7324,7 +7791,8 @@
       "homeWeightedNR": -2.7,
       "awayWeightedNR": 2.1,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500557",
@@ -7341,7 +7809,8 @@
       "homeWeightedNR": -16.8,
       "awayWeightedNR": 4.7,
       "predictedWinner": "HOU",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500549",
@@ -7358,7 +7827,8 @@
       "homeWeightedNR": -3.6,
       "awayWeightedNR": -5,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500548",
@@ -7392,7 +7862,8 @@
       "homeWeightedNR": 3.4,
       "awayWeightedNR": -12.3,
       "predictedWinner": "CLE",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500560",
@@ -7409,7 +7880,8 @@
       "homeWeightedNR": 2.8,
       "awayWeightedNR": 4.4,
       "predictedWinner": "TOR",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500562",
@@ -7426,7 +7898,8 @@
       "homeWeightedNR": -13,
       "awayWeightedNR": -2.8,
       "predictedWinner": "LAL",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500559",
@@ -7443,7 +7916,8 @@
       "homeWeightedNR": -4,
       "awayWeightedNR": 7.8,
       "predictedWinner": "BOS",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500561",
@@ -7460,7 +7934,8 @@
       "homeWeightedNR": -4.2,
       "awayWeightedNR": -5,
       "predictedWinner": "DAL",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500563",
@@ -7477,7 +7952,8 @@
       "homeWeightedNR": 3.7,
       "awayWeightedNR": 9.1,
       "predictedWinner": "CHA",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500569",
@@ -7494,7 +7970,8 @@
       "homeWeightedNR": -4.6,
       "awayWeightedNR": 4.1,
       "predictedWinner": "ATL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500568",
@@ -7511,7 +7988,8 @@
       "homeWeightedNR": 6.5,
       "awayWeightedNR": 4.3,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500566",
@@ -7528,7 +8006,8 @@
       "homeWeightedNR": 0.9,
       "awayWeightedNR": 4.8,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500564",
@@ -7545,7 +8024,8 @@
       "homeWeightedNR": -2.3,
       "awayWeightedNR": 6.6,
       "predictedWinner": "PHX",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500570",
@@ -7562,7 +8042,8 @@
       "homeWeightedNR": 2.4,
       "awayWeightedNR": 0.1,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500567",
@@ -7579,7 +8060,8 @@
       "homeWeightedNR": -7.1,
       "awayWeightedNR": -0.5,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500565",
@@ -7596,7 +8078,8 @@
       "homeWeightedNR": 2.5,
       "awayWeightedNR": -4.6,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500571",
@@ -7613,7 +8096,8 @@
       "homeWeightedNR": -2.8,
       "awayWeightedNR": -0.3,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500577",
@@ -7630,7 +8114,8 @@
       "homeWeightedNR": 2.8,
       "awayWeightedNR": -9.4,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500575",
@@ -7647,7 +8132,8 @@
       "homeWeightedNR": -3.2,
       "awayWeightedNR": 0,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500573",
@@ -7664,7 +8150,8 @@
       "homeWeightedNR": -3.9,
       "awayWeightedNR": -9.6,
       "predictedWinner": "CHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500572",
@@ -7681,7 +8168,8 @@
       "homeWeightedNR": 6.1,
       "awayWeightedNR": 1.5,
       "predictedWinner": "PHI",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500576",
@@ -7698,7 +8186,8 @@
       "homeWeightedNR": -9.4,
       "awayWeightedNR": -1.6,
       "predictedWinner": "NYK",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": 11.5
     },
     {
       "gameId": "0022500574",
@@ -7715,7 +8204,8 @@
       "homeWeightedNR": -6.8,
       "awayWeightedNR": -6.4,
       "predictedWinner": "BKN",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500584",
@@ -7732,7 +8222,8 @@
       "homeWeightedNR": 4.4,
       "awayWeightedNR": -1.3,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500586",
@@ -7749,7 +8240,8 @@
       "homeWeightedNR": -1,
       "awayWeightedNR": 6.5,
       "predictedWinner": "LAL",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500583",
@@ -7766,7 +8258,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": -9.5,
       "predictedWinner": "DAL",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500579",
@@ -7783,7 +8276,8 @@
       "homeWeightedNR": 8.1,
       "awayWeightedNR": 6.4,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500582",
@@ -7800,7 +8294,8 @@
       "homeWeightedNR": 1.3,
       "awayWeightedNR": -3.9,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500581",
@@ -7817,7 +8312,8 @@
       "homeWeightedNR": 3.5,
       "awayWeightedNR": 9.9,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500578",
@@ -7834,7 +8330,8 @@
       "homeWeightedNR": -2,
       "awayWeightedNR": -1.1,
       "predictedWinner": "MEM",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500580",
@@ -7851,7 +8348,8 @@
       "homeWeightedNR": -2.6,
       "awayWeightedNR": 6.5,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500585",
@@ -7868,7 +8366,8 @@
       "homeWeightedNR": -2,
       "awayWeightedNR": 2,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500592",
@@ -7885,7 +8384,8 @@
       "homeWeightedNR": -7.4,
       "awayWeightedNR": -11.9,
       "predictedWinner": "SAC",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500589",
@@ -7902,7 +8402,8 @@
       "homeWeightedNR": 1.7,
       "awayWeightedNR": 3.8,
       "predictedWinner": "PHI",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500591",
@@ -7919,7 +8420,8 @@
       "homeWeightedNR": -0.4,
       "awayWeightedNR": 7.6,
       "predictedWinner": "MIN",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500587",
@@ -7936,7 +8438,8 @@
       "homeWeightedNR": -6.3,
       "awayWeightedNR": -3.3,
       "predictedWinner": "CHI",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500590",
@@ -7953,7 +8456,8 @@
       "homeWeightedNR": 1.9,
       "awayWeightedNR": 4.1,
       "predictedWinner": "TOR",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500588",
@@ -7970,7 +8474,8 @@
       "homeWeightedNR": -3.6,
       "awayWeightedNR": -5,
       "predictedWinner": "IND",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500597",
@@ -7987,7 +8492,8 @@
       "homeWeightedNR": -2.6,
       "awayWeightedNR": 10.5,
       "predictedWinner": "OKC",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500596",
@@ -8004,7 +8510,8 @@
       "homeWeightedNR": -3.1,
       "awayWeightedNR": 4.2,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500598",
@@ -8021,7 +8528,8 @@
       "homeWeightedNR": 2.3,
       "awayWeightedNR": 6.8,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500601",
@@ -8038,7 +8546,8 @@
       "homeWeightedNR": -0.7,
       "awayWeightedNR": -1.9,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500595",
@@ -8055,7 +8564,8 @@
       "homeWeightedNR": 8.4,
       "awayWeightedNR": -1.6,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500599",
@@ -8072,7 +8582,8 @@
       "homeWeightedNR": 7,
       "awayWeightedNR": 8.4,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500600",
@@ -8089,7 +8600,8 @@
       "homeWeightedNR": 1.1,
       "awayWeightedNR": -12.8,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500594",
@@ -8106,7 +8618,8 @@
       "homeWeightedNR": -0.8,
       "awayWeightedNR": 6.3,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500593",
@@ -8123,7 +8636,8 @@
       "homeWeightedNR": -1.3,
       "awayWeightedNR": -11.7,
       "predictedWinner": "DAL",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500603",
@@ -8140,7 +8654,8 @@
       "homeWeightedNR": -2.9,
       "awayWeightedNR": -4.8,
       "predictedWinner": "CHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500604",
@@ -8157,7 +8672,8 @@
       "homeWeightedNR": 0.1,
       "awayWeightedNR": -6.3,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500607",
@@ -8174,7 +8690,8 @@
       "homeWeightedNR": -4,
       "awayWeightedNR": 1.4,
       "predictedWinner": "TOR",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500605",
@@ -8191,7 +8708,8 @@
       "homeWeightedNR": 3.7,
       "awayWeightedNR": 6.1,
       "predictedWinner": "DEN",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500606",
@@ -8208,7 +8726,8 @@
       "homeWeightedNR": -2.9,
       "awayWeightedNR": 0.5,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500602",
@@ -8259,7 +8778,8 @@
       "homeWeightedNR": 6.9,
       "awayWeightedNR": -1.6,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500016",
@@ -8276,7 +8796,8 @@
       "homeWeightedNR": -3.4,
       "awayWeightedNR": 1.5,
       "predictedWinner": "NYK",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500610",
@@ -8293,7 +8814,8 @@
       "homeWeightedNR": -7.2,
       "awayWeightedNR": 4.1,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500609",
@@ -8310,7 +8832,8 @@
       "homeWeightedNR": 1.4,
       "awayWeightedNR": -6.7,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500608",
@@ -8361,7 +8884,8 @@
       "homeWeightedNR": 2.9,
       "awayWeightedNR": -10,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500017",
@@ -8378,7 +8902,8 @@
       "homeWeightedNR": 10.2,
       "awayWeightedNR": 7.7,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500614",
@@ -8395,7 +8920,8 @@
       "homeWeightedNR": 0.3,
       "awayWeightedNR": 3.3,
       "predictedWinner": "CHI",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500616",
@@ -8412,7 +8938,8 @@
       "homeWeightedNR": -11.6,
       "awayWeightedNR": 5.3,
       "predictedWinner": "MIN",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500618",
@@ -8429,7 +8956,8 @@
       "homeWeightedNR": 9.8,
       "awayWeightedNR": -1.3,
       "predictedWinner": "GSW",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500613",
@@ -8446,7 +8974,8 @@
       "homeWeightedNR": 2.5,
       "awayWeightedNR": 4.9,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500615",
@@ -8463,7 +8992,8 @@
       "homeWeightedNR": 1.6,
       "awayWeightedNR": 4.5,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500617",
@@ -8480,7 +9010,8 @@
       "homeWeightedNR": 0.1,
       "awayWeightedNR": -1,
       "predictedWinner": "DEN",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500619",
@@ -8497,7 +9028,8 @@
       "homeWeightedNR": -3,
       "awayWeightedNR": -4.6,
       "predictedWinner": "SAC",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500626",
@@ -8514,7 +9046,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": 1.5,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500624",
@@ -8531,7 +9064,8 @@
       "homeWeightedNR": -6.2,
       "awayWeightedNR": 9.6,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 9.5
     },
     {
       "gameId": "0022500620",
@@ -8548,7 +9082,8 @@
       "homeWeightedNR": 5.7,
       "awayWeightedNR": 0.3,
       "predictedWinner": "CHA",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500623",
@@ -8565,7 +9100,8 @@
       "homeWeightedNR": -0.7,
       "awayWeightedNR": -4.9,
       "predictedWinner": "MEM",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500622",
@@ -8582,7 +9118,8 @@
       "homeWeightedNR": -4.7,
       "awayWeightedNR": -7.5,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500625",
@@ -8599,7 +9136,8 @@
       "homeWeightedNR": -5.5,
       "awayWeightedNR": 12.9,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 11.5
     },
     {
       "gameId": "0022500621",
@@ -8616,7 +9154,8 @@
       "homeWeightedNR": 7.2,
       "awayWeightedNR": -7.7,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500632",
@@ -8633,7 +9172,8 @@
       "homeWeightedNR": -10.6,
       "awayWeightedNR": 4.2,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500628",
@@ -8650,7 +9190,8 @@
       "homeWeightedNR": 0,
       "awayWeightedNR": 1.2,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500634",
@@ -8667,7 +9208,8 @@
       "homeWeightedNR": 2,
       "awayWeightedNR": -3.1,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500631",
@@ -8684,7 +9226,8 @@
       "homeWeightedNR": 4.6,
       "awayWeightedNR": 3.5,
       "predictedWinner": "MIN",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500633",
@@ -8701,7 +9244,8 @@
       "homeWeightedNR": 0,
       "awayWeightedNR": -0.7,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500630",
@@ -8718,7 +9262,8 @@
       "homeWeightedNR": 2.9,
       "awayWeightedNR": 7.4,
       "predictedWinner": "GSW",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500629",
@@ -8735,7 +9280,8 @@
       "homeWeightedNR": -11.1,
       "awayWeightedNR": -1.2,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500627",
@@ -8752,7 +9298,8 @@
       "homeWeightedNR": -1,
       "awayWeightedNR": 5.4,
       "predictedWinner": "ORL",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500640",
@@ -8769,7 +9316,8 @@
       "homeWeightedNR": -8.1,
       "awayWeightedNR": 0.4,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500639",
@@ -8786,7 +9334,8 @@
       "homeWeightedNR": -0.4,
       "awayWeightedNR": -5.8,
       "predictedWinner": "MEM",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500635",
@@ -8803,7 +9352,8 @@
       "homeWeightedNR": 10.8,
       "awayWeightedNR": 1.7,
       "predictedWinner": "DET",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500636",
@@ -8820,7 +9370,8 @@
       "homeWeightedNR": -4.4,
       "awayWeightedNR": 4.8,
       "predictedWinner": "PHX",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500642",
@@ -8837,7 +9388,8 @@
       "homeWeightedNR": 4.7,
       "awayWeightedNR": 2.2,
       "predictedWinner": "POR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500641",
@@ -8854,7 +9406,8 @@
       "homeWeightedNR": 13,
       "awayWeightedNR": -8.4,
       "predictedWinner": "OKC",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500638",
@@ -8871,7 +9424,8 @@
       "homeWeightedNR": 1,
       "awayWeightedNR": -4.8,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500637",
@@ -8888,7 +9442,8 @@
       "homeWeightedNR": -12.8,
       "awayWeightedNR": 8.6,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500648",
@@ -8905,7 +9460,8 @@
       "homeWeightedNR": 4.7,
       "awayWeightedNR": -0.9,
       "predictedWinner": "DAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500646",
@@ -8922,7 +9478,8 @@
       "homeWeightedNR": -3.8,
       "awayWeightedNR": 0.1,
       "predictedWinner": "ORL",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500647",
@@ -8939,7 +9496,8 @@
       "homeWeightedNR": 3.9,
       "awayWeightedNR": 7.4,
       "predictedWinner": "BOS",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500649",
@@ -8956,7 +9514,8 @@
       "homeWeightedNR": -9.3,
       "awayWeightedNR": -3.8,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500645",
@@ -8990,7 +9549,8 @@
       "homeWeightedNR": 1.5,
       "awayWeightedNR": 2.4,
       "predictedWinner": "PHI",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500650",
@@ -9024,7 +9584,8 @@
       "homeWeightedNR": 3.9,
       "awayWeightedNR": -1,
       "predictedWinner": "PHX",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500654",
@@ -9041,7 +9602,8 @@
       "homeWeightedNR": 5.1,
       "awayWeightedNR": -5.3,
       "predictedWinner": "SAS",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500644",
@@ -9058,7 +9620,8 @@
       "homeWeightedNR": 2.2,
       "awayWeightedNR": 4.7,
       "predictedWinner": "MIN",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500653",
@@ -9075,7 +9638,8 @@
       "homeWeightedNR": 11.4,
       "awayWeightedNR": 3,
       "predictedWinner": "OKC",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500656",
@@ -9092,7 +9656,8 @@
       "homeWeightedNR": 0.7,
       "awayWeightedNR": -13.4,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500660",
@@ -9109,7 +9674,8 @@
       "homeWeightedNR": 5.6,
       "awayWeightedNR": 2.4,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500661",
@@ -9126,7 +9692,8 @@
       "homeWeightedNR": 4.4,
       "awayWeightedNR": 0.7,
       "predictedWinner": "CHI",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500658",
@@ -9143,7 +9710,8 @@
       "homeWeightedNR": 1.5,
       "awayWeightedNR": -5.8,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500663",
@@ -9160,7 +9728,8 @@
       "homeWeightedNR": -0.6,
       "awayWeightedNR": 6.9,
       "predictedWinner": "GSW",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500659",
@@ -9194,7 +9763,8 @@
       "homeWeightedNR": 2.6,
       "awayWeightedNR": -1.3,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500657",
@@ -9228,7 +9798,8 @@
       "homeWeightedNR": -4.2,
       "awayWeightedNR": -6.5,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500664",
@@ -9245,7 +9816,8 @@
       "homeWeightedNR": -10.2,
       "awayWeightedNR": 0.5,
       "predictedWinner": "POR",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500670",
@@ -9262,7 +9834,8 @@
       "homeWeightedNR": -11.7,
       "awayWeightedNR": 4.5,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500669",
@@ -9279,7 +9852,8 @@
       "homeWeightedNR": 2.2,
       "awayWeightedNR": -16,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500667",
@@ -9296,7 +9870,8 @@
       "homeWeightedNR": 11.7,
       "awayWeightedNR": -3.4,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500665",
@@ -9313,7 +9888,8 @@
       "homeWeightedNR": 3.6,
       "awayWeightedNR": -8.3,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -14.5
     },
     {
       "gameId": "0022500668",
@@ -9330,7 +9906,8 @@
       "homeWeightedNR": -0.1,
       "awayWeightedNR": 8.5,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500671",
@@ -9347,7 +9924,8 @@
       "homeWeightedNR": 5.2,
       "awayWeightedNR": 0.8,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500679",
@@ -9364,7 +9942,8 @@
       "homeWeightedNR": 2.6,
       "awayWeightedNR": 4,
       "predictedWinner": "HOU",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500676",
@@ -9381,7 +9960,8 @@
       "homeWeightedNR": -1,
       "awayWeightedNR": 9.8,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500674",
@@ -9398,7 +9978,8 @@
       "homeWeightedNR": 1.4,
       "awayWeightedNR": -7.9,
       "predictedWinner": "MIA",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500677",
@@ -9415,7 +9996,8 @@
       "homeWeightedNR": 3.5,
       "awayWeightedNR": 1.5,
       "predictedWinner": "DAL",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500673",
@@ -9432,7 +10014,8 @@
       "homeWeightedNR": 6.6,
       "awayWeightedNR": -0.3,
       "predictedWinner": "BOS",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500675",
@@ -9449,7 +10032,8 @@
       "homeWeightedNR": 4.4,
       "awayWeightedNR": 6.5,
       "predictedWinner": "TOR",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500678",
@@ -9466,7 +10050,8 @@
       "homeWeightedNR": -12,
       "awayWeightedNR": 2.4,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500672",
@@ -9483,7 +10068,8 @@
       "homeWeightedNR": -8,
       "awayWeightedNR": 2.5,
       "predictedWinner": "CHI",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500683",
@@ -9500,7 +10086,8 @@
       "homeWeightedNR": 0.9,
       "awayWeightedNR": 11.5,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500684",
@@ -9517,7 +10104,8 @@
       "homeWeightedNR": 0.7,
       "awayWeightedNR": -15.2,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500681",
@@ -9534,7 +10122,8 @@
       "homeWeightedNR": -9,
       "awayWeightedNR": -7.9,
       "predictedWinner": "MIL",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500680",
@@ -9551,7 +10140,8 @@
       "homeWeightedNR": -1.3,
       "awayWeightedNR": -9.1,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500529",
@@ -9568,7 +10158,8 @@
       "homeWeightedNR": 1.3,
       "awayWeightedNR": 0.8,
       "predictedWinner": "CHI",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500685",
@@ -9585,7 +10176,8 @@
       "homeWeightedNR": 1.6,
       "awayWeightedNR": 8.7,
       "predictedWinner": "DET",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500686",
@@ -9602,7 +10194,8 @@
       "homeWeightedNR": 2,
       "awayWeightedNR": 10.7,
       "predictedWinner": "OKC",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500682",
@@ -9619,7 +10212,8 @@
       "homeWeightedNR": 1.1,
       "awayWeightedNR": 1.8,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500693",
@@ -9636,7 +10230,8 @@
       "homeWeightedNR": 3.3,
       "awayWeightedNR": 7.7,
       "predictedWinner": "CLE",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500690",
@@ -9653,7 +10248,8 @@
       "homeWeightedNR": 10.2,
       "awayWeightedNR": 0.3,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500689",
@@ -9670,7 +10266,8 @@
       "homeWeightedNR": 4.3,
       "awayWeightedNR": -9.5,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500687",
@@ -9687,7 +10284,8 @@
       "homeWeightedNR": -6.3,
       "awayWeightedNR": 0.4,
       "predictedWinner": "TOR",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500695",
@@ -9704,7 +10302,8 @@
       "homeWeightedNR": 1.8,
       "awayWeightedNR": 5.4,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500696",
@@ -9721,7 +10320,8 @@
       "homeWeightedNR": 3.8,
       "awayWeightedNR": 5.3,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500694",
@@ -9738,7 +10338,8 @@
       "homeWeightedNR": -12,
       "awayWeightedNR": -12.5,
       "predictedWinner": "UTA",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500688",
@@ -9755,7 +10356,8 @@
       "homeWeightedNR": -6.4,
       "awayWeightedNR": -2.4,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500691",
@@ -9772,7 +10374,8 @@
       "homeWeightedNR": -3.6,
       "awayWeightedNR": -3.4,
       "predictedWinner": "NOP",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500700",
@@ -9789,7 +10392,8 @@
       "homeWeightedNR": -4.2,
       "awayWeightedNR": 3.8,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500698",
@@ -9806,7 +10410,8 @@
       "homeWeightedNR": -6.9,
       "awayWeightedNR": -1.2,
       "predictedWinner": "ATL",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500692",
@@ -9823,7 +10428,8 @@
       "homeWeightedNR": 2.2,
       "awayWeightedNR": 0.5,
       "predictedWinner": "MIA",
-      "actualWinner": "CHI"
+      "actualWinner": "CHI",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500699",
@@ -9840,7 +10446,8 @@
       "homeWeightedNR": -1.2,
       "awayWeightedNR": -3.1,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500697",
@@ -9874,7 +10481,8 @@
       "homeWeightedNR": 4.4,
       "awayWeightedNR": 0.4,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500710",
@@ -9891,7 +10499,8 @@
       "homeWeightedNR": -4.5,
       "awayWeightedNR": 5.7,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500702",
@@ -9908,7 +10517,8 @@
       "homeWeightedNR": 5.8,
       "awayWeightedNR": -9.3,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -27.5
     },
     {
       "gameId": "0022500706",
@@ -9925,7 +10535,8 @@
       "homeWeightedNR": -1.3,
       "awayWeightedNR": -12.3,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500707",
@@ -9942,7 +10553,8 @@
       "homeWeightedNR": -8.3,
       "awayWeightedNR": -11.6,
       "predictedWinner": "WAS",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500704",
@@ -9959,7 +10571,8 @@
       "homeWeightedNR": 5,
       "awayWeightedNR": -10,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500709",
@@ -9976,7 +10589,8 @@
       "homeWeightedNR": 4.3,
       "awayWeightedNR": 4.2,
       "predictedWinner": "PHX",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500708",
@@ -9993,7 +10607,8 @@
       "homeWeightedNR": 11.2,
       "awayWeightedNR": 2.1,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500711",
@@ -10010,7 +10625,8 @@
       "homeWeightedNR": 2.4,
       "awayWeightedNR": 7.7,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500703",
@@ -10027,7 +10643,8 @@
       "homeWeightedNR": 3.9,
       "awayWeightedNR": -3.8,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500705",
@@ -10044,7 +10661,8 @@
       "homeWeightedNR": 0.6,
       "awayWeightedNR": 0.5,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500712",
@@ -10078,7 +10696,8 @@
       "homeWeightedNR": -5.2,
       "awayWeightedNR": 7.1,
       "predictedWinner": "MIN",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500715",
@@ -10095,7 +10714,8 @@
       "homeWeightedNR": 6.2,
       "awayWeightedNR": -0.9,
       "predictedWinner": "LAC",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500713",
@@ -10112,7 +10732,8 @@
       "homeWeightedNR": -6.3,
       "awayWeightedNR": 4,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500716",
@@ -10129,7 +10750,8 @@
       "homeWeightedNR": 9.8,
       "awayWeightedNR": 1.8,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500721",
@@ -10146,7 +10768,8 @@
       "homeWeightedNR": -0.6,
       "awayWeightedNR": 9.7,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500725",
@@ -10163,7 +10786,8 @@
       "homeWeightedNR": -6.4,
       "awayWeightedNR": 1.8,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500724",
@@ -10180,7 +10804,8 @@
       "homeWeightedNR": 3,
       "awayWeightedNR": 3.2,
       "predictedWinner": "GSW",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500717",
@@ -10197,7 +10822,8 @@
       "homeWeightedNR": -5.9,
       "awayWeightedNR": -11,
       "predictedWinner": "IND",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500722",
@@ -10214,7 +10840,8 @@
       "homeWeightedNR": -11,
       "awayWeightedNR": -4.4,
       "predictedWinner": "CHI",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500723",
@@ -10231,7 +10858,8 @@
       "homeWeightedNR": 8.7,
       "awayWeightedNR": -4.3,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500719",
@@ -10248,7 +10876,8 @@
       "homeWeightedNR": -13.7,
       "awayWeightedNR": -0.7,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500720",
@@ -10265,7 +10894,8 @@
       "homeWeightedNR": 4.6,
       "awayWeightedNR": -1.8,
       "predictedWinner": "MIA",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500718",
@@ -10282,7 +10912,8 @@
       "homeWeightedNR": -6.9,
       "awayWeightedNR": 12.4,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500732",
@@ -10299,7 +10930,8 @@
       "homeWeightedNR": 2.5,
       "awayWeightedNR": 8.4,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500729",
@@ -10316,7 +10948,8 @@
       "homeWeightedNR": -8.6,
       "awayWeightedNR": -4.3,
       "predictedWinner": "MIL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500730",
@@ -10333,7 +10966,8 @@
       "homeWeightedNR": 4.1,
       "awayWeightedNR": 11.5,
       "predictedWinner": "OKC",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500727",
@@ -10350,7 +10984,8 @@
       "homeWeightedNR": -0.4,
       "awayWeightedNR": 4.3,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500728",
@@ -10367,7 +11002,8 @@
       "homeWeightedNR": 4.6,
       "awayWeightedNR": 10,
       "predictedWinner": "HOU",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500731",
@@ -10384,7 +11020,8 @@
       "homeWeightedNR": -10.6,
       "awayWeightedNR": -4.2,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500726",
@@ -10401,7 +11038,8 @@
       "homeWeightedNR": 15.7,
       "awayWeightedNR": 1.4,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500739",
@@ -10418,7 +11056,8 @@
       "homeWeightedNR": 2.3,
       "awayWeightedNR": -1.6,
       "predictedWinner": "PHX",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500738",
@@ -10435,7 +11074,8 @@
       "homeWeightedNR": -2.2,
       "awayWeightedNR": 5.6,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500733",
@@ -10452,7 +11092,8 @@
       "homeWeightedNR": 9.8,
       "awayWeightedNR": -9.9,
       "predictedWinner": "DET",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500734",
@@ -10469,7 +11110,8 @@
       "homeWeightedNR": -7,
       "awayWeightedNR": -13.7,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500740",
@@ -10486,7 +11128,8 @@
       "homeWeightedNR": 0.7,
       "awayWeightedNR": 4.4,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500737",
@@ -10503,7 +11146,8 @@
       "homeWeightedNR": 2.6,
       "awayWeightedNR": 7.4,
       "predictedWinner": "HOU",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500735",
@@ -10520,7 +11164,8 @@
       "homeWeightedNR": -0.5,
       "awayWeightedNR": -9,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500736",
@@ -10537,7 +11182,8 @@
       "homeWeightedNR": -1.4,
       "awayWeightedNR": -6.3,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500744",
@@ -10554,7 +11200,8 @@
       "homeWeightedNR": 3.9,
       "awayWeightedNR": -3.9,
       "predictedWinner": "MIN",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500741",
@@ -10571,7 +11218,8 @@
       "homeWeightedNR": 12.4,
       "awayWeightedNR": 4.2,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500743",
@@ -10588,7 +11236,8 @@
       "homeWeightedNR": -7.2,
       "awayWeightedNR": -5.7,
       "predictedWinner": "MIL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500746",
@@ -10605,7 +11254,8 @@
       "homeWeightedNR": -9.9,
       "awayWeightedNR": -1.3,
       "predictedWinner": "LAC",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500745",
@@ -10622,7 +11272,8 @@
       "homeWeightedNR": -6.4,
       "awayWeightedNR": -3.2,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500742",
@@ -10639,7 +11290,8 @@
       "homeWeightedNR": 8.9,
       "awayWeightedNR": 13.7,
       "predictedWinner": "NYK",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500750",
@@ -10656,7 +11308,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": -7.4,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500755",
@@ -10673,7 +11326,8 @@
       "homeWeightedNR": -5,
       "awayWeightedNR": -4.7,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500747",
@@ -10707,7 +11361,8 @@
       "homeWeightedNR": 3.2,
       "awayWeightedNR": 0,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500752",
@@ -10724,7 +11379,8 @@
       "homeWeightedNR": -8.9,
       "awayWeightedNR": 0.1,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500754",
@@ -10741,7 +11397,8 @@
       "homeWeightedNR": 1,
       "awayWeightedNR": 3.7,
       "predictedWinner": "PHX",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500751",
@@ -10758,7 +11415,8 @@
       "homeWeightedNR": -0.5,
       "awayWeightedNR": 7.5,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500749",
@@ -10775,7 +11433,8 @@
       "homeWeightedNR": 6.1,
       "awayWeightedNR": -3.2,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500748",
@@ -10792,7 +11451,8 @@
       "homeWeightedNR": 8.7,
       "awayWeightedNR": -0.1,
       "predictedWinner": "OKC",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500756",
@@ -10809,7 +11469,8 @@
       "homeWeightedNR": -9.4,
       "awayWeightedNR": 10.2,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500757",
@@ -10894,7 +11555,8 @@
       "homeWeightedNR": -12.8,
       "awayWeightedNR": -11.5,
       "predictedWinner": "CHI",
-      "actualWinner": "BKN"
+      "actualWinner": "BKN",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500767",
@@ -10911,7 +11573,8 @@
       "homeWeightedNR": 2,
       "awayWeightedNR": 9.1,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500764",
@@ -10928,7 +11591,8 @@
       "homeWeightedNR": -4.1,
       "awayWeightedNR": -4.4,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500768",
@@ -10945,7 +11609,8 @@
       "homeWeightedNR": -1.7,
       "awayWeightedNR": -4.6,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500765",
@@ -10962,7 +11627,8 @@
       "homeWeightedNR": -0.1,
       "awayWeightedNR": 0.1,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500766",
@@ -10979,7 +11645,8 @@
       "homeWeightedNR": -3.6,
       "awayWeightedNR": -7.8,
       "predictedWinner": "NOP",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500770",
@@ -10996,7 +11663,8 @@
       "homeWeightedNR": -2.9,
       "awayWeightedNR": 5,
       "predictedWinner": "PHI",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500769",
@@ -11013,7 +11681,8 @@
       "homeWeightedNR": 1.8,
       "awayWeightedNR": 8.5,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500761",
@@ -11030,7 +11699,8 @@
       "homeWeightedNR": 7.4,
       "awayWeightedNR": 12.5,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500763",
@@ -11047,7 +11717,8 @@
       "homeWeightedNR": 6.5,
       "awayWeightedNR": -6,
       "predictedWinner": "MIA",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500771",
@@ -11064,7 +11735,8 @@
       "homeWeightedNR": 9.7,
       "awayWeightedNR": -7.5,
       "predictedWinner": "NYK",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500772",
@@ -11081,7 +11753,8 @@
       "homeWeightedNR": 0.1,
       "awayWeightedNR": -1,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500774",
@@ -11098,7 +11771,8 @@
       "homeWeightedNR": 0.9,
       "awayWeightedNR": 7.1,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500773",
@@ -11115,7 +11789,8 @@
       "homeWeightedNR": -0.1,
       "awayWeightedNR": -5.3,
       "predictedWinner": "PHX",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500780",
@@ -11132,7 +11807,8 @@
       "homeWeightedNR": 1.8,
       "awayWeightedNR": 5.8,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500788",
@@ -11149,7 +11825,8 @@
       "homeWeightedNR": -2.3,
       "awayWeightedNR": 9.6,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500785",
@@ -11166,7 +11843,8 @@
       "homeWeightedNR": 1.8,
       "awayWeightedNR": 8.2,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500787",
@@ -11183,7 +11861,8 @@
       "homeWeightedNR": 2.3,
       "awayWeightedNR": -4.8,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500778",
@@ -11200,7 +11879,8 @@
       "homeWeightedNR": 6.6,
       "awayWeightedNR": -10.2,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500776",
@@ -11217,7 +11897,8 @@
       "homeWeightedNR": 10.5,
       "awayWeightedNR": -11.8,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -17.5
     },
     {
       "gameId": "0022500775",
@@ -11234,7 +11915,8 @@
       "homeWeightedNR": 5.3,
       "awayWeightedNR": -2.3,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500782",
@@ -11251,7 +11933,8 @@
       "homeWeightedNR": 1.2,
       "awayWeightedNR": -0.9,
       "predictedWinner": "HOU",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500777",
@@ -11268,7 +11951,8 @@
       "homeWeightedNR": -0.9,
       "awayWeightedNR": -4.1,
       "predictedWinner": "ORL",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500779",
@@ -11285,7 +11969,8 @@
       "homeWeightedNR": -7.8,
       "awayWeightedNR": -6.5,
       "predictedWinner": "BKN",
-      "actualWinner": "IND"
+      "actualWinner": "IND",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500786",
@@ -11302,7 +11987,8 @@
       "homeWeightedNR": -5.1,
       "awayWeightedNR": -9.6,
       "predictedWinner": "UTA",
-      "actualWinner": "UTA"
+      "actualWinner": "UTA",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500784",
@@ -11319,7 +12005,8 @@
       "homeWeightedNR": -0.3,
       "awayWeightedNR": 4.7,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500783",
@@ -11336,7 +12023,8 @@
       "homeWeightedNR": 2.5,
       "awayWeightedNR": 0,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500781",
@@ -11353,7 +12041,8 @@
       "homeWeightedNR": 4.1,
       "awayWeightedNR": 10.5,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500790",
@@ -11370,7 +12059,8 @@
       "homeWeightedNR": -1.8,
       "awayWeightedNR": -2.6,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 7.5
     },
     {
       "gameId": "0022500791",
@@ -11387,7 +12077,8 @@
       "homeWeightedNR": -1.9,
       "awayWeightedNR": -6.3,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500789",
@@ -11404,7 +12095,8 @@
       "homeWeightedNR": 8.5,
       "awayWeightedNR": -3.7,
       "predictedWinner": "OKC",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": -11.5
     },
     {
       "gameId": "0022500795",
@@ -11421,7 +12113,8 @@
       "homeWeightedNR": -12.8,
       "awayWeightedNR": -5.1,
       "predictedWinner": "IND",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500800",
@@ -11438,7 +12131,8 @@
       "homeWeightedNR": -12.1,
       "awayWeightedNR": 0.7,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500792",
@@ -11455,7 +12149,8 @@
       "homeWeightedNR": 4,
       "awayWeightedNR": 1.4,
       "predictedWinner": "CHA",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500801",
@@ -11472,7 +12167,8 @@
       "homeWeightedNR": 1.2,
       "awayWeightedNR": 3,
       "predictedWinner": "DEN",
-      "actualWinner": "LAC"
+      "actualWinner": "LAC",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500798",
@@ -11489,7 +12185,8 @@
       "homeWeightedNR": 10.6,
       "awayWeightedNR": -2.1,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500796",
@@ -11506,7 +12203,8 @@
       "homeWeightedNR": 9.8,
       "awayWeightedNR": 13.1,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500793",
@@ -11523,7 +12221,8 @@
       "homeWeightedNR": 11.2,
       "awayWeightedNR": -7.3,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500794",
@@ -11540,7 +12239,8 @@
       "homeWeightedNR": -4.5,
       "awayWeightedNR": -3.4,
       "predictedWinner": "PHI",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500797",
@@ -11557,7 +12257,8 @@
       "homeWeightedNR": -11.4,
       "awayWeightedNR": 1.2,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500799",
@@ -11574,7 +12275,8 @@
       "homeWeightedNR": -1.9,
       "awayWeightedNR": 8.3,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500808",
@@ -11591,7 +12293,8 @@
       "homeWeightedNR": 7.3,
       "awayWeightedNR": -8.9,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -17.5
     },
     {
       "gameId": "0022500805",
@@ -11608,7 +12311,8 @@
       "homeWeightedNR": -2,
       "awayWeightedNR": 5.7,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500804",
@@ -11625,7 +12329,8 @@
       "homeWeightedNR": -5.4,
       "awayWeightedNR": -2.2,
       "predictedWinner": "MEM",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500810",
@@ -11642,7 +12347,8 @@
       "homeWeightedNR": -0.8,
       "awayWeightedNR": 2.9,
       "predictedWinner": "DEN",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500802",
@@ -11659,7 +12365,8 @@
       "homeWeightedNR": 2.8,
       "awayWeightedNR": 11.8,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500806",
@@ -11676,7 +12383,8 @@
       "homeWeightedNR": 5.3,
       "awayWeightedNR": -7.9,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": -15.5
     },
     {
       "gameId": "0022500807",
@@ -11693,7 +12401,8 @@
       "homeWeightedNR": -0.7,
       "awayWeightedNR": -0.9,
       "predictedWinner": "NOP",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500803",
@@ -11710,7 +12419,8 @@
       "homeWeightedNR": -11.6,
       "awayWeightedNR": -5.5,
       "predictedWinner": "IND",
-      "actualWinner": "WAS"
+      "actualWinner": "WAS",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500809",
@@ -11727,7 +12437,8 @@
       "homeWeightedNR": -0.8,
       "awayWeightedNR": -0.5,
       "predictedWinner": "LAL",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500816",
@@ -11744,7 +12455,8 @@
       "homeWeightedNR": 9.6,
       "awayWeightedNR": 2.2,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500813",
@@ -11761,7 +12473,8 @@
       "homeWeightedNR": 9.1,
       "awayWeightedNR": -2.8,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500811",
@@ -11778,7 +12491,8 @@
       "homeWeightedNR": -5.1,
       "awayWeightedNR": 3.6,
       "predictedWinner": "ORL",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500814",
@@ -11795,7 +12509,8 @@
       "homeWeightedNR": -11.1,
       "awayWeightedNR": 14.1,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500812",
@@ -11812,7 +12527,8 @@
       "homeWeightedNR": -3.3,
       "awayWeightedNR": -4.7,
       "predictedWinner": "PHI",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500815",
@@ -11829,7 +12545,8 @@
       "homeWeightedNR": 12.7,
       "awayWeightedNR": -14.7,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -18.5
     },
     {
       "gameId": "0022500817",
@@ -11863,7 +12580,8 @@
       "homeWeightedNR": 5.6,
       "awayWeightedNR": -7.4,
       "predictedWinner": "MIN",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500820",
@@ -11880,7 +12598,8 @@
       "homeWeightedNR": -3.6,
       "awayWeightedNR": 7.8,
       "predictedWinner": "DEN",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500819",
@@ -11897,7 +12616,8 @@
       "homeWeightedNR": 2.2,
       "awayWeightedNR": 2.4,
       "predictedWinner": "MIL",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 24.5
     },
     {
       "gameId": "0022500822",
@@ -11914,7 +12634,8 @@
       "homeWeightedNR": -9.6,
       "awayWeightedNR": 0.6,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500818",
@@ -11931,7 +12652,8 @@
       "homeWeightedNR": -5.1,
       "awayWeightedNR": -9.9,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500823",
@@ -11948,7 +12670,8 @@
       "homeWeightedNR": -0.6,
       "awayWeightedNR": 7.7,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500825",
@@ -11965,7 +12688,8 @@
       "homeWeightedNR": -10.6,
       "awayWeightedNR": 7.1,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500826",
@@ -11982,7 +12706,8 @@
       "homeWeightedNR": -4.4,
       "awayWeightedNR": -5.8,
       "predictedWinner": "PHX",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500827",
@@ -11999,7 +12724,8 @@
       "homeWeightedNR": -1.7,
       "awayWeightedNR": 4.3,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500821",
@@ -12016,7 +12742,8 @@
       "homeWeightedNR": -5.6,
       "awayWeightedNR": -8.6,
       "predictedWinner": "IND",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500828",
@@ -12033,7 +12760,8 @@
       "homeWeightedNR": 12,
       "awayWeightedNR": 13.7,
       "predictedWinner": "DET",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": -1.5
     },
     {
       "gameId": "0022500829",
@@ -12050,7 +12778,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": -15.6,
       "predictedWinner": "MEM",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500830",
@@ -12067,7 +12796,8 @@
       "homeWeightedNR": 1.5,
       "awayWeightedNR": -2.5,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500838",
@@ -12084,7 +12814,8 @@
       "homeWeightedNR": -1.9,
       "awayWeightedNR": -2.5,
       "predictedWinner": "GSW",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500832",
@@ -12101,7 +12832,8 @@
       "homeWeightedNR": -3.4,
       "awayWeightedNR": -9.3,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -12.5
     },
     {
       "gameId": "0022500840",
@@ -12118,7 +12850,8 @@
       "homeWeightedNR": -2.4,
       "awayWeightedNR": 4.7,
       "predictedWinner": "ORL",
-      "actualWinner": "ORL"
+      "actualWinner": "ORL",
+      "closingSpread": -5.5
     },
     {
       "gameId": "0022500831",
@@ -12135,7 +12868,8 @@
       "homeWeightedNR": -5.9,
       "awayWeightedNR": -4.2,
       "predictedWinner": "PHI",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500841",
@@ -12152,7 +12886,8 @@
       "homeWeightedNR": -4.6,
       "awayWeightedNR": 3.5,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500835",
@@ -12169,7 +12904,8 @@
       "homeWeightedNR": 10.1,
       "awayWeightedNR": 6.6,
       "predictedWinner": "CLE",
-      "actualWinner": "CLE"
+      "actualWinner": "CLE",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500837",
@@ -12186,7 +12922,8 @@
       "homeWeightedNR": -0.3,
       "awayWeightedNR": 8.5,
       "predictedWinner": "MIA",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500833",
@@ -12203,7 +12940,8 @@
       "homeWeightedNR": -10.9,
       "awayWeightedNR": -7.1,
       "predictedWinner": "DAL",
-      "actualWinner": "DAL"
+      "actualWinner": "DAL",
+      "closingSpread": 1.5
     },
     {
       "gameId": "0022500836",
@@ -12220,7 +12958,8 @@
       "homeWeightedNR": -10.1,
       "awayWeightedNR": 2.3,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500839",
@@ -12237,7 +12976,8 @@
       "homeWeightedNR": -7.3,
       "awayWeightedNR": 8.9,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500834",
@@ -12254,7 +12994,8 @@
       "homeWeightedNR": 4.7,
       "awayWeightedNR": 8.3,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -2.5
     },
     {
       "gameId": "0022500842",
@@ -12271,7 +13012,8 @@
       "homeWeightedNR": 10.5,
       "awayWeightedNR": 8.3,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -10.5
     },
     {
       "gameId": "0022500845",
@@ -12288,7 +13030,8 @@
       "homeWeightedNR": 3.5,
       "awayWeightedNR": -13.1,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": -13.5
     },
     {
       "gameId": "0022500846",
@@ -12305,7 +13048,8 @@
       "homeWeightedNR": 0.8,
       "awayWeightedNR": 8.7,
       "predictedWinner": "CLE",
-      "actualWinner": "MIL"
+      "actualWinner": "MIL",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500843",
@@ -12322,7 +13066,8 @@
       "homeWeightedNR": 2.7,
       "awayWeightedNR": 13,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500844",
@@ -12339,7 +13084,8 @@
       "homeWeightedNR": -5,
       "awayWeightedNR": -1.7,
       "predictedWinner": "GSW",
-      "actualWinner": "GSW"
+      "actualWinner": "GSW",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500847",
@@ -12356,7 +13102,8 @@
       "homeWeightedNR": 6.9,
       "awayWeightedNR": 12,
       "predictedWinner": "BOS",
-      "actualWinner": "DEN"
+      "actualWinner": "DEN",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500857",
@@ -12373,7 +13120,8 @@
       "homeWeightedNR": -0.4,
       "awayWeightedNR": 2.6,
       "predictedWinner": "MIN",
-      "actualWinner": "MIN"
+      "actualWinner": "MIN",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500849",
@@ -12390,7 +13138,8 @@
       "homeWeightedNR": 0.3,
       "awayWeightedNR": 7.6,
       "predictedWinner": "MIA",
-      "actualWinner": "PHI"
+      "actualWinner": "PHI",
+      "closingSpread": -3.5
     },
     {
       "gameId": "0022500852",
@@ -12407,7 +13156,8 @@
       "homeWeightedNR": 4.3,
       "awayWeightedNR": 7.3,
       "predictedWinner": "HOU",
-      "actualWinner": "HOU"
+      "actualWinner": "HOU",
+      "closingSpread": 2.5
     },
     {
       "gameId": "0022500848",
@@ -12424,7 +13174,8 @@
       "homeWeightedNR": -8.2,
       "awayWeightedNR": 5.2,
       "predictedWinner": "CHA",
-      "actualWinner": "CHA"
+      "actualWinner": "CHA",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500853",
@@ -12441,7 +13192,8 @@
       "homeWeightedNR": -12,
       "awayWeightedNR": -3.7,
       "predictedWinner": "POR",
-      "actualWinner": "POR"
+      "actualWinner": "POR",
+      "closingSpread": 4.5
     },
     {
       "gameId": "0022500854",
@@ -12458,7 +13210,8 @@
       "homeWeightedNR": -4.8,
       "awayWeightedNR": -14.7,
       "predictedWinner": "DAL",
-      "actualWinner": "SAC"
+      "actualWinner": "SAC",
+      "closingSpread": -7.5
     },
     {
       "gameId": "0022500856",
@@ -12475,7 +13228,8 @@
       "homeWeightedNR": -4.6,
       "awayWeightedNR": -2.4,
       "predictedWinner": "UTA",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500855",
@@ -12492,7 +13246,8 @@
       "homeWeightedNR": -8.1,
       "awayWeightedNR": -1.9,
       "predictedWinner": "LAL",
-      "actualWinner": "PHX"
+      "actualWinner": "PHX",
+      "closingSpread": 5.5
     },
     {
       "gameId": "0022500850",
@@ -12509,7 +13264,8 @@
       "homeWeightedNR": -0.7,
       "awayWeightedNR": -9.8,
       "predictedWinner": "ATL",
-      "actualWinner": "ATL"
+      "actualWinner": "ATL",
+      "closingSpread": -9.5
     },
     {
       "gameId": "0022500851",
@@ -12526,7 +13282,8 @@
       "homeWeightedNR": -11.5,
       "awayWeightedNR": 12.4,
       "predictedWinner": "SAS",
-      "actualWinner": "SAS"
+      "actualWinner": "SAS",
+      "closingSpread": 10.5
     },
     {
       "gameId": "0022500861",
@@ -12543,7 +13300,8 @@
       "homeWeightedNR": -4.3,
       "awayWeightedNR": -6,
       "predictedWinner": "DAL",
-      "actualWinner": "MEM"
+      "actualWinner": "MEM",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500858",
@@ -12560,7 +13318,8 @@
       "homeWeightedNR": 10.4,
       "awayWeightedNR": 7.1,
       "predictedWinner": "DET",
-      "actualWinner": "DET"
+      "actualWinner": "DET",
+      "closingSpread": -6.5
     },
     {
       "gameId": "0022500859",
@@ -12577,7 +13336,8 @@
       "homeWeightedNR": 7.6,
       "awayWeightedNR": -11,
       "predictedWinner": "BOS",
-      "actualWinner": "BOS"
+      "actualWinner": "BOS",
+      "closingSpread": -17.5
     },
     {
       "gameId": "0022500860",
@@ -12594,7 +13354,8 @@
       "homeWeightedNR": 0.8,
       "awayWeightedNR": 3.6,
       "predictedWinner": "NYK",
-      "actualWinner": "NYK"
+      "actualWinner": "NYK",
+      "closingSpread": 8.5
     },
     {
       "gameId": "0022500862",
@@ -12611,7 +13372,8 @@
       "homeWeightedNR": 8.2,
       "awayWeightedNR": 8.6,
       "predictedWinner": "OKC",
-      "actualWinner": "OKC"
+      "actualWinner": "OKC",
+      "closingSpread": -8.5
     },
     {
       "gameId": "0022500867",
@@ -12628,7 +13390,8 @@
       "homeWeightedNR": -6.6,
       "awayWeightedNR": -0.8,
       "predictedWinner": "NOP",
-      "actualWinner": "NOP"
+      "actualWinner": "NOP",
+      "closingSpread": 6.5
     },
     {
       "gameId": "0022500864",
@@ -12645,7 +13408,8 @@
       "homeWeightedNR": 6.4,
       "awayWeightedNR": 7.5,
       "predictedWinner": "MIA",
-      "actualWinner": "MIA"
+      "actualWinner": "MIA",
+      "closingSpread": -4.5
     },
     {
       "gameId": "0022500863",
@@ -12679,7 +13443,8 @@
       "homeWeightedNR": -12.5,
       "awayWeightedNR": 3.9,
       "predictedWinner": "TOR",
-      "actualWinner": "TOR"
+      "actualWinner": "TOR",
+      "closingSpread": 13.5
     },
     {
       "gameId": "0022500866",
@@ -12696,7 +13461,8 @@
       "homeWeightedNR": 0.9,
       "awayWeightedNR": -3.2,
       "predictedWinner": "GSW",
-      "actualWinner": "LAL"
+      "actualWinner": "LAL",
+      "closingSpread": 3.5
     },
     {
       "gameId": "0022500868",

@@ -75,6 +75,7 @@ interface WalkforwardGame {
   homeSnapshot: TeamSnapshot;
   awaySnapshot: TeamSnapshot;
   isHornetsGame: boolean;
+  closingSpread?: number; // Home team closing spread (from historical odds)
 }
 
 interface WalkforwardData {
@@ -106,6 +107,7 @@ interface GameResult {
   awayWeightedNR: number;
   predictedWinner: string;
   actualWinner: string;
+  closingSpread?: number;
 }
 
 // === Prediction Logic ===
@@ -198,17 +200,23 @@ interface Metrics {
   suCorrect: number;
   total: number;
   suPct: number;
+  atsW: number;
+  atsL: number;
+  atsPush: number;
+  atsPct: number;
+  atsTotal: number;
 }
 
 function computeMetrics(results: GameResult[]): Metrics {
   if (results.length === 0) {
-    return { mae: 0, rmse: 0, bias: 0, suCorrect: 0, total: 0, suPct: 0 };
+    return { mae: 0, rmse: 0, bias: 0, suCorrect: 0, total: 0, suPct: 0, atsW: 0, atsL: 0, atsPush: 0, atsPct: 0, atsTotal: 0 };
   }
 
   let sumAbsErr = 0;
   let sumSqErr = 0;
   let sumErr = 0;
   let suCorrect = 0;
+  let atsW = 0, atsL = 0, atsPush = 0;
 
   for (const r of results) {
     const err = r.predictedMargin - r.actualMargin;
@@ -221,9 +229,26 @@ function computeMetrics(results: GameResult[]): Metrics {
         (r.predictedMargin < 0 && r.actualMargin < 0)) {
       suCorrect++;
     }
+
+    // ATS: did our predicted margin beat the closing spread?
+    if (r.closingSpread !== undefined) {
+      // closingSpread is from home perspective (e.g., -5.5 means home favored by 5.5)
+      // Model predicts margin from home perspective
+      // "Cover" = our prediction is on the same side of the spread as the actual result
+      const actualCover = r.actualMargin + r.closingSpread; // >0 means home covered
+      const predictedCover = r.predictedMargin + r.closingSpread; // >0 means we'd pick home to cover
+      if (actualCover === 0) {
+        atsPush++;
+      } else if ((predictedCover > 0 && actualCover > 0) || (predictedCover < 0 && actualCover < 0)) {
+        atsW++;
+      } else {
+        atsL++;
+      }
+    }
   }
 
   const n = results.length;
+  const atsTotal = atsW + atsL;
   return {
     mae: sumAbsErr / n,
     rmse: Math.sqrt(sumSqErr / n),
@@ -231,6 +256,11 @@ function computeMetrics(results: GameResult[]): Metrics {
     suCorrect,
     total: n,
     suPct: (suCorrect / n) * 100,
+    atsW,
+    atsL,
+    atsPush,
+    atsPct: atsTotal > 0 ? (atsW / atsTotal) * 100 : 0,
+    atsTotal,
   };
 }
 
@@ -242,14 +272,21 @@ const fmt = (n: number, d: number = 1) => n.toFixed(d);
 const fmtSign = (n: number, d: number = 1) => (n >= 0 ? '+' : '') + n.toFixed(d);
 
 function printMetricsRow(label: string, m: Metrics) {
-  console.log(
+  let row =
     pad(label, 22) + '| ' +
     padL(fmt(m.mae), 6) + ' | ' +
     padL(fmt(m.rmse), 6) + ' | ' +
     padL(fmtSign(m.bias), 6) + ' | ' +
-    padL(fmt(m.suPct), 6) + '% | ' +
-    padL(`n=${m.total}`, 7)
-  );
+    padL(fmt(m.suPct), 6) + '% | ';
+
+  if (m.atsTotal > 0) {
+    row += padL(`${m.atsW}-${m.atsL}`, 7) + ' | ' +
+           padL(fmt(m.atsPct), 5) + '% | ';
+  } else {
+    row += padL('---', 7) + ' |   --- | ';
+  }
+  row += padL(`n=${m.total}`, 7);
+  console.log(row);
 }
 
 function printHeader() {
@@ -259,9 +296,11 @@ function printHeader() {
     padL('RMSE', 6) + ' | ' +
     padL('Bias', 6) + ' | ' +
     padL('SU Acc', 7) + ' | ' +
+    padL('ATS W-L', 7) + ' | ' +
+    padL('ATS%', 6) + ' | ' +
     padL('Games', 7)
   );
-  console.log('-'.repeat(68));
+  console.log('-'.repeat(86));
 }
 
 // === Main ===
@@ -310,14 +349,19 @@ function main() {
       awayWeightedNR: awayWNR,
       predictedWinner: pred.predictedMargin > 0 ? game.homeAbbrev : game.awayAbbrev,
       actualWinner: game.actualMargin > 0 ? game.homeAbbrev : game.awayAbbrev,
+      closingSpread: game.closingSpread,
     });
   }
 
   // Split results
   const nonHornets = results.filter(r => !r.isHornetsGame);
   const hornetsOnly = results.filter(r => r.isHornetsGame);
+  const withSpreads = nonHornets.filter(r => r.closingSpread !== undefined);
+  const spreadPct = ((withSpreads.length / nonHornets.length) * 100).toFixed(0);
 
   // === Overall Metrics ===
+  console.log(`Games with closing spreads: ${withSpreads.length}/${nonHornets.length} (${spreadPct}%)`);
+  console.log('');
   console.log('=== OVERALL METRICS ===');
   printHeader();
   printMetricsRow('League (all)', computeMetrics(results));
