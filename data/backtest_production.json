@@ -1,43 +1,43 @@
 {
-  "runDate": "2026-03-01T20:12:51.030Z",
+  "runDate": "2026-03-01T20:21:39.278Z",
   "gamesAnalyzed": 51,
   "gamesSkipped": 10,
   "core5Games": 30,
   "summary": {
     "standard": {
-      "mae": 11.366666666666667,
-      "rmse": 15.809844289890657,
-      "bias": -4.625490196078432,
-      "atsW": 32,
-      "atsL": 19,
-      "pickCorrect": 32,
-      "total": 51
-    },
-    "bayesian": {
-      "mae": 11.33529411764706,
-      "rmse": 15.67415132017817,
-      "bias": -4.205882352941177,
-      "atsW": 34,
-      "atsL": 17,
-      "pickCorrect": 32,
-      "total": 51
-    },
-    "buzzing": {
-      "mae": 11.364705882352942,
-      "rmse": 15.260175004778635,
-      "bias": -2.5176470588235293,
+      "mae": 11.29607843137255,
+      "rmse": 15.74066171965299,
+      "bias": -4.601960784313726,
       "atsW": 33,
       "atsL": 18,
       "pickCorrect": 32,
       "total": 51
     },
+    "bayesian": {
+      "mae": 11.262745098039218,
+      "rmse": 15.606986871772728,
+      "bias": -4.199999999999999,
+      "atsW": 34,
+      "atsL": 17,
+      "pickCorrect": 34,
+      "total": 51
+    },
+    "buzzing": {
+      "mae": 11.309803921568625,
+      "rmse": 15.192942117841378,
+      "bias": -2.505882352941176,
+      "atsW": 34,
+      "atsL": 17,
+      "pickCorrect": 31,
+      "total": 51
+    },
     "core5Bayesian": {
-      "mae": 14.463333333333336,
-      "rmse": 19.153407007631827,
-      "bias": -8.923333333333336,
+      "mae": 14.399999999999999,
+      "rmse": 19.079238279693804,
+      "bias": -8.919999999999998,
       "atsW": 19,
       "atsL": 11,
-      "pickCorrect": 20,
+      "pickCorrect": 21,
       "total": 30
     }
   },
@@ -54,16 +54,16 @@
       "spread": 4.1,
       "predictions": {
         "standard": {
-          "margin": 1.3,
-          "rawMargin": 1.3
+          "margin": 1.1,
+          "rawMargin": 1.1
         },
         "bayesian": {
-          "margin": 1.3,
-          "rawMargin": 1.3
+          "margin": 1.1,
+          "rawMargin": 1.1
         },
         "buzzing": {
-          "margin": 1.3,
-          "rawMargin": 1.3
+          "margin": 1.1,
+          "rawMargin": 1.1
         }
       }
     },
@@ -79,16 +79,16 @@
       "spread": 7,
       "predictions": {
         "standard": {
-          "margin": -2.9,
-          "rawMargin": -2.9
+          "margin": -2.6,
+          "rawMargin": -2.6
         },
         "bayesian": {
-          "margin": -2.9,
-          "rawMargin": -2.9
+          "margin": -2.6,
+          "rawMargin": -2.6
         },
         "buzzing": {
-          "margin": -2.9,
-          "rawMargin": -2.9
+          "margin": -2.6,
+          "rawMargin": -2.6
         }
       }
     },
@@ -104,16 +104,16 @@
       "spread": 4,
       "predictions": {
         "standard": {
-          "margin": -7.2,
-          "rawMargin": -7.2
+          "margin": -7.4,
+          "rawMargin": -7.4
         },
         "bayesian": {
-          "margin": -7.2,
-          "rawMargin": -7.2
+          "margin": -7.4,
+          "rawMargin": -7.4
         },
         "buzzing": {
-          "margin": -7.2,
-          "rawMargin": -7.2
+          "margin": -7.4,
+          "rawMargin": -7.4
         }
       }
     },
@@ -129,16 +129,16 @@
       "spread": 6.9,
       "predictions": {
         "standard": {
-          "margin": -6,
-          "rawMargin": -6
+          "margin": -5.8,
+          "rawMargin": -5.8
         },
         "bayesian": {
-          "margin": -6,
-          "rawMargin": -6
+          "margin": -5.7,
+          "rawMargin": -5.7
         },
         "buzzing": {
-          "margin": -6,
-          "rawMargin": -6
+          "margin": -5.8,
+          "rawMargin": -5.8
         }
       }
     },
@@ -154,16 +154,16 @@
       "spread": 6.9,
       "predictions": {
         "standard": {
-          "margin": -1.5,
-          "rawMargin": -1.5
+          "margin": -1.2,
+          "rawMargin": -1.2
         },
         "bayesian": {
-          "margin": -1.4,
-          "rawMargin": -1.4
+          "margin": -1.2,
+          "rawMargin": -1.2
         },
         "buzzing": {
-          "margin": -1.5,
-          "rawMargin": -1.5
+          "margin": -1.2,
+          "rawMargin": -1.2
         }
       }
     },
@@ -179,16 +179,16 @@
       "spread": 3.8,
       "predictions": {
         "standard": {
-          "margin": 0.4,
-          "rawMargin": 0.4
+          "margin": 0.1,
+          "rawMargin": 0.1
         },
         "bayesian": {
-          "margin": 0.4,
-          "rawMargin": 0.4
+          "margin": 0.2,
+          "rawMargin": 0.2
         },
         "buzzing": {
-          "margin": 0.4,
-          "rawMargin": 0.4
+          "margin": 0.1,
+          "rawMargin": 0.1
         }
       }
     },
@@ -204,16 +204,16 @@
       "spread": 6.8,
       "predictions": {
         "standard": {
-          "margin": -5.4,
-          "rawMargin": -5.4
+          "margin": -5.1,
+          "rawMargin": -5.1
         },
         "bayesian": {
-          "margin": -5.3,
-          "rawMargin": -5.3
+          "margin": -5.1,
+          "rawMargin": -5.1
         },
         "buzzing": {
-          "margin": -5.4,
-          "rawMargin": -5.4
+          "margin": -5.1,
+          "rawMargin": -5.1
         }
       }
     },
@@ -229,16 +229,16 @@
       "spread": 3.7,
       "predictions": {
         "standard": {
-          "margin": -2.1,
-          "rawMargin": -2.1
+          "margin": -2.4,
+          "rawMargin": -2.4
         },
         "bayesian": {
-          "margin": -2.1,
-          "rawMargin": -2.1
+          "margin": -2.3,
+          "rawMargin": -2.3
         },
         "buzzing": {
-          "margin": -2.1,
-          "rawMargin": -2.1
+          "margin": -2.4,
+          "rawMargin": -2.4
         }
       }
     },
@@ -254,16 +254,16 @@
       "spread": 3.6,
       "predictions": {
         "standard": {
-          "margin": 1.2,
-          "rawMargin": 1.2
+          "margin": 0.9,
+          "rawMargin": 0.9
         },
         "bayesian": {
-          "margin": 1.2,
-          "rawMargin": 1.2
+          "margin": 1,
+          "rawMargin": 1
         },
         "buzzing": {
-          "margin": 1.2,
-          "rawMargin": 1.2
+          "margin": 0.9,
+          "rawMargin": 0.9
         }
       }
     },
@@ -279,16 +279,16 @@
       "spread": 3.6,
       "predictions": {
         "standard": {
-          "margin": -3.8,
-          "rawMargin": -3.8
+          "margin": -4.1,
+          "rawMargin": -4.1
         },
         "bayesian": {
-          "margin": -3.7,
-          "rawMargin": -3.7
+          "margin": -4,
+          "rawMargin": -4
         },
         "buzzing": {
-          "margin": -2.8,
-          "rawMargin": -2.8
+          "margin": -3.1,
+          "rawMargin": -3.1
         }
       }
     },
@@ -304,16 +304,16 @@
       "spread": 6.5,
       "predictions": {
         "standard": {
-          "margin": -1.2,
-          "rawMargin": -1.2
+          "margin": -1,
+          "rawMargin": -1
         },
         "bayesian": {
-          "margin": -1.1,
-          "rawMargin": -1.1
+          "margin": -0.9,
+          "rawMargin": -0.9
         },
         "buzzing": {
-          "margin": 0,
-          "rawMargin": 0
+          "margin": 0.3,
+          "rawMargin": 0.3
         }
       }
     },
@@ -329,16 +329,16 @@
       "spread": 6.4,
       "predictions": {
         "standard": {
-          "margin": -7.5,
-          "rawMargin": -7.5
+          "margin": -7.2,
+          "rawMargin": -7.2
         },
         "bayesian": {
-          "margin": -7.3,
-          "rawMargin": -7.3
+          "margin": -7.1,
+          "rawMargin": -7.1
         },
         "buzzing": {
-          "margin": -6,
-          "rawMargin": -6
+          "margin": -5.8,
+          "rawMargin": -5.8
         }
       }
     },
@@ -354,16 +354,16 @@
       "spread": 6.2,
       "predictions": {
         "standard": {
-          "margin": -6.5,
-          "rawMargin": -6.5
+          "margin": -6.2,
+          "rawMargin": -6.2
         },
         "bayesian": {
-          "margin": -6.3,
-          "rawMargin": -6.3
+          "margin": -6.1,
+          "rawMargin": -6.1
         },
         "buzzing": {
-          "margin": -4.9,
-          "rawMargin": -4.9
+          "margin": -4.7,
+          "rawMargin": -4.7
         }
       }
     },
@@ -379,16 +379,16 @@
       "spread": 3.1,
       "predictions": {
         "standard": {
+          "margin": -0.5,
+          "rawMargin": -0.5
+        },
+        "bayesian": {
           "margin": -0.3,
           "rawMargin": -0.3
         },
-        "bayesian": {
-          "margin": -0.1,
-          "rawMargin": -0.1
-        },
         "buzzing": {
-          "margin": 1.8,
-          "rawMargin": 1.8
+          "margin": 1.5,
+          "rawMargin": 1.5
         }
       }
     },
@@ -404,16 +404,16 @@
       "spread": 2.7,
       "predictions": {
         "standard": {
+          "margin": 4.8,
+          "rawMargin": 4.8
+        },
+        "bayesian": {
           "margin": 5,
           "rawMargin": 5
         },
-        "bayesian": {
-          "margin": 5.2,
-          "rawMargin": 5.2
-        },
         "buzzing": {
-          "margin": 7.2,
-          "rawMargin": 7.2
+          "margin": 7,
+          "rawMargin": 7
         }
       }
     },
@@ -429,16 +429,16 @@
       "spread": 5.6,
       "predictions": {
         "standard": {
-          "margin": -5.5,
-          "rawMargin": -5.5
-        },
-        "bayesian": {
           "margin": -5.3,
           "rawMargin": -5.3
         },
+        "bayesian": {
+          "margin": -5.1,
+          "rawMargin": -5.1
+        },
         "buzzing": {
-          "margin": -3.3,
-          "rawMargin": -3.3
+          "margin": -3.1,
+          "rawMargin": -3.1
         }
       }
     },
@@ -454,16 +454,16 @@
       "spread": 2.2,
       "predictions": {
         "standard": {
-          "margin": 2.9,
-          "rawMargin": 2.9
+          "margin": 2.7,
+          "rawMargin": 2.7
         },
         "bayesian": {
-          "margin": 3.1,
-          "rawMargin": 3.1
+          "margin": 2.8,
+          "rawMargin": 2.8
         },
         "buzzing": {
-          "margin": 5,
-          "rawMargin": 5
+          "margin": 4.7,
+          "rawMargin": 4.7
         }
       }
     },
@@ -479,16 +479,16 @@
       "spread": 5,
       "predictions": {
         "standard": {
-          "margin": -6.1,
-          "rawMargin": -6.1
-        },
-        "bayesian": {
           "margin": -5.8,
           "rawMargin": -5.8
         },
+        "bayesian": {
+          "margin": -5.6,
+          "rawMargin": -5.6
+        },
         "buzzing": {
-          "margin": -3.9,
-          "rawMargin": -3.9
+          "margin": -3.7,
+          "rawMargin": -3.7
         }
       }
     },
@@ -504,16 +504,16 @@
       "spread": 4.8,
       "predictions": {
         "standard": {
-          "margin": -7,
-          "rawMargin": -7
-        },
-        "bayesian": {
           "margin": -6.7,
           "rawMargin": -6.7
         },
+        "bayesian": {
+          "margin": -6.5,
+          "rawMargin": -6.5
+        },
         "buzzing": {
-          "margin": -5.4,
-          "rawMargin": -5.4
+          "margin": -5.2,
+          "rawMargin": -5.2
         }
       }
     },
@@ -529,16 +529,16 @@
       "spread": 1.7,
       "predictions": {
         "standard": {
+          "margin": 2,
+          "rawMargin": 2
+        },
+        "bayesian": {
           "margin": 2.2,
           "rawMargin": 2.2
         },
-        "bayesian": {
-          "margin": 2.4,
-          "rawMargin": 2.4
-        },
         "buzzing": {
-          "margin": 3.6,
-          "rawMargin": 3.6
+          "margin": 3.3,
+          "rawMargin": 3.3
         }
       }
     },
@@ -554,16 +554,16 @@
       "spread": 4.3,
       "predictions": {
         "standard": {
-          "margin": -3.8,
-          "rawMargin": -3.8
+          "margin": -3.6,
+          "rawMargin": -3.6
         },
         "bayesian": {
-          "margin": -3.5,
-          "rawMargin": -3.5
+          "margin": -3.3,
+          "rawMargin": -3.3
         },
         "buzzing": {
-          "margin": -2.2,
-          "rawMargin": -2.2
+          "margin": -2,
+          "rawMargin": -2
         }
       }
     },
@@ -579,16 +579,16 @@
       "spread": 1,
       "predictions": {
         "standard": {
-          "margin": 3.9,
-          "rawMargin": 3.9
+          "margin": 3.7,
+          "rawMargin": 3.7
         },
         "bayesian": {
-          "margin": 4.3,
-          "rawMargin": 4.3
+          "margin": 4,
+          "rawMargin": 4
         },
         "buzzing": {
-          "margin": 5.7,
-          "rawMargin": 5.7
+          "margin": 5.5,
+          "rawMargin": 5.5
         }
       }
     },
@@ -604,16 +604,16 @@
       "spread": 0.9,
       "predictions": {
         "standard": {
-          "margin": 0.3,
-          "rawMargin": 0.3
+          "margin": 0.1,
+          "rawMargin": 0.1
         },
         "bayesian": {
-          "margin": 0.6,
-          "rawMargin": 0.6
+          "margin": 0.4,
+          "rawMargin": 0.4
         },
         "buzzing": {
-          "margin": 2.2,
-          "rawMargin": 2.2
+          "margin": 1.9,
+          "rawMargin": 1.9
         }
       }
     },
@@ -629,16 +629,16 @@
       "spread": 3.7,
       "predictions": {
         "standard": {
-          "margin": -1.8,
-          "rawMargin": -1.8
+          "margin": -1.6,
+          "rawMargin": -1.6
         },
         "bayesian": {
-          "margin": -1.5,
-          "rawMargin": -1.5
+          "margin": -1.3,
+          "rawMargin": -1.3
         },
         "buzzing": {
-          "margin": 0.2,
-          "rawMargin": 0.2
+          "margin": 0.4,
+          "rawMargin": 0.4
         }
       }
     },
@@ -654,16 +654,16 @@
       "spread": 3.6,
       "predictions": {
         "standard": {
-          "margin": -1.4,
-          "rawMargin": -1.4
-        },
-        "bayesian": {
           "margin": -1.1,
           "rawMargin": -1.1
         },
+        "bayesian": {
+          "margin": -0.8,
+          "rawMargin": -0.8
+        },
         "buzzing": {
-          "margin": 0.7,
-          "rawMargin": 0.7
+          "margin": 0.9,
+          "rawMargin": 0.9
         }
       }
     },
@@ -679,16 +679,16 @@
       "spread": 3.5,
       "predictions": {
         "standard": {
-          "margin": -8.4,
-          "rawMargin": -8.4
+          "margin": -8.2,
+          "rawMargin": -8.2
         },
         "bayesian": {
-          "margin": -8.1,
-          "rawMargin": -8.1
+          "margin": -7.9,
+          "rawMargin": -7.9
         },
         "buzzing": {
-          "margin": -6.5,
-          "rawMargin": -6.5
+          "margin": -6.3,
+          "rawMargin": -6.3
         }
       }
     },
@@ -704,16 +704,16 @@
       "spread": 0.4,
       "predictions": {
         "standard": {
-          "margin": 3,
-          "rawMargin": 3
+          "margin": 2.8,
+          "rawMargin": 2.8
         },
         "bayesian": {
-          "margin": 3.5,
-          "rawMargin": 3.5
+          "margin": 3.2,
+          "rawMargin": 3.2
         },
         "buzzing": {
-          "margin": 5.2,
-          "rawMargin": 5.2
+          "margin": 4.9,
+          "rawMargin": 4.9
         }
       }
     },
@@ -729,16 +729,16 @@
       "spread": 0.3,
       "predictions": {
         "standard": {
-          "margin": 5.6,
-          "rawMargin": 5.6
+          "margin": 5.4,
+          "rawMargin": 5.4
         },
         "bayesian": {
-          "margin": 6.1,
-          "rawMargin": 6.1
+          "margin": 5.8,
+          "rawMargin": 5.8
         },
         "buzzing": {
-          "margin": 7.8,
-          "rawMargin": 7.8
+          "margin": 7.6,
+          "rawMargin": 7.6
         }
       }
     },
@@ -754,16 +754,16 @@
       "spread": 3.1,
       "predictions": {
         "standard": {
-          "margin": 2.6,
-          "rawMargin": 2.6
+          "margin": 2.8,
+          "rawMargin": 2.8
         },
         "bayesian": {
-          "margin": 3,
-          "rawMargin": 3
+          "margin": 3.2,
+          "rawMargin": 3.2
         },
         "buzzing": {
-          "margin": 4.5,
-          "rawMargin": 4.5
+          "margin": 4.8,
+          "rawMargin": 4.8
         }
       }
     },
@@ -779,16 +779,16 @@
       "spread": 3,
       "predictions": {
         "standard": {
-          "margin": 2.2,
-          "rawMargin": 2.2
+          "margin": 2.5,
+          "rawMargin": 2.5
         },
         "bayesian": {
-          "margin": 2.8,
-          "rawMargin": 2.8
+          "margin": 3,
+          "rawMargin": 3
         },
         "buzzing": {
-          "margin": 4.6,
-          "rawMargin": 4.6
+          "margin": 4.9,
+          "rawMargin": 4.9
         }
       }
     },
@@ -804,16 +804,16 @@
       "spread": 2.6,
       "predictions": {
         "standard": {
-          "margin": 2.1,
-          "rawMargin": 2.1
+          "margin": 2.3,
+          "rawMargin": 2.3
         },
         "bayesian": {
-          "margin": 2.6,
-          "rawMargin": 2.6
+          "margin": 2.8,
+          "rawMargin": 2.8
         },
         "buzzing": {
-          "margin": 4.3,
-          "rawMargin": 4.3
+          "margin": 4.5,
+          "rawMargin": 4.5
         }
       }
     },
@@ -829,16 +829,16 @@
       "spread": 2.3,
       "predictions": {
         "standard": {
-          "margin": 0.8,
-          "rawMargin": 0.8
+          "margin": 1,
+          "rawMargin": 1
         },
         "bayesian": {
-          "margin": 1.4,
-          "rawMargin": 1.4
+          "margin": 1.6,
+          "rawMargin": 1.6
         },
         "buzzing": {
-          "margin": 3.4,
-          "rawMargin": 3.4
+          "margin": 3.6,
+          "rawMargin": 3.6
         }
       }
     },
@@ -854,16 +854,16 @@
       "spread": 2.1,
       "predictions": {
         "standard": {
-          "margin": -0.2,
-          "rawMargin": -0.2
+          "margin": 0,
+          "rawMargin": 0
         },
         "bayesian": {
-          "margin": 0.4,
-          "rawMargin": 0.4
+          "margin": 0.6,
+          "rawMargin": 0.6
         },
         "buzzing": {
-          "margin": 2.6,
-          "rawMargin": 2.6
+          "margin": 2.8,
+          "rawMargin": 2.8
         }
       }
     },
@@ -879,16 +879,16 @@
       "spread": -1.3,
       "predictions": {
         "standard": {
-          "margin": 6.4,
-          "rawMargin": 6.4
+          "margin": 6.2,
+          "rawMargin": 6.2
         },
         "bayesian": {
-          "margin": 7.1,
-          "rawMargin": 7.1
+          "margin": 6.9,
+          "rawMargin": 6.9
         },
         "buzzing": {
-          "margin": 9.6,
-          "rawMargin": 9.6
+          "margin": 9.4,
+          "rawMargin": 9.4
         }
       }
     },
@@ -904,16 +904,16 @@
       "spread": 1.6,
       "predictions": {
         "standard": {
-          "margin": 0.2,
-          "rawMargin": 0.2
+          "margin": 0.5,
+          "rawMargin": 0.5
         },
         "bayesian": {
-          "margin": 1,
-          "rawMargin": 1
+          "margin": 1.2,
+          "rawMargin": 1.2
         },
         "buzzing": {
-          "margin": 3.5,
-          "rawMargin": 3.5
+          "margin": 3.7,
+          "rawMargin": 3.7
         }
       }
     },
@@ -929,16 +929,16 @@
       "spread": -1.7,
       "predictions": {
         "standard": {
-          "margin": 11.8,
-          "rawMargin": 11.8
+          "margin": 11.6,
+          "rawMargin": 11.6
         },
         "bayesian": {
-          "margin": 12.6,
-          "rawMargin": 12.6
+          "margin": 12.4,
+          "rawMargin": 12.4
         },
         "buzzing": {
           "margin": 15,
-          "rawMargin": 15.2
+          "rawMargin": 15
         }
       }
     },
@@ -954,16 +954,16 @@
       "spread": -2,
       "predictions": {
         "standard": {
-          "margin": 6.2,
-          "rawMargin": 6.2
+          "margin": 5.9,
+          "rawMargin": 5.9
         },
         "bayesian": {
-          "margin": 6.9,
-          "rawMargin": 6.9
+          "margin": 6.7,
+          "rawMargin": 6.7
         },
         "buzzing": {
-          "margin": 9.5,
-          "rawMargin": 9.5
+          "margin": 9.3,
+          "rawMargin": 9.3
         }
       }
     },
@@ -979,16 +979,16 @@
       "spread": 0.3,
       "predictions": {
         "standard": {
-          "margin": 3.5,
-          "rawMargin": 3.5
+          "margin": 3.7,
+          "rawMargin": 3.7
         },
         "bayesian": {
-          "margin": 4.2,
-          "rawMargin": 4.2
+          "margin": 4.4,
+          "rawMargin": 4.4
         },
         "buzzing": {
-          "margin": 6.7,
-          "rawMargin": 6.7
+          "margin": 6.9,
+          "rawMargin": 6.9
         }
       }
     },
@@ -1004,16 +1004,16 @@
       "spread": -0.1,
       "predictions": {
         "standard": {
-          "margin": 4.6,
-          "rawMargin": 4.6
+          "margin": 4.8,
+          "rawMargin": 4.8
         },
         "bayesian": {
-          "margin": 5.3,
-          "rawMargin": 5.3
+          "margin": 5.6,
+          "rawMargin": 5.6
         },
         "buzzing": {
-          "margin": 7.7,
-          "rawMargin": 7.7
+          "margin": 7.9,
+          "rawMargin": 7.9
         }
       }
     },
@@ -1029,16 +1029,16 @@
       "spread": -3.8,
       "predictions": {
         "standard": {
-          "margin": 3.2,
-          "rawMargin": 3.2
+          "margin": 3,
+          "rawMargin": 3
         },
         "bayesian": {
-          "margin": 4,
-          "rawMargin": 4
+          "margin": 3.8,
+          "rawMargin": 3.8
         },
         "buzzing": {
-          "margin": 6.9,
-          "rawMargin": 6.9
+          "margin": 6.7,
+          "rawMargin": 6.7
         }
       }
     },
@@ -1054,16 +1054,16 @@
       "spread": -4.5,
       "predictions": {
         "standard": {
-          "margin": 7.6,
-          "rawMargin": 7.6
+          "margin": 7.4,
+          "rawMargin": 7.4
         },
         "bayesian": {
-          "margin": 8.6,
-          "rawMargin": 8.6
+          "margin": 8.3,
+          "rawMargin": 8.3
         },
         "buzzing": {
-          "margin": 11.7,
-          "rawMargin": 11.7
+          "margin": 11.5,
+          "rawMargin": 11.5
         }
       }
     },
@@ -1079,16 +1079,16 @@
       "spread": -1.5,
       "predictions": {
         "standard": {
-          "margin": -0.9,
-          "rawMargin": -0.9
+          "margin": -0.7,
+          "rawMargin": -0.7
         },
         "bayesian": {
-          "margin": 0,
-          "rawMargin": 0
+          "margin": 0.2,
+          "rawMargin": 0.2
         },
         "buzzing": {
-          "margin": 3,
-          "rawMargin": 3
+          "margin": 3.2,
+          "rawMargin": 3.2
         }
       }
     },
@@ -1104,16 +1104,16 @@
       "spread": -1.5,
       "predictions": {
         "standard": {
-          "margin": 0.2,
-          "rawMargin": 0.2
+          "margin": 0.5,
+          "rawMargin": 0.5
         },
         "bayesian": {
-          "margin": 1.1,
-          "rawMargin": 1.1
+          "margin": 1.3,
+          "rawMargin": 1.3
         },
         "buzzing": {
-          "margin": 3.9,
-          "rawMargin": 3.9
+          "margin": 4.1,
+          "rawMargin": 4.1
         }
       }
     },
@@ -1129,16 +1129,16 @@
       "spread": -4.5,
       "predictions": {
         "standard": {
-          "margin": 1.4,
-          "rawMargin": 1.4
+          "margin": 1.1,
+          "rawMargin": 1.1
         },
         "bayesian": {
-          "margin": 2.1,
-          "rawMargin": 2.1
+          "margin": 1.9,
+          "rawMargin": 1.9
         },
         "buzzing": {
-          "margin": 4.7,
-          "rawMargin": 4.7
+          "margin": 4.5,
+          "rawMargin": 4.5
         }
       }
     },
@@ -1154,16 +1154,16 @@
       "spread": -4.5,
       "predictions": {
         "standard": {
-          "margin": 3.5,
-          "rawMargin": 3.5
+          "margin": 3.3,
+          "rawMargin": 3.3
         },
         "bayesian": {
-          "margin": 4.3,
-          "rawMargin": 4.3
+          "margin": 4,
+          "rawMargin": 4
         },
         "buzzing": {
-          "margin": 6.7,
-          "rawMargin": 6.7
+          "margin": 6.5,
+          "rawMargin": 6.5
         }
       }
     },
@@ -1179,16 +1179,16 @@
       "spread": -4.5,
       "predictions": {
         "standard": {
-          "margin": 3.4,
-          "rawMargin": 3.4
+          "margin": 3.2,
+          "rawMargin": 3.2
         },
         "bayesian": {
-          "margin": 4,
-          "rawMargin": 4
+          "margin": 3.8,
+          "rawMargin": 3.8
         },
         "buzzing": {
-          "margin": 6.6,
-          "rawMargin": 6.6
+          "margin": 6.4,
+          "rawMargin": 6.4
         }
       }
     },
@@ -1204,16 +1204,16 @@
       "spread": -4.5,
       "predictions": {
         "standard": {
-          "margin": -0.4,
-          "rawMargin": -0.4
+          "margin": -0.6,
+          "rawMargin": -0.6
         },
         "bayesian": {
-          "margin": 0.2,
-          "rawMargin": 0.2
+          "margin": 0,
+          "rawMargin": 0
         },
         "buzzing": {
-          "margin": 2.9,
-          "rawMargin": 2.9
+          "margin": 2.7,
+          "rawMargin": 2.7
         }
       }
     },
@@ -1229,16 +1229,16 @@
       "spread": -1.5,
       "predictions": {
         "standard": {
-          "margin": 4,
-          "rawMargin": 4
+          "margin": 4.2,
+          "rawMargin": 4.2
         },
         "bayesian": {
-          "margin": 4.6,
-          "rawMargin": 4.6
+          "margin": 4.8,
+          "rawMargin": 4.8
         },
         "buzzing": {
-          "margin": 7.3,
-          "rawMargin": 7.3
+          "margin": 7.6,
+          "rawMargin": 7.6
         }
       }
     },
@@ -1254,16 +1254,16 @@
       "spread": -1.5,
       "predictions": {
         "standard": {
-          "margin": 1.5,
-          "rawMargin": 1.5
+          "margin": 1.8,
+          "rawMargin": 1.8
         },
         "bayesian": {
-          "margin": 2.1,
-          "rawMargin": 2.1
+          "margin": 2.3,
+          "rawMargin": 2.3
         },
         "buzzing": {
-          "margin": 4.8,
-          "rawMargin": 4.8
+          "margin": 5,
+          "rawMargin": 5
         }
       }
     },
@@ -1279,16 +1279,16 @@
       "spread": -1.5,
       "predictions": {
         "standard": {
-          "margin": 4.5,
-          "rawMargin": 4.5
+          "margin": 4.7,
+          "rawMargin": 4.7
         },
         "bayesian": {
-          "margin": 5.1,
-          "rawMargin": 5.1
+          "margin": 5.3,
+          "rawMargin": 5.3
         },
         "buzzing": {
-          "margin": 7.3,
-          "rawMargin": 7.3
+          "margin": 7.5,
+          "rawMargin": 7.5
         }
       }
     },
@@ -1304,16 +1304,16 @@
       "spread": -4.5,
       "predictions": {
         "standard": {
-          "margin": 7.5,
-          "rawMargin": 7.5
+          "margin": 7.3,
+          "rawMargin": 7.3
         },
         "bayesian": {
-          "margin": 8.4,
-          "rawMargin": 8.4
+          "margin": 8.2,
+          "rawMargin": 8.2
         },
         "buzzing": {
-          "margin": 11.2,
-          "rawMargin": 11.2
+          "margin": 11,
+          "rawMargin": 11
         }
       }
     }

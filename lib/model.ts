@@ -25,8 +25,8 @@ const ELO_INITIAL = 1500;
 const ELO_TO_SPREAD = 28; // ~28 Elo points = 1 point spread
 
 // === Net Rating Parameters ===
-// Home court reduced from 2.5 to 2.0 per backtest (was overpredicting home by +1.3)
-const NR_HOME_ADVANTAGE = 2.0; // Points (was 2.5)
+// Home court: 2.0 → 1.5 per league-wide backtest (+0.9 home bias on 690 games)
+const NR_HOME_ADVANTAGE = 1.5; // Points (was 2.0, originally 2.5)
 // B2B penalty is asymmetric: home teams lose crowd/energy edge, away teams less affected
 // Per league-wide backtest (690 games): home B2B bias +3.4, away B2B bias +2.9 w/ flat 1.5
 const NR_FATIGUE_HOME_B2B = 3.0; // Home team on B2B (was flat 1.5)

@@ -31,7 +31,7 @@ const WINDOW_WEIGHTS = {
   season: 0.20,
 };
 
-const NR_HOME_ADVANTAGE = 2.0;     // Points
+const NR_HOME_ADVANTAGE = 1.5;     // Points (was 2.0)
 const NR_FATIGUE_HOME_B2B = 3.0;   // Home team on B2B (fatigue erodes crowd/energy edge)
 const NR_FATIGUE_AWAY_B2B = 1.0;   // Away team on B2B (less impact, already traveling)
 const MID_VS_MID_ADJUSTMENT = -1.0;
