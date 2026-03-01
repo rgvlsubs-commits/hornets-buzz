@@ -714,81 +714,84 @@ def main(odds_api_key: Optional[str] = None):
             "tsPct": 0.55, "tsPctRank": 15,
         }
 
-    # Fetch upcoming schedule from NBA API
+    # Fetch upcoming schedule from NBA API (full season schedule in one call)
     print("\nFetching upcoming schedule...")
     upcoming_games = []
     try:
-        from nba_api.stats.endpoints import scoreboardv2
+        from nba_api.stats.endpoints import scheduleleaguev2
         from nba_api.stats.static import teams as nba_teams
         import time
 
-        for days_ahead in range(0, 14):
-            game_date = datetime.now() + timedelta(days=days_ahead)
-            date_str = game_date.strftime('%m/%d/%Y')
-            try:
-                time.sleep(0.4)
-                sb = scoreboardv2.ScoreboardV2(game_date=date_str)
-                games_df = sb.get_data_frames()[0]
-                if len(games_df) > 0:
-                    hornets_games = games_df[
-                        (games_df['HOME_TEAM_ID'] == HORNETS_TEAM_ID) |
-                        (games_df['VISITOR_TEAM_ID'] == HORNETS_TEAM_ID)
-                    ]
-                    for _, g in hornets_games.iterrows():
-                        is_home = g['HOME_TEAM_ID'] == HORNETS_TEAM_ID
-                        opp_id = g['VISITOR_TEAM_ID'] if is_home else g['HOME_TEAM_ID']
-                        opp_team = [t for t in nba_teams.get_teams() if t['id'] == opp_id]
-                        opp_name = opp_team[0]['full_name'] if opp_team else 'Unknown'
+        time.sleep(0.6)
+        schedule = scheduleleaguev2.ScheduleLeagueV2(season="2025-26", league_id="00")
+        schedule_df = schedule.get_data_frames()[0]
 
-                        # Get opponent strength and pace
-                        opp_stats = team_stats.get(opp_id, {})
-                        opp_net_rating = opp_stats.get("net_rating", 0)
-                        opp_pace = opp_stats.get("pace", 100.0)
+        # Filter Hornets games that haven't been played yet
+        today_str = datetime.utcnow().strftime('%Y-%m-%d')
+        cha_games = schedule_df[
+            ((schedule_df['homeTeam_teamId'] == HORNETS_TEAM_ID) |
+             (schedule_df['awayTeam_teamId'] == HORNETS_TEAM_ID)) &
+            (schedule_df['gameStatus'] != 3)  # 3 = Final
+        ].sort_values('gameDateEst')
 
-                        # Rest days calculated sequentially below after sorting
-                        rest_days = 2  # Placeholder, recomputed after sorting
-
-                        # Check if we have existing opening spread for this game
-                        game_id = str(g.get('GAME_ID', ''))
-                        existing_game = existing_upcoming.get(game_id, {})
-                        opening_spread = existing_game.get("openingSpread")
-                        opening_timestamp = existing_game.get("openingTimestamp")
-
-                        # TODO: Check opponent's schedule to determine their rest
-                        # For now, preserve from existing data or default to None
-                        opp_rest_days = existing_game.get("opponentRestDays")
-                        opp_is_b2b = existing_game.get("opponentIsBackToBack")
-
-                        upcoming_games.append({
-                            "gameId": game_id,
-                            "date": game_date.strftime('%Y-%m-%d'),
-                            "opponent": opp_name,
-                            "isHome": is_home,
-                            "spread": None,  # No line yet
-                            "openingSpread": opening_spread,  # Preserve from previous run
-                            "spreadMovement": None,
-                            "moneyline": None,
-                            "impliedWinPct": None,
-                            "overUnder": None,
-                            "hasRealOdds": False,
-                            "openingTimestamp": opening_timestamp,
-                            "lastUpdated": None,
-                            "opponentNetRating": opp_net_rating,
-                            "opponentPace": opp_pace,
-                            "opponentThreePtRate": opp_stats.get("three_pt_rate", 0.0),
-                            "opponentFtRate": opp_stats.get("ft_rate", 0.0),
-                            "opponentOrebPerGame": opp_stats.get("oreb_per_game", 0.0),
-                            "opponentTovPerGame": opp_stats.get("tov_per_game", 0.0),
-                            "opponentStlPerGame": opp_stats.get("stl_per_game", 0.0),
-                            "opponentDefFg3Pct": opp_stats.get("def_fg3_pct", 0.360),
-                            "restDays": max(0, rest_days),
-                            "isBackToBack": rest_days == 0,
-                            "opponentRestDays": opp_rest_days,
-                            "opponentIsBackToBack": opp_is_b2b,
-                        })
-                        print(f"  Found: {game_date.strftime('%b %d')} {'vs' if is_home else '@'} {opp_name} (opp NR: {opp_net_rating:+.1f})")
-            except Exception as e:
+        seen_game_ids = set()
+        for _, g in cha_games.iterrows():
+            game_id = str(g.get('gameId', ''))
+            if game_id in seen_game_ids:
                 continue
+            seen_game_ids.add(game_id)
+
+            is_home = g['homeTeam_teamId'] == HORNETS_TEAM_ID
+            opp_id = int(g['awayTeam_teamId'] if is_home else g['homeTeam_teamId'])
+            opp_name_raw = g['awayTeam_teamName'] if is_home else g['homeTeam_teamName']
+            opp_city = g['awayTeam_teamCity'] if is_home else g['homeTeam_teamCity']
+            opp_name = f"{opp_city} {opp_name_raw}"
+
+            # Parse date from gameDateEst
+            date_raw = str(g.get('gameDateEst', ''))[:10]
+
+            # Get opponent strength and pace
+            opp_stats = team_stats.get(opp_id, {})
+            opp_net_rating = opp_stats.get("net_rating", 0)
+            opp_pace = opp_stats.get("pace", 100.0)
+
+            # Preserve existing opening spread data
+            existing_game = existing_upcoming.get(game_id, {})
+            opening_spread = existing_game.get("openingSpread")
+            opening_timestamp = existing_game.get("openingTimestamp")
+            opp_rest_days = existing_game.get("opponentRestDays")
+            opp_is_b2b = existing_game.get("opponentIsBackToBack")
+
+            upcoming_games.append({
+                "gameId": game_id,
+                "date": date_raw,
+                "opponent": opp_name,
+                "isHome": is_home,
+                "spread": None,
+                "openingSpread": opening_spread,
+                "spreadMovement": None,
+                "moneyline": None,
+                "impliedWinPct": None,
+                "overUnder": None,
+                "hasRealOdds": False,
+                "openingTimestamp": opening_timestamp,
+                "lastUpdated": None,
+                "opponentNetRating": opp_net_rating,
+                "opponentPace": opp_pace,
+                "opponentThreePtRate": opp_stats.get("three_pt_rate", 0.0),
+                "opponentFtRate": opp_stats.get("ft_rate", 0.0),
+                "opponentOrebPerGame": opp_stats.get("oreb_per_game", 0.0),
+                "opponentTovPerGame": opp_stats.get("tov_per_game", 0.0),
+                "opponentStlPerGame": opp_stats.get("stl_per_game", 0.0),
+                "opponentDefFg3Pct": opp_stats.get("def_fg3_pct", 0.360),
+                "restDays": 2,  # Placeholder, recomputed below
+                "isBackToBack": False,
+                "opponentRestDays": opp_rest_days,
+                "opponentIsBackToBack": opp_is_b2b,
+            })
+            print(f"  Found: {date_raw} {'vs' if is_home else '@'} {opp_name} (opp NR: {opp_net_rating:+.1f})")
+
+        print(f"  Total upcoming: {len(upcoming_games)}")
     except Exception as e:
         print(f"  Schedule fetch error: {e}")
 
@@ -958,7 +961,7 @@ def main(odds_api_key: Optional[str] = None):
         "games": games,
         "metrics": metrics,
         "respectMetrics": respect_metrics,
-        "upcomingGames": upcoming_games[:5],
+        "upcomingGames": upcoming_games,
         "leagueAverages": {
             "netRating": 0.0,
             "ortg": 114.2,
