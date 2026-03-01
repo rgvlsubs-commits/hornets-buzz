@@ -1,43 +1,44 @@
 'use client';
 
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { TeamMetrics } from '@/lib/types';
+import { TeamMetrics, LeagueRankings as LeagueRankingsType } from '@/lib/types';
 import { RollingMetrics } from '@/lib/model';
 import { formatPlusMinus, formatRank, getBuzzLevel, getRankColor } from '@/lib/utils';
+
+const HORNETS_TEAM_ID = 1610612766;
 
 interface BuzzMeterProps {
   metrics: TeamMetrics;
   rollingMetrics?: RollingMetrics;
   windowLabel?: string;
+  leagueRankings?: LeagueRankingsType;
 }
 
-export default function BuzzMeter({ metrics, rollingMetrics, windowLabel }: BuzzMeterProps) {
+export default function BuzzMeter({ metrics, rollingMetrics, windowLabel, leagueRankings }: BuzzMeterProps) {
   // Use rolling metrics if provided, otherwise use season metrics
   const netRating = rollingMetrics?.netRating ?? metrics.netRating;
-  const netRatingRank = rollingMetrics
-    ? estimateRankFromNetRating(rollingMetrics.netRating)
-    : metrics.netRatingRank;
   const wins = rollingMetrics?.wins ?? metrics.wins;
   const losses = rollingMetrics?.losses ?? metrics.losses;
+
+  // Compute actual rank by comparing against all 30 teams (matches LeagueRankings table)
+  const netRatingRank = useMemo(() => {
+    if (!rollingMetrics) return metrics.netRatingRank;
+    if (!leagueRankings) return metrics.netRatingRank;
+
+    // Build list of all teams' net ratings, replacing Hornets with rolling value
+    const ratings = leagueRankings.teams.map(t =>
+      t.teamId === HORNETS_TEAM_ID ? rollingMetrics.netRating : t.netRating
+    );
+    // Count how many teams have a higher net rating
+    const rank = ratings.filter(r => r > rollingMetrics.netRating).length + 1;
+    return rank;
+  }, [rollingMetrics, leagueRankings, metrics.netRatingRank]);
 
   const { level, description } = getBuzzLevel(netRatingRank);
 
   // Calculate needle rotation: rank 1 = 90deg (right), rank 30 = -90deg (left)
   const needleRotation = 90 - ((netRatingRank - 1) / 29) * 180;
-
-// Estimate rank from net rating (rough approximation)
-function estimateRankFromNetRating(nr: number): number {
-  if (nr >= 10) return 1;
-  if (nr >= 8) return 3;
-  if (nr >= 6) return 5;
-  if (nr >= 4) return 8;
-  if (nr >= 2) return 12;
-  if (nr >= 0) return 15;
-  if (nr >= -2) return 18;
-  if (nr >= -4) return 22;
-  if (nr >= -6) return 25;
-  return 28;
-}
 
   return (
     <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700">

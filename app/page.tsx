@@ -280,6 +280,7 @@ export default function Home() {
                 metrics={data.metrics}
                 rollingMetrics={selectedMetrics ?? undefined}
                 windowLabel={selectedWindow >= maxGames ? 'All Games' : `Last ${selectedWindow} Games`}
+                leagueRankings={data.leagueRankings}
               />
               <RespectMeter
                 respectMetrics={data.respectMetrics}
@@ -287,6 +288,7 @@ export default function Home() {
                 windowLabel={selectedWindow >= maxGames ? 'All Games' : `Last ${selectedWindow} Games`}
                 games={data.games}
                 windowSize={selectedWindow >= maxGames ? 999 : selectedWindow}
+                healthyOnly={healthyOnly}
               />
             </div>
 

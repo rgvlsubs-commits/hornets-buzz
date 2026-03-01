@@ -9,8 +9,9 @@ interface RespectMeterProps {
   respectMetrics: RespectMetrics;
   rollingMetrics?: RollingMetrics;
   windowLabel?: string;
-  games?: Game[];       // All qualified games for dynamic calculation
+  games?: Game[];       // All games (newest-first) for dynamic calculation
   windowSize?: number;  // Current window size for filtering games
+  healthyOnly?: boolean; // Whether to filter to qualified (Core 5) games only
 }
 
 export default function RespectMeter({
@@ -19,11 +20,16 @@ export default function RespectMeter({
   windowLabel,
   games = [],
   windowSize,
+  healthyOnly = true,
 }: RespectMeterProps) {
-  // Get the games for the current window
+  // Filter games based on healthy toggle, then take the window
+  const eligibleGames = healthyOnly
+    ? games.filter(g => g.isQualified)
+    : games;
+
   const windowGames = windowSize && windowSize < 999
-    ? games.filter(g => g.isQualified).slice(0, windowSize)
-    : games.filter(g => g.isQualified);
+    ? eligibleGames.slice(0, windowSize)
+    : eligibleGames;
 
   // Calculate actual win % from rolling metrics if provided
   const actualWinPct = rollingMetrics
@@ -31,8 +37,10 @@ export default function RespectMeter({
     : respectMetrics.actualWinPct;
 
   // Calculate Vegas implied win % from games in the window
-  const impliedWinPct = windowGames.length > 0
-    ? windowGames.reduce((sum, g) => sum + (g.impliedWinPct || 0.5), 0) / windowGames.length
+  // impliedWinPct is populated for all 61 games via historical odds
+  const gamesWithImplied = windowGames.filter(g => g.impliedWinPct != null);
+  const impliedWinPct = gamesWithImplied.length > 0
+    ? gamesWithImplied.reduce((sum, g) => sum + g.impliedWinPct!, 0) / gamesWithImplied.length
     : respectMetrics.impliedWinPct;
 
   // Calculate ATS record for the window
@@ -106,7 +114,7 @@ export default function RespectMeter({
           </p>
           <p className="text-xs text-slate-400">Actual Win Rate</p>
           <p className="text-xs text-slate-500">
-            {rollingMetrics ? `(${rollingMetrics.wins}-${rollingMetrics.losses})` : '(Qualified)'}
+            {rollingMetrics ? `(${rollingMetrics.wins}-${rollingMetrics.losses})` : `(${windowGames.length} games)`}
           </p>
         </div>
         <div className="bg-slate-800/50 rounded-lg p-3">
@@ -115,7 +123,7 @@ export default function RespectMeter({
           </p>
           <p className="text-xs text-slate-400">Vegas Implied</p>
           <p className="text-xs text-slate-500">
-            {windowGames.length > 0 ? `(${windowGames.length} games)` : '(Markets)'}
+            {gamesWithImplied.length > 0 ? `(${gamesWithImplied.length} games)` : '(Markets)'}
           </p>
         </div>
         <div className="bg-slate-800/50 rounded-lg p-3">
