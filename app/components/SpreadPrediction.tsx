@@ -36,6 +36,7 @@ export default function SpreadPredictionComponent({
   const [lastOddsRefresh, setLastOddsRefresh] = useState<string | null>(null);
   const [oddsError, setOddsError] = useState<string | null>(null);
   const [showFactorDetails, setShowFactorDetails] = useState<Record<string, boolean>>({});
+  const [showMatchupContext, setShowMatchupContext] = useState<Record<string, boolean>>({});
 
   // Refresh odds from The Odds API
   const refreshOdds = useCallback(async () => {
@@ -493,6 +494,74 @@ export default function SpreadPredictionComponent({
                   </div>
                 )}
               </div>
+
+              {/* Matchup Context — style dimensions for discussion */}
+              {(game.opponentDefFg3Pct || game.opponentTovPerGame || game.opponentOrebPerGame) && (
+                <div className="border-t border-slate-700 pt-3 mt-3">
+                  <button
+                    onClick={() => setShowMatchupContext(prev => ({ ...prev, [game.gameId]: !prev[game.gameId] }))}
+                    className="text-xs text-slate-500 hover:text-slate-400 underline underline-offset-2"
+                  >
+                    {showMatchupContext[game.gameId] ? 'Hide matchup context' : 'Matchup context'}
+                  </button>
+                  {showMatchupContext[game.gameId] && (
+                    <div className="mt-2 space-y-1.5">
+                      {game.opponentDefFg3Pct != null && (
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">Opp 3PT Def</span>
+                          <span className={
+                            game.opponentDefFg3Pct >= 0.370 ? 'text-[#00A3B4]'
+                            : game.opponentDefFg3Pct <= 0.348 ? 'text-red-400'
+                            : 'text-slate-300'
+                          }>
+                            {(game.opponentDefFg3Pct * 100).toFixed(1)}%
+                            {game.opponentDefFg3Pct >= 0.370 ? ' (poor — CHA upside)' : game.opponentDefFg3Pct <= 0.348 ? ' (elite — CHA risk)' : ''}
+                          </span>
+                        </div>
+                      )}
+                      {game.opponentTovPerGame != null && game.opponentTovPerGame > 0 && (
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">Opp TOV/g</span>
+                          <span className={
+                            game.opponentTovPerGame >= 15.0 ? 'text-[#F9A01B]'
+                            : 'text-slate-300'
+                          }>
+                            {game.opponentTovPerGame.toFixed(1)}
+                            {game.opponentTovPerGame >= 15.0 ? ' (high — model may overpredict)' : ''}
+                          </span>
+                        </div>
+                      )}
+                      {game.opponentPace != null && (
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">Opp Pace</span>
+                          <span className="text-slate-300">{game.opponentPace.toFixed(1)}</span>
+                        </div>
+                      )}
+                      {game.opponentThreePtRate != null && game.opponentThreePtRate > 0 && (
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">Opp 3PT Rate</span>
+                          <span className="text-slate-300">{(game.opponentThreePtRate * 100).toFixed(1)}%</span>
+                        </div>
+                      )}
+                      {game.opponentOrebPerGame != null && game.opponentOrebPerGame > 0 && (
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">Opp OREB/g</span>
+                          <span className="text-slate-300">{game.opponentOrebPerGame.toFixed(1)}</span>
+                        </div>
+                      )}
+                      {game.opponentStlPerGame != null && game.opponentStlPerGame > 0 && (
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">Opp STL/g</span>
+                          <span className="text-slate-300">{game.opponentStlPerGame.toFixed(1)}</span>
+                        </div>
+                      )}
+                      <p className="text-[10px] text-slate-600 pt-1">
+                        Context only — not in model. CHA shoots 47% of FGA from 3.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Injury Report */}
               {(() => {

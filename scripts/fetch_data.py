@@ -61,6 +61,17 @@ def get_all_team_stats():
         adv_df = adv_stats.get_data_frames()[0]
         adv_by_id = {row["TEAM_ID"]: row for _, row in adv_df.iterrows()}
 
+        # Fetch Opponent stats for defensive 3PT% allowed
+        time.sleep(0.6)
+        opp_stats_api = leaguedashteamstats.LeagueDashTeamStats(
+            season=SEASON,
+            season_type_all_star="Regular Season",
+            per_mode_detailed="PerGame",
+            measure_type_detailed_defense="Opponent"
+        )
+        opp_df = opp_stats_api.get_data_frames()[0]
+        opp_by_id = {row["TEAM_ID"]: row for _, row in opp_df.iterrows()}
+
         # Build team strength dictionary
         team_stats = {}
         for _, row in df.iterrows():
@@ -84,6 +95,8 @@ def get_all_team_stats():
 
             # Real pace/ORTG/DRTG from Advanced stats
             adv_row = adv_by_id.get(team_id, {})
+            # Opponent (defensive) stats
+            opp_row = opp_by_id.get(team_id, {})
 
             team_stats[team_id] = {
                 "team_id": team_id,
@@ -101,6 +114,8 @@ def get_all_team_stats():
                 "oreb_per_game": round(float(oreb), 1),
                 "tov_per_game": round(float(tov), 1),
                 "stl_per_game": round(float(stl), 1),
+                # Defensive 3PT% allowed (what opponents shoot from 3 against this team)
+                "def_fg3_pct": round(float(opp_row.get("OPP_FG3_PCT", 0.360)), 3),
             }
 
         print(f"  Fetched stats for {len(team_stats)} teams")
@@ -405,6 +420,7 @@ def build_league_rankings(team_stats: dict) -> dict:
             "orebPerGame": stats.get("oreb_per_game", 0.0),
             "tovPerGame": stats.get("tov_per_game", 0.0),
             "stlPerGame": stats.get("stl_per_game", 0.0),
+            "defFg3Pct": stats.get("def_fg3_pct", 0.360),
         })
 
     # Calculate ranks for each metric
@@ -626,6 +642,7 @@ def main(odds_api_key: Optional[str] = None):
             "opponentOrebPerGame": opp_stats.get("oreb_per_game", 0.0),
             "opponentTovPerGame": opp_stats.get("tov_per_game", 0.0),
             "opponentStlPerGame": opp_stats.get("stl_per_game", 0.0),
+            "opponentDefFg3Pct": opp_stats.get("def_fg3_pct", 0.360),
             **advanced_stats,
         }
 
@@ -750,6 +767,7 @@ def main(odds_api_key: Optional[str] = None):
                             "opponentOrebPerGame": opp_stats.get("oreb_per_game", 0.0),
                             "opponentTovPerGame": opp_stats.get("tov_per_game", 0.0),
                             "opponentStlPerGame": opp_stats.get("stl_per_game", 0.0),
+                            "opponentDefFg3Pct": opp_stats.get("def_fg3_pct", 0.360),
                             "restDays": max(0, rest_days),
                             "isBackToBack": rest_days == 0,
                             "opponentRestDays": opp_rest_days,

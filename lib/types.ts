@@ -38,6 +38,7 @@ export interface Game {
   opponentOrebPerGame?: number;  // Opponent's offensive rebounds per game
   opponentTovPerGame?: number;   // Opponent's turnovers per game
   opponentStlPerGame?: number;   // Opponent's steals per game
+  opponentDefFg3Pct?: number;    // Opponent's defensive 3PT% allowed
   restDays?: number;           // Days of rest before game
   isBackToBack?: boolean;      // Back-to-back game?
 }
@@ -135,6 +136,7 @@ export interface UpcomingGame {
   opponentOrebPerGame?: number;  // Opponent's offensive rebounds per game
   opponentTovPerGame?: number;   // Opponent's turnovers per game
   opponentStlPerGame?: number;   // Opponent's steals per game
+  opponentDefFg3Pct?: number;    // Opponent's defensive 3PT% allowed
   restDays?: number;             // Days of rest before game
   isBackToBack?: boolean;        // Back-to-back game?
   opponentRestDays?: number;     // Opponent's days of rest
@@ -160,6 +162,7 @@ export interface LeagueTeam {
   orebPerGame: number;
   tovPerGame: number;
   stlPerGame: number;
+  defFg3Pct: number;       // Defensive 3PT% allowed (lower = better defense)
   netRatingRank: number;
   ortgRank: number;
   drtgRank: number;

@@ -1,0 +1,1022 @@
+{
+  "total_games": 61,
+  "qualified_analyzed": 30,
+  "overall_mae": 13.69,
+  "mean_residual": 4.03,
+  "style_data_present": true,
+  "correlations": [
+    {
+      "dimension": "Opp TOV/g",
+      "key": "opponentTovPerGame",
+      "r": -0.2799,
+      "p_value": 0.1341,
+      "significant": false,
+      "n": 30
+    },
+    {
+      "dimension": "Opp Def 3PT%",
+      "key": "opponentDefFg3Pct",
+      "r": 0.1629,
+      "p_value": 0.3896,
+      "significant": false,
+      "n": 30
+    },
+    {
+      "dimension": "Opp OREB/g",
+      "key": "opponentOrebPerGame",
+      "r": -0.1627,
+      "p_value": 0.3903,
+      "significant": false,
+      "n": 30
+    },
+    {
+      "dimension": "Opp STL/g",
+      "key": "opponentStlPerGame",
+      "r": -0.0998,
+      "p_value": 0.5998,
+      "significant": false,
+      "n": 30
+    },
+    {
+      "dimension": "Opp FT Rate",
+      "key": "opponentFtRate",
+      "r": 0.0634,
+      "p_value": 0.7392,
+      "significant": false,
+      "n": 30
+    },
+    {
+      "dimension": "Opp 3PT Rate",
+      "key": "opponentThreePtRate",
+      "r": 0.0466,
+      "p_value": 0.807,
+      "significant": false,
+      "n": 30
+    },
+    {
+      "dimension": "Opp Pace",
+      "key": "opponentPace",
+      "r": 0.0324,
+      "p_value": 0.8648,
+      "significant": false,
+      "n": 30
+    },
+    {
+      "dimension": "Combined Pace",
+      "key": "combined_pace",
+      "r": 0.0143,
+      "p_value": 0.94,
+      "significant": false,
+      "n": 30
+    },
+    {
+      "dimension": "Pace Delta",
+      "key": "pace_delta",
+      "r": -0.014,
+      "p_value": 0.9416,
+      "significant": false,
+      "n": 30
+    }
+  ],
+  "buckets": {
+    "Opp Pace": {
+      "key": "opponentPace",
+      "median": 101.1,
+      "high": {
+        "count": 15,
+        "mean_residual": 0.71,
+        "mae": 11.61,
+        "mean_dim_value": 102.14
+      },
+      "low": {
+        "count": 15,
+        "mean_residual": 7.36,
+        "mae": 15.77,
+        "mean_dim_value": 99.22
+      },
+      "bias_diff": -6.65
+    },
+    "Opp 3PT Rate": {
+      "key": "opponentThreePtRate",
+      "median": 0.411,
+      "high": {
+        "count": 15,
+        "mean_residual": -0.46,
+        "mae": 10.24,
+        "mean_dim_value": 0.43
+      },
+      "low": {
+        "count": 15,
+        "mean_residual": 8.52,
+        "mae": 17.14,
+        "mean_dim_value": 0.378
+      },
+      "bias_diff": -8.98
+    },
+    "Opp FT Rate": {
+      "key": "opponentFtRate",
+      "median": 0.266,
+      "high": {
+        "count": 15,
+        "mean_residual": 6.21,
+        "mae": 17.37,
+        "mean_dim_value": 0.291
+      },
+      "low": {
+        "count": 15,
+        "mean_residual": 1.85,
+        "mae": 10.01,
+        "mean_dim_value": 0.249
+      },
+      "bias_diff": 4.36
+    },
+    "Opp OREB/g": {
+      "key": "opponentOrebPerGame",
+      "median": 11.3,
+      "high": {
+        "count": 13,
+        "mean_residual": 0.24,
+        "mae": 13.33,
+        "mean_dim_value": 12.615
+      },
+      "low": {
+        "count": 17,
+        "mean_residual": 6.93,
+        "mae": 13.97,
+        "mean_dim_value": 10.324
+      },
+      "bias_diff": -6.69
+    },
+    "Opp TOV/g": {
+      "key": "opponentTovPerGame",
+      "median": 14.5,
+      "high": {
+        "count": 14,
+        "mean_residual": 0.58,
+        "mae": 13.33,
+        "mean_dim_value": 15.386
+      },
+      "low": {
+        "count": 16,
+        "mean_residual": 7.06,
+        "mae": 14.01,
+        "mean_dim_value": 13.925
+      },
+      "bias_diff": -6.48
+    },
+    "Opp STL/g": {
+      "key": "opponentStlPerGame",
+      "median": 8.6,
+      "high": {
+        "count": 12,
+        "mean_residual": 2.96,
+        "mae": 14.31,
+        "mean_dim_value": 9.35
+      },
+      "low": {
+        "count": 18,
+        "mean_residual": 4.75,
+        "mae": 13.28,
+        "mean_dim_value": 7.994
+      },
+      "bias_diff": -1.79
+    },
+    "Opp Def 3PT%": {
+      "key": "opponentDefFg3Pct",
+      "median": 0.357,
+      "high": {
+        "count": 14,
+        "mean_residual": 4.6,
+        "mae": 13.93,
+        "mean_dim_value": 0.367
+      },
+      "low": {
+        "count": 16,
+        "mean_residual": 3.53,
+        "mae": 13.48,
+        "mean_dim_value": 0.351
+      },
+      "bias_diff": 1.07
+    },
+    "Pace Delta": {
+      "key": "pace_delta",
+      "median": -2.5,
+      "high": {
+        "count": 15,
+        "mean_residual": 4.73,
+        "mae": 13.01,
+        "mean_dim_value": 0.467
+      },
+      "low": {
+        "count": 15,
+        "mean_residual": 3.33,
+        "mae": 14.38,
+        "mean_dim_value": -5.36
+      },
+      "bias_diff": 1.4
+    },
+    "Combined Pace": {
+      "key": "combined_pace",
+      "median": 198.95,
+      "high": {
+        "count": 15,
+        "mean_residual": 4.96,
+        "mae": 14.57,
+        "mean_dim_value": 202.407
+      },
+      "low": {
+        "count": 15,
+        "mean_residual": 3.1,
+        "mae": 12.82,
+        "mean_dim_value": 195.42
+      },
+      "bias_diff": 1.86
+    }
+  },
+  "details": {
+    "Opp TOV/g": [
+      {
+        "date": "2026-01-05",
+        "opponent": "OKC",
+        "dim_value": 12.8,
+        "residual": 36.75,
+        "predicted": -9.75,
+        "actual": 27
+      },
+      {
+        "date": "2026-01-18",
+        "opponent": "DEN",
+        "dim_value": 13.0,
+        "residual": 20.76,
+        "predicted": 2.24,
+        "actual": 23
+      },
+      {
+        "date": "2025-11-26",
+        "opponent": "NYK",
+        "dim_value": 13.6,
+        "residual": -1.7,
+        "predicted": -3.3,
+        "actual": -5
+      },
+      {
+        "date": "2025-12-26",
+        "opponent": "ORL",
+        "dim_value": 13.7,
+        "residual": 17.71,
+        "predicted": -0.71,
+        "actual": 17
+      },
+      {
+        "date": "2026-01-22",
+        "opponent": "ORL",
+        "dim_value": 13.7,
+        "residual": 16.0,
+        "predicted": 11.0,
+        "actual": 27
+      },
+      {
+        "date": "2026-01-31",
+        "opponent": "SAS",
+        "dim_value": 13.7,
+        "residual": -4.19,
+        "predicted": 8.19,
+        "actual": 4
+      },
+      {
+        "date": "2026-01-26",
+        "opponent": "PHI",
+        "dim_value": 13.8,
+        "residual": 24,
+        "predicted": 15,
+        "actual": 39
+      },
+      {
+        "date": "2025-11-29",
+        "opponent": "TOR",
+        "dim_value": 13.9,
+        "residual": 8.0,
+        "predicted": -3.0,
+        "actual": 5
+      },
+      {
+        "date": "2025-12-05",
+        "opponent": "TOR",
+        "dim_value": 13.9,
+        "residual": 31.12,
+        "predicted": -5.12,
+        "actual": 26
+      },
+      {
+        "date": "2025-12-18",
+        "opponent": "ATL",
+        "dim_value": 14.3,
+        "residual": 1.58,
+        "predicted": 5.42,
+        "actual": 7
+      },
+      {
+        "date": "2026-02-02",
+        "opponent": "NOP",
+        "dim_value": 14.3,
+        "residual": -9,
+        "predicted": 15,
+        "actual": 6
+      },
+      {
+        "date": "2026-02-07",
+        "opponent": "ATL",
+        "dim_value": 14.3,
+        "residual": -2.76,
+        "predicted": 9.76,
+        "actual": 7
+      },
+      {
+        "date": "2025-12-22",
+        "opponent": "CLE",
+        "dim_value": 14.4,
+        "residual": 1.63,
+        "predicted": -5.63,
+        "actual": -4
+      },
+      {
+        "date": "2026-01-21",
+        "opponent": "CLE",
+        "dim_value": 14.4,
+        "residual": -22,
+        "predicted": 15,
+        "actual": -7
+      },
+      {
+        "date": "2026-01-08",
+        "opponent": "IND",
+        "dim_value": 14.5,
+        "residual": -16,
+        "predicted": 15,
+        "actual": -1
+      },
+      {
+        "date": "2026-02-26",
+        "opponent": "IND",
+        "dim_value": 14.5,
+        "residual": 11,
+        "predicted": 15,
+        "actual": 26
+      },
+      {
+        "date": "2026-01-15",
+        "opponent": "LAL",
+        "dim_value": 14.8,
+        "residual": 13.19,
+        "predicted": 6.81,
+        "actual": 20
+      },
+      {
+        "date": "2026-01-29",
+        "opponent": "DAL",
+        "dim_value": 14.8,
+        "residual": -13.31,
+        "predicted": 14.31,
+        "actual": 1
+      },
+      {
+        "date": "2025-11-22",
+        "opponent": "LAC",
+        "dim_value": 15.1,
+        "residual": -7.1,
+        "predicted": 2.1,
+        "actual": -5
+      },
+      {
+        "date": "2025-11-28",
+        "opponent": "CHI",
+        "dim_value": 15.1,
+        "residual": -0.75,
+        "predicted": 5.75,
+        "actual": 5
+      },
+      {
+        "date": "2026-01-12",
+        "opponent": "LAC",
+        "dim_value": 15.1,
+        "residual": -15.75,
+        "predicted": 8.75,
+        "actual": -7
+      },
+      {
+        "date": "2026-02-24",
+        "opponent": "CHI",
+        "dim_value": 15.1,
+        "residual": 21.57,
+        "predicted": 9.43,
+        "actual": 31
+      },
+      {
+        "date": "2026-01-28",
+        "opponent": "MEM",
+        "dim_value": 15.2,
+        "residual": -10,
+        "predicted": 15,
+        "actual": 5
+      },
+      {
+        "date": "2025-12-20",
+        "opponent": "DET",
+        "dim_value": 15.3,
+        "residual": -21.24,
+        "predicted": -5.76,
+        "actual": -27
+      },
+      {
+        "date": "2026-02-09",
+        "opponent": "DET",
+        "dim_value": 15.3,
+        "residual": -13.12,
+        "predicted": 5.12,
+        "actual": -8
+      },
+      {
+        "date": "2025-12-23",
+        "opponent": "WAS",
+        "dim_value": 15.5,
+        "residual": 8.15,
+        "predicted": 10.85,
+        "actual": 19
+      },
+      {
+        "date": "2026-01-24",
+        "opponent": "WAS",
+        "dim_value": 15.5,
+        "residual": -8,
+        "predicted": 15,
+        "actual": 7
+      },
+      {
+        "date": "2026-02-05",
+        "opponent": "HOU",
+        "dim_value": 15.5,
+        "residual": 5.94,
+        "predicted": 6.06,
+        "actual": 12
+      },
+      {
+        "date": "2026-01-10",
+        "opponent": "UTA",
+        "dim_value": 15.8,
+        "residual": 47.6,
+        "predicted": 9.4,
+        "actual": 57
+      },
+      {
+        "date": "2026-02-28",
+        "opponent": "POR",
+        "dim_value": 17.3,
+        "residual": 0.87,
+        "predicted": 14.13,
+        "actual": 15
+      }
+    ]
+  },
+  "results": [
+    {
+      "game_id": "0022500268",
+      "date": "2025-11-22",
+      "opponent": "LAC",
+      "is_home": true,
+      "predicted_margin": 2.1,
+      "actual_margin": -5,
+      "residual": -7.1,
+      "opponentPace": 96.7,
+      "opponentThreePtRate": 0.413,
+      "opponentFtRate": 0.301,
+      "opponentOrebPerGame": 9.4,
+      "opponentTovPerGame": 15.1,
+      "opponentStlPerGame": 8.6,
+      "opponentDefFg3Pct": 0.368,
+      "pace_delta": 3.3,
+      "combined_pace": 196.7
+    },
+    {
+      "game_id": "0022500061",
+      "date": "2025-11-26",
+      "opponent": "NYK",
+      "is_home": true,
+      "predicted_margin": -3.3,
+      "actual_margin": -5,
+      "residual": -1.7,
+      "opponentPace": 98.6,
+      "opponentThreePtRate": 0.437,
+      "opponentFtRate": 0.243,
+      "opponentOrebPerGame": 12.9,
+      "opponentTovPerGame": 13.6,
+      "opponentStlPerGame": 8.0,
+      "opponentDefFg3Pct": 0.359,
+      "pace_delta": 1.4,
+      "combined_pace": 198.6
+    },
+    {
+      "game_id": "0022500071",
+      "date": "2025-11-28",
+      "opponent": "CHI",
+      "is_home": true,
+      "predicted_margin": 5.75,
+      "actual_margin": 5,
+      "residual": -0.75,
+      "opponentPace": 102.4,
+      "opponentThreePtRate": 0.444,
+      "opponentFtRate": 0.241,
+      "opponentOrebPerGame": 10.2,
+      "opponentTovPerGame": 15.1,
+      "opponentStlPerGame": 7.5,
+      "opponentDefFg3Pct": 0.374,
+      "pace_delta": -2.4,
+      "combined_pace": 202.4
+    },
+    {
+      "game_id": "0022500294",
+      "date": "2025-11-29",
+      "opponent": "TOR",
+      "is_home": true,
+      "predicted_margin": -3.0,
+      "actual_margin": 5,
+      "residual": 8.0,
+      "opponentPace": 99.3,
+      "opponentThreePtRate": 0.372,
+      "opponentFtRate": 0.256,
+      "opponentOrebPerGame": 11.3,
+      "opponentTovPerGame": 13.9,
+      "opponentStlPerGame": 8.6,
+      "opponentDefFg3Pct": 0.349,
+      "pace_delta": 0.7,
+      "combined_pace": 199.3
+    },
+    {
+      "game_id": "0022500344",
+      "date": "2025-12-05",
+      "opponent": "TOR",
+      "is_home": false,
+      "predicted_margin": -5.12,
+      "actual_margin": 26,
+      "residual": 31.12,
+      "opponentPace": 99.3,
+      "opponentThreePtRate": 0.372,
+      "opponentFtRate": 0.256,
+      "opponentOrebPerGame": 11.3,
+      "opponentTovPerGame": 13.9,
+      "opponentStlPerGame": 8.6,
+      "opponentDefFg3Pct": 0.349,
+      "pace_delta": 3.7,
+      "combined_pace": 202.3
+    },
+    {
+      "game_id": "0022500371",
+      "date": "2025-12-18",
+      "opponent": "ATL",
+      "is_home": true,
+      "predicted_margin": 5.42,
+      "actual_margin": 7,
+      "residual": 1.58,
+      "opponentPace": 103.0,
+      "opponentThreePtRate": 0.427,
+      "opponentFtRate": 0.235,
+      "opponentOrebPerGame": 10.4,
+      "opponentTovPerGame": 14.3,
+      "opponentStlPerGame": 9.4,
+      "opponentDefFg3Pct": 0.356,
+      "pace_delta": 1.0,
+      "combined_pace": 207.0
+    },
+    {
+      "game_id": "0022500390",
+      "date": "2025-12-20",
+      "opponent": "DET",
+      "is_home": false,
+      "predicted_margin": -5.76,
+      "actual_margin": -27,
+      "residual": -21.24,
+      "opponentPace": 100.4,
+      "opponentThreePtRate": 0.35,
+      "opponentFtRate": 0.293,
+      "opponentOrebPerGame": 13.4,
+      "opponentTovPerGame": 15.3,
+      "opponentStlPerGame": 10.6,
+      "opponentDefFg3Pct": 0.35,
+      "pace_delta": 5.6,
+      "combined_pace": 206.4
+    },
+    {
+      "game_id": "0022500402",
+      "date": "2025-12-22",
+      "opponent": "CLE",
+      "is_home": false,
+      "predicted_margin": -5.63,
+      "actual_margin": -4,
+      "residual": 1.63,
+      "opponentPace": 101.2,
+      "opponentThreePtRate": 0.443,
+      "opponentFtRate": 0.255,
+      "opponentOrebPerGame": 12.1,
+      "opponentTovPerGame": 14.4,
+      "opponentStlPerGame": 9.0,
+      "opponentDefFg3Pct": 0.37,
+      "pace_delta": -0.2,
+      "combined_pace": 202.2
+    },
+    {
+      "game_id": "0022500409",
+      "date": "2025-12-23",
+      "opponent": "WAS",
+      "is_home": true,
+      "predicted_margin": 10.85,
+      "actual_margin": 19,
+      "residual": 8.15,
+      "opponentPace": 102.2,
+      "opponentThreePtRate": 0.399,
+      "opponentFtRate": 0.235,
+      "opponentOrebPerGame": 11.5,
+      "opponentTovPerGame": 15.5,
+      "opponentStlPerGame": 7.9,
+      "opponentDefFg3Pct": 0.366,
+      "pace_delta": -7.7,
+      "combined_pace": 196.7
+    },
+    {
+      "game_id": "0022500424",
+      "date": "2025-12-26",
+      "opponent": "ORL",
+      "is_home": false,
+      "predicted_margin": -0.71,
+      "actual_margin": 17,
+      "residual": 17.71,
+      "opponentPace": 100.1,
+      "opponentThreePtRate": 0.382,
+      "opponentFtRate": 0.3,
+      "opponentOrebPerGame": 11.1,
+      "opponentTovPerGame": 13.7,
+      "opponentStlPerGame": 8.7,
+      "opponentDefFg3Pct": 0.357,
+      "pace_delta": -2.6,
+      "combined_pace": 197.6
+    },
+    {
+      "game_id": "0022500506",
+      "date": "2026-01-05",
+      "opponent": "OKC",
+      "is_home": false,
+      "predicted_margin": -9.75,
+      "actual_margin": 27,
+      "residual": 36.75,
+      "opponentPace": 100.7,
+      "opponentThreePtRate": 0.42,
+      "opponentFtRate": 0.269,
+      "opponentOrebPerGame": 9.5,
+      "opponentTovPerGame": 12.8,
+      "opponentStlPerGame": 9.9,
+      "opponentDefFg3Pct": 0.368,
+      "pace_delta": -3.7,
+      "combined_pace": 197.7
+    },
+    {
+      "game_id": "0022500528",
+      "date": "2026-01-08",
+      "opponent": "IND",
+      "is_home": true,
+      "predicted_margin": 15,
+      "actual_margin": -1,
+      "residual": -16,
+      "opponentPace": 102.0,
+      "opponentThreePtRate": 0.416,
+      "opponentFtRate": 0.263,
+      "opponentOrebPerGame": 10.3,
+      "opponentTovPerGame": 14.5,
+      "opponentStlPerGame": 7.5,
+      "opponentDefFg3Pct": 0.346,
+      "pace_delta": -4.0,
+      "combined_pace": 200.0
+    },
+    {
+      "game_id": "0022500547",
+      "date": "2026-01-10",
+      "opponent": "UTA",
+      "is_home": false,
+      "predicted_margin": 9.4,
+      "actual_margin": 57,
+      "residual": 47.6,
+      "opponentPace": 103.1,
+      "opponentThreePtRate": 0.409,
+      "opponentFtRate": 0.286,
+      "opponentOrebPerGame": 11.9,
+      "opponentTovPerGame": 15.8,
+      "opponentStlPerGame": 8.5,
+      "opponentDefFg3Pct": 0.372,
+      "pace_delta": -1.6,
+      "combined_pace": 204.6
+    },
+    {
+      "game_id": "0022500563",
+      "date": "2026-01-12",
+      "opponent": "LAC",
+      "is_home": false,
+      "predicted_margin": 8.75,
+      "actual_margin": -7,
+      "residual": -15.75,
+      "opponentPace": 96.7,
+      "opponentThreePtRate": 0.413,
+      "opponentFtRate": 0.301,
+      "opponentOrebPerGame": 9.4,
+      "opponentTovPerGame": 15.1,
+      "opponentStlPerGame": 8.6,
+      "opponentDefFg3Pct": 0.368,
+      "pace_delta": -2.7,
+      "combined_pace": 190.7
+    },
+    {
+      "game_id": "0022500586",
+      "date": "2026-01-15",
+      "opponent": "LAL",
+      "is_home": false,
+      "predicted_margin": 6.81,
+      "actual_margin": 20,
+      "residual": 13.19,
+      "opponentPace": 99.3,
+      "opponentThreePtRate": 0.4,
+      "opponentFtRate": 0.318,
+      "opponentOrebPerGame": 9.5,
+      "opponentTovPerGame": 14.8,
+      "opponentStlPerGame": 8.1,
+      "opponentDefFg3Pct": 0.363,
+      "pace_delta": -0.8,
+      "combined_pace": 197.8
+    },
+    {
+      "game_id": "0022500605",
+      "date": "2026-01-18",
+      "opponent": "DEN",
+      "is_home": false,
+      "predicted_margin": 2.24,
+      "actual_margin": 23,
+      "residual": 20.76,
+      "opponentPace": 98.9,
+      "opponentThreePtRate": 0.404,
+      "opponentFtRate": 0.297,
+      "opponentOrebPerGame": 9.7,
+      "opponentTovPerGame": 13.0,
+      "opponentStlPerGame": 7.1,
+      "opponentDefFg3Pct": 0.349,
+      "pace_delta": -12.9,
+      "combined_pace": 184.9
+    },
+    {
+      "game_id": "0022500620",
+      "date": "2026-01-21",
+      "opponent": "CLE",
+      "is_home": true,
+      "predicted_margin": 15,
+      "actual_margin": -7,
+      "residual": -22,
+      "opponentPace": 101.2,
+      "opponentThreePtRate": 0.443,
+      "opponentFtRate": 0.255,
+      "opponentOrebPerGame": 12.1,
+      "opponentTovPerGame": 14.4,
+      "opponentStlPerGame": 9.0,
+      "opponentDefFg3Pct": 0.37,
+      "pace_delta": -5.2,
+      "combined_pace": 197.2
+    },
+    {
+      "game_id": "0022500627",
+      "date": "2026-01-22",
+      "opponent": "ORL",
+      "is_home": false,
+      "predicted_margin": 11.0,
+      "actual_margin": 27,
+      "residual": 16.0,
+      "opponentPace": 100.1,
+      "opponentThreePtRate": 0.382,
+      "opponentFtRate": 0.3,
+      "opponentOrebPerGame": 11.1,
+      "opponentTovPerGame": 13.7,
+      "opponentStlPerGame": 8.7,
+      "opponentDefFg3Pct": 0.357,
+      "pace_delta": -5.1,
+      "combined_pace": 195.1
+    },
+    {
+      "game_id": "0022500645",
+      "date": "2026-01-24",
+      "opponent": "WAS",
+      "is_home": true,
+      "predicted_margin": 15,
+      "actual_margin": 7,
+      "residual": -8,
+      "opponentPace": 102.2,
+      "opponentThreePtRate": 0.399,
+      "opponentFtRate": 0.235,
+      "opponentOrebPerGame": 11.5,
+      "opponentTovPerGame": 15.5,
+      "opponentStlPerGame": 7.9,
+      "opponentDefFg3Pct": 0.366,
+      "pace_delta": -2.2,
+      "combined_pace": 202.2
+    },
+    {
+      "game_id": "0022500657",
+      "date": "2026-01-26",
+      "opponent": "PHI",
+      "is_home": true,
+      "predicted_margin": 15,
+      "actual_margin": 39,
+      "residual": 24,
+      "opponentPace": 100.1,
+      "opponentThreePtRate": 0.398,
+      "opponentFtRate": 0.284,
+      "opponentOrebPerGame": 12.0,
+      "opponentTovPerGame": 13.8,
+      "opponentStlPerGame": 9.3,
+      "opponentDefFg3Pct": 0.356,
+      "pace_delta": 1.4,
+      "combined_pace": 201.6
+    },
+    {
+      "game_id": "0022500676",
+      "date": "2026-01-28",
+      "opponent": "MEM",
+      "is_home": false,
+      "predicted_margin": 15,
+      "actual_margin": 5,
+      "residual": -10,
+      "opponentPace": 101.6,
+      "opponentThreePtRate": 0.421,
+      "opponentFtRate": 0.257,
+      "opponentOrebPerGame": 11.5,
+      "opponentTovPerGame": 15.2,
+      "opponentStlPerGame": 8.6,
+      "opponentDefFg3Pct": 0.361,
+      "pace_delta": -1.6,
+      "combined_pace": 201.6
+    },
+    {
+      "game_id": "0022500683",
+      "date": "2026-01-29",
+      "opponent": "DAL",
+      "is_home": false,
+      "predicted_margin": 14.31,
+      "actual_margin": 1,
+      "residual": -13.31,
+      "opponentPace": 102.6,
+      "opponentThreePtRate": 0.35,
+      "opponentFtRate": 0.287,
+      "opponentOrebPerGame": 10.1,
+      "opponentTovPerGame": 14.8,
+      "opponentStlPerGame": 7.5,
+      "opponentDefFg3Pct": 0.343,
+      "pace_delta": -1.1,
+      "combined_pace": 204.1
+    },
+    {
+      "game_id": "0022500697",
+      "date": "2026-01-31",
+      "opponent": "SAS",
+      "is_home": true,
+      "predicted_margin": 8.19,
+      "actual_margin": 4,
+      "residual": -4.19,
+      "opponentPace": 101.0,
+      "opponentThreePtRate": 0.419,
+      "opponentFtRate": 0.283,
+      "opponentOrebPerGame": 11.3,
+      "opponentTovPerGame": 13.7,
+      "opponentStlPerGame": 7.8,
+      "opponentDefFg3Pct": 0.357,
+      "pace_delta": -6.5,
+      "combined_pace": 195.5
+    },
+    {
+      "game_id": "0022500712",
+      "date": "2026-02-02",
+      "opponent": "NOP",
+      "is_home": true,
+      "predicted_margin": 15,
+      "actual_margin": 6,
+      "residual": -9,
+      "opponentPace": 101.2,
+      "opponentThreePtRate": 0.359,
+      "opponentFtRate": 0.277,
+      "opponentOrebPerGame": 12.3,
+      "opponentTovPerGame": 14.3,
+      "opponentStlPerGame": 8.8,
+      "opponentDefFg3Pct": 0.35,
+      "pace_delta": -4.7,
+      "combined_pace": 197.7
+    },
+    {
+      "game_id": "0022500737",
+      "date": "2026-02-05",
+      "opponent": "HOU",
+      "is_home": false,
+      "predicted_margin": 6.06,
+      "actual_margin": 12,
+      "residual": 5.94,
+      "opponentPace": 96.7,
+      "opponentThreePtRate": 0.346,
+      "opponentFtRate": 0.263,
+      "opponentOrebPerGame": 15.3,
+      "opponentTovPerGame": 15.5,
+      "opponentStlPerGame": 8.8,
+      "opponentDefFg3Pct": 0.345,
+      "pace_delta": -0.2,
+      "combined_pace": 193.2
+    },
+    {
+      "game_id": "0022500751",
+      "date": "2026-02-07",
+      "opponent": "ATL",
+      "is_home": false,
+      "predicted_margin": 9.76,
+      "actual_margin": 7,
+      "residual": -2.76,
+      "opponentPace": 103.0,
+      "opponentThreePtRate": 0.427,
+      "opponentFtRate": 0.235,
+      "opponentOrebPerGame": 10.4,
+      "opponentTovPerGame": 14.3,
+      "opponentStlPerGame": 9.4,
+      "opponentDefFg3Pct": 0.356,
+      "pace_delta": -6.0,
+      "combined_pace": 200.0
+    },
+    {
+      "game_id": "0022500761",
+      "date": "2026-02-09",
+      "opponent": "DET",
+      "is_home": true,
+      "predicted_margin": 5.12,
+      "actual_margin": -8,
+      "residual": -13.12,
+      "opponentPace": 100.4,
+      "opponentThreePtRate": 0.35,
+      "opponentFtRate": 0.293,
+      "opponentOrebPerGame": 13.4,
+      "opponentTovPerGame": 15.3,
+      "opponentStlPerGame": 10.6,
+      "opponentDefFg3Pct": 0.35,
+      "pace_delta": -7.4,
+      "combined_pace": 193.4
+    },
+    {
+      "game_id": "0022500836",
+      "date": "2026-02-24",
+      "opponent": "CHI",
+      "is_home": false,
+      "predicted_margin": 9.43,
+      "actual_margin": 31,
+      "residual": 21.57,
+      "opponentPace": 102.4,
+      "opponentThreePtRate": 0.444,
+      "opponentFtRate": 0.241,
+      "opponentOrebPerGame": 10.2,
+      "opponentTovPerGame": 15.1,
+      "opponentStlPerGame": 7.5,
+      "opponentDefFg3Pct": 0.374,
+      "pace_delta": -2.9,
+      "combined_pace": 201.9
+    },
+    {
+      "game_id": "0022500848",
+      "date": "2026-02-26",
+      "opponent": "IND",
+      "is_home": false,
+      "predicted_margin": 15,
+      "actual_margin": 26,
+      "residual": 11,
+      "opponentPace": 102.0,
+      "opponentThreePtRate": 0.416,
+      "opponentFtRate": 0.263,
+      "opponentOrebPerGame": 10.3,
+      "opponentTovPerGame": 14.5,
+      "opponentStlPerGame": 7.5,
+      "opponentDefFg3Pct": 0.346,
+      "pace_delta": -3.5,
+      "combined_pace": 200.5
+    },
+    {
+      "game_id": "0022500863",
+      "date": "2026-02-28",
+      "opponent": "POR",
+      "is_home": true,
+      "predicted_margin": 14.13,
+      "actual_margin": 15,
+      "residual": 0.87,
+      "opponentPace": 102.0,
+      "opponentThreePtRate": 0.469,
+      "opponentFtRate": 0.281,
+      "opponentOrebPerGame": 14.1,
+      "opponentTovPerGame": 17.3,
+      "opponentStlPerGame": 8.1,
+      "opponentDefFg3Pct": 0.363,
+      "pace_delta": -5.5,
+      "combined_pace": 198.5
+    }
+  ]
+}
