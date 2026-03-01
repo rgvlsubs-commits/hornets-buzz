@@ -654,6 +654,23 @@ def main(odds_api_key: Optional[str] = None):
         else:
             print(f"Excluded (missing: {', '.join(missing_starters)})")
 
+    # Retry failed box scores (games with fallback netRating: 0.0)
+    fallback_games = [g for g in games if g.get("netRating") == 0.0 and g.get("isQualified")]
+    if fallback_games:
+        print(f"\nRetrying {len(fallback_games)} games with fallback box scores...")
+        for g in fallback_games:
+            print(f"  - Retrying {g['date']} vs {g['opponent']}...", end=" ")
+            time.sleep(1.5)  # Longer delay for retry
+            retry_stats = get_box_score_advanced(g["gameId"])
+            if retry_stats and retry_stats.get("netRating", 0) != 0:
+                g.update(retry_stats)
+                # Recalculate opponent score from updated stats
+                est_margin = retry_stats["netRating"] * retry_stats.get("pace", 100) / 100
+                g["opponentScore"] = int(g["hornetsScore"] - est_margin)
+                print(f"Success (NR: {retry_stats['netRating']:.1f})")
+            else:
+                print("Still failed")
+
     # Sort games by date descending (most recent first)
     games.sort(key=lambda g: g["date"], reverse=True)
     qualified_games.sort(key=lambda g: g["date"], reverse=True)
@@ -728,12 +745,8 @@ def main(odds_api_key: Optional[str] = None):
                         opp_net_rating = opp_stats.get("net_rating", 0)
                         opp_pace = opp_stats.get("pace", 100.0)
 
-                        # Calculate rest days from last game
-                        if games:
-                            last_game_date = datetime.strptime(games[0]["date"], "%Y-%m-%d")
-                            rest_days = (game_date - last_game_date).days - 1
-                        else:
-                            rest_days = 2  # Default
+                        # Rest days calculated sequentially below after sorting
+                        rest_days = 2  # Placeholder, recomputed after sorting
 
                         # Check if we have existing opening spread for this game
                         game_id = str(g.get('GAME_ID', ''))
@@ -778,6 +791,26 @@ def main(odds_api_key: Optional[str] = None):
                 continue
     except Exception as e:
         print(f"  Schedule fetch error: {e}")
+
+    # Recompute rest days sequentially for upcoming games
+    # Each game's rest is relative to the previous game (completed or upcoming)
+    if upcoming_games:
+        upcoming_games.sort(key=lambda g: g["date"])
+        # Start from the last completed game date
+        if games:
+            prev_date = datetime.strptime(games[0]["date"], "%Y-%m-%d")  # games[0] is most recent (desc sort)
+        else:
+            prev_date = None
+        for ug in upcoming_games:
+            ug_date = datetime.strptime(ug["date"], "%Y-%m-%d")
+            if prev_date is not None:
+                rest = (ug_date - prev_date).days - 1
+                ug["restDays"] = max(0, rest)
+                ug["isBackToBack"] = rest == 0
+            else:
+                ug["restDays"] = 2
+                ug["isBackToBack"] = False
+            prev_date = ug_date
 
     # Try to get real odds from The Odds API
     odds_data = fetch_betting_odds(odds_api_key)
