@@ -623,6 +623,7 @@ export interface RollingMetrics {
   netRating: number;
   ortg: number;
   drtg: number;
+  pace: number;
   wins: number;
   losses: number;
   pointDiff: number;
@@ -785,6 +786,7 @@ export function calculateRollingMetrics(
       netRating: 0,
       ortg: 0,
       drtg: 0,
+      pace: 0,
       wins: 0,
       losses: 0,
       pointDiff: 0,
@@ -796,6 +798,7 @@ export function calculateRollingMetrics(
   const netRating = windowGames.reduce((sum, g) => sum + g.netRating, 0) / windowGames.length;
   const ortg = windowGames.reduce((sum, g) => sum + g.ortg, 0) / windowGames.length;
   const drtg = windowGames.reduce((sum, g) => sum + g.drtg, 0) / windowGames.length;
+  const pace = windowGames.reduce((sum, g) => sum + g.pace, 0) / windowGames.length;
   const wins = windowGames.filter(g => g.result === 'W').length;
   const losses = windowGames.filter(g => g.result === 'L').length;
   const pointDiff = windowGames.reduce((sum, g) => sum + (g.hornetsScore - g.opponentScore), 0) / windowGames.length;
@@ -828,6 +831,7 @@ export function calculateRollingMetrics(
     netRating: Math.round(netRating * 10) / 10,
     ortg: Math.round(ortg * 10) / 10,
     drtg: Math.round(drtg * 10) / 10,
+    pace: Math.round(pace * 10) / 10,
     wins,
     losses,
     pointDiff: Math.round(pointDiff * 10) / 10,
@@ -1241,8 +1245,8 @@ export function predictSpread(
   else if (confidenceScore < 45) confidence = 'low';
 
   // === Calculate Combined Pace ===
-  const hornetsPace = rollingMetrics.season.games > 0 ? 100 : LEAGUE_AVG_PACE;
-  const opponentPace = (upcomingGame as any).opponentPace ?? LEAGUE_AVG_PACE;
+  const hornetsPace = rollingMetrics.season.pace > 0 ? rollingMetrics.season.pace : LEAGUE_AVG_PACE;
+  const opponentPace = upcomingGame.opponentPace ?? LEAGUE_AVG_PACE;
   const combinedPace = hornetsPace + opponentPace;
 
   // === Calculate Regime-Based Sigma (Variance) ===

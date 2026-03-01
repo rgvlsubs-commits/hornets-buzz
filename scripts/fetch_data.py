@@ -51,6 +51,16 @@ def get_all_team_stats():
         )
         df = stats.get_data_frames()[0]
 
+        # Fetch Advanced stats for real pace, ORTG, DRTG
+        time.sleep(0.6)
+        adv_stats = leaguedashteamstats.LeagueDashTeamStats(
+            season=SEASON,
+            season_type_all_star="Regular Season",
+            measure_type_detailed_defense="Advanced"
+        )
+        adv_df = adv_stats.get_data_frames()[0]
+        adv_by_id = {row["TEAM_ID"]: row for _, row in adv_df.iterrows()}
+
         # Build team strength dictionary
         team_stats = {}
         for _, row in df.iterrows():
@@ -60,11 +70,20 @@ def get_all_team_stats():
             wins = row.get("W", 0)
             losses = row.get("L", 0)
             games = wins + losses
-            pts_for = row.get("PTS", 0)
-            pts_against = row.get("PTS", 0) - row.get("PLUS_MINUS", 0)
 
             # Net rating proxy: plus/minus per game
             net_rating = row.get("PLUS_MINUS", 0) if games > 0 else 0
+
+            # Style dimensions from PerGame data
+            fga = row.get("FGA", 1)  # guard against division by zero
+            fg3a = row.get("FG3A", 0)
+            fta = row.get("FTA", 0)
+            oreb = row.get("OREB", 0)
+            tov = row.get("TOV", 0)
+            stl = row.get("STL", 0)
+
+            # Real pace/ORTG/DRTG from Advanced stats
+            adv_row = adv_by_id.get(team_id, {})
 
             team_stats[team_id] = {
                 "team_id": team_id,
@@ -73,6 +92,15 @@ def get_all_team_stats():
                 "losses": losses,
                 "net_rating": round(net_rating, 1),
                 "win_pct": wins / games if games > 0 else 0.5,
+                "pace": round(float(adv_row.get("PACE", 100.0)), 1),
+                "ortg": round(float(adv_row.get("OFF_RATING", 114.0)), 1),
+                "drtg": round(float(adv_row.get("DEF_RATING", 114.0)), 1),
+                # Style dimensions (rates)
+                "three_pt_rate": round(fg3a / fga, 3) if fga > 0 else 0.0,
+                "ft_rate": round(fta / fga, 3) if fga > 0 else 0.0,
+                "oreb_per_game": round(float(oreb), 1),
+                "tov_per_game": round(float(tov), 1),
+                "stl_per_game": round(float(stl), 1),
             }
 
         print(f"  Fetched stats for {len(team_stats)} teams")
@@ -352,10 +380,9 @@ def build_league_rankings(team_stats: dict) -> dict:
         games = wins + losses
         net_rating = stats.get("net_rating", 0)
 
-        # Estimate ORTG and DRTG from net rating (approximate)
-        # Net Rating = ORTG - DRTG, league average ~114
-        ortg = 114 + (net_rating / 2)
-        drtg = 114 - (net_rating / 2)
+        # Use real ORTG/DRTG from Advanced stats, fallback to estimate
+        ortg = stats.get("ortg", 114 + net_rating / 2)
+        drtg = stats.get("drtg", 114 - net_rating / 2)
 
         # Calculate point differential
         point_diff = net_rating * games / 100 * 100  # Approximate
@@ -372,6 +399,12 @@ def build_league_rankings(team_stats: dict) -> dict:
             "elo": int(round(elo, 0)),
             "wins": wins,
             "losses": losses,
+            "pace": stats.get("pace", 100.0),
+            "threePtRate": stats.get("three_pt_rate", 0.0),
+            "ftRate": stats.get("ft_rate", 0.0),
+            "orebPerGame": stats.get("oreb_per_game", 0.0),
+            "tovPerGame": stats.get("tov_per_game", 0.0),
+            "stlPerGame": stats.get("stl_per_game", 0.0),
         })
 
     # Calculate ranks for each metric
@@ -394,6 +427,11 @@ def build_league_rankings(team_stats: dict) -> dict:
     sorted_by_elo = sorted(enriched_teams, key=lambda t: t["elo"], reverse=True)
     for i, team in enumerate(sorted_by_elo):
         team["eloRank"] = i + 1
+
+    # Pace (higher is faster)
+    sorted_by_pace = sorted(enriched_teams, key=lambda t: t["pace"], reverse=True)
+    for i, team in enumerate(sorted_by_pace):
+        team["paceRank"] = i + 1
 
     # Sort by net rating by default
     enriched_teams = sorted(enriched_teams, key=lambda t: t["netRating"], reverse=True)
@@ -583,6 +621,11 @@ def main(odds_api_key: Optional[str] = None):
             "coveredSpread": covered_spread,
             "opponentNetRating": opp_net_rating,
             "opponentPace": opp_pace,
+            "opponentThreePtRate": opp_stats.get("three_pt_rate", 0.0),
+            "opponentFtRate": opp_stats.get("ft_rate", 0.0),
+            "opponentOrebPerGame": opp_stats.get("oreb_per_game", 0.0),
+            "opponentTovPerGame": opp_stats.get("tov_per_game", 0.0),
+            "opponentStlPerGame": opp_stats.get("stl_per_game", 0.0),
             **advanced_stats,
         }
 
@@ -702,6 +745,11 @@ def main(odds_api_key: Optional[str] = None):
                             "lastUpdated": None,
                             "opponentNetRating": opp_net_rating,
                             "opponentPace": opp_pace,
+                            "opponentThreePtRate": opp_stats.get("three_pt_rate", 0.0),
+                            "opponentFtRate": opp_stats.get("ft_rate", 0.0),
+                            "opponentOrebPerGame": opp_stats.get("oreb_per_game", 0.0),
+                            "opponentTovPerGame": opp_stats.get("tov_per_game", 0.0),
+                            "opponentStlPerGame": opp_stats.get("stl_per_game", 0.0),
                             "restDays": max(0, rest_days),
                             "isBackToBack": rest_days == 0,
                             "opponentRestDays": opp_rest_days,

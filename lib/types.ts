@@ -32,6 +32,12 @@ export interface Game {
   clv?: number;             // Closing Line Value (closing - opening, positive = got better number)
   // Opponent & rest data
   opponentNetRating?: number;  // Opponent's net rating
+  opponentPace?: number;       // Opponent's pace (possessions per game)
+  opponentThreePtRate?: number;  // Opponent's 3PA/FGA rate
+  opponentFtRate?: number;       // Opponent's FTA/FGA rate
+  opponentOrebPerGame?: number;  // Opponent's offensive rebounds per game
+  opponentTovPerGame?: number;   // Opponent's turnovers per game
+  opponentStlPerGame?: number;   // Opponent's steals per game
   restDays?: number;           // Days of rest before game
   isBackToBack?: boolean;      // Back-to-back game?
 }
@@ -124,6 +130,11 @@ export interface UpcomingGame {
   // Opponent & rest data for predictions
   opponentNetRating?: number;    // Opponent's net rating
   opponentPace?: number;         // Opponent's pace (possessions per game)
+  opponentThreePtRate?: number;  // Opponent's 3PA/FGA rate
+  opponentFtRate?: number;       // Opponent's FTA/FGA rate
+  opponentOrebPerGame?: number;  // Opponent's offensive rebounds per game
+  opponentTovPerGame?: number;   // Opponent's turnovers per game
+  opponentStlPerGame?: number;   // Opponent's steals per game
   restDays?: number;             // Days of rest before game
   isBackToBack?: boolean;        // Back-to-back game?
   opponentRestDays?: number;     // Opponent's days of rest
@@ -143,10 +154,17 @@ export interface LeagueTeam {
   elo: number;
   wins: number;
   losses: number;
+  pace: number;
+  threePtRate: number;
+  ftRate: number;
+  orebPerGame: number;
+  tovPerGame: number;
+  stlPerGame: number;
   netRatingRank: number;
   ortgRank: number;
   drtgRank: number;
   eloRank: number;
+  paceRank: number;
 }
 
 // League rankings data
