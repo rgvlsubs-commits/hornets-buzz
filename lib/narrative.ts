@@ -192,6 +192,12 @@ function buildConvictionClose(prediction: SpreadPrediction, trend: TrendAnalysis
     details.push('opponent injuries provide some unmodeled edge');
   }
 
+  if (bd.alignment.marketDisagreementPenalty <= -10) {
+    details.push('the model strongly disagrees with the market (10+ pts) — historically a red flag');
+  } else if (bd.alignment.marketDisagreementPenalty <= -5) {
+    details.push('the model disagrees with the market by 7+ points — proceed with caution');
+  }
+
   // --- Game Chaos ---
   if (bd.chaos.score >= 25) {
     details.push('this is a calm-pace, low-variance environment');

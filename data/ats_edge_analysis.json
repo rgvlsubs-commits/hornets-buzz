@@ -1,0 +1,835 @@
+{
+  "metadata": {
+    "totalGames": 664,
+    "overallATS": {
+      "label": "Overall",
+      "n": 664,
+      "atsW": 326,
+      "atsL": 338,
+      "atsPush": 0,
+      "atsPct": 49.096385542168676,
+      "modelBias": 0.6748493975903613,
+      "marketBias": 0.6189759036144579,
+      "avgDisagreement": 0.055873493975903604
+    }
+  },
+  "b2bGranularity": [
+    {
+      "label": "Neither B2B",
+      "n": 463,
+      "atsW": 239,
+      "atsL": 224,
+      "atsPush": 0,
+      "atsPct": 51.61987041036718,
+      "modelBias": 0.32613390928725716,
+      "marketBias": 0.11987041036717062,
+      "avgDisagreement": 0.20626349892008655
+    },
+    {
+      "label": "Home-only B2B",
+      "n": 71,
+      "atsW": 33,
+      "atsL": 38,
+      "atsPush": 0,
+      "atsPct": 46.478873239436616,
+      "modelBias": 2.4042253521126753,
+      "marketBias": 0.9225352112676056,
+      "avgDisagreement": 1.4816901408450698
+    },
+    {
+      "label": "Away-only B2B",
+      "n": 89,
+      "atsW": 39,
+      "atsL": 50,
+      "atsPush": 0,
+      "atsPct": 43.82022471910113,
+      "modelBias": 2.4112359550561795,
+      "marketBias": 3.8707865168539324,
+      "avgDisagreement": -1.4595505617977529
+    },
+    {
+      "label": "Both B2B",
+      "n": 41,
+      "atsW": 15,
+      "atsL": 26,
+      "atsPush": 0,
+      "atsPct": 36.58536585365854,
+      "modelBias": -2.151219512195121,
+      "marketBias": -1.329268292682927,
+      "avgDisagreement": -0.8219512195121954
+    }
+  ],
+  "restDaysDifferential": [
+    {
+      "label": "Home +3 rest days",
+      "n": 6,
+      "atsW": 4,
+      "atsL": 2,
+      "atsPush": 0,
+      "atsPct": 66.66666666666666,
+      "modelBias": 10.883333333333333,
+      "marketBias": 13.166666666666666,
+      "avgDisagreement": -2.283333333333333
+    },
+    {
+      "label": "Home +1-2 rest days",
+      "n": 162,
+      "atsW": 74,
+      "atsL": 88,
+      "atsPush": 0,
+      "atsPct": 45.67901234567901,
+      "modelBias": 0.741358024691358,
+      "marketBias": 1.4876543209876543,
+      "avgDisagreement": -0.7462962962962963
+    },
+    {
+      "label": "Even rest",
+      "n": 356,
+      "atsW": 173,
+      "atsL": 183,
+      "atsPush": 0,
+      "atsPct": 48.59550561797753,
+      "modelBias": 0.5275280898876403,
+      "marketBias": 0.47191011235955055,
+      "avgDisagreement": 0.05561797752808999
+    },
+    {
+      "label": "Away rest advantage",
+      "n": 140,
+      "atsW": 75,
+      "atsL": 65,
+      "atsPush": 0,
+      "atsPct": 53.57142857142857,
+      "modelBias": 0.5349999999999998,
+      "marketBias": -0.55,
+      "avgDisagreement": 1.0849999999999997
+    }
+  ],
+  "disagreement": {
+    "absolute": [
+      {
+        "label": "0-2pt disagreement",
+        "n": 264,
+        "atsW": 128,
+        "atsL": 136,
+        "atsPush": 0,
+        "atsPct": 48.484848484848484,
+        "modelBias": -0.04810606060606111,
+        "marketBias": -0.21212121212121213,
+        "avgDisagreement": 0.16401515151515147
+      },
+      {
+        "label": "2-4pt disagreement",
+        "n": 191,
+        "atsW": 96,
+        "atsL": 95,
+        "atsPush": 0,
+        "atsPct": 50.26178010471204,
+        "modelBias": 0.10575916230366507,
+        "marketBias": 0.013089005235602094,
+        "avgDisagreement": 0.09267015706806282
+      },
+      {
+        "label": "4-6pt disagreement",
+        "n": 125,
+        "atsW": 68,
+        "atsL": 57,
+        "atsPush": 0,
+        "atsPct": 54.400000000000006,
+        "modelBias": 1.8816000000000002,
+        "marketBias": 1.948,
+        "avgDisagreement": -0.06639999999999995
+      },
+      {
+        "label": "6-8pt disagreement",
+        "n": 57,
+        "atsW": 27,
+        "atsL": 30,
+        "atsPush": 0,
+        "atsPct": 47.368421052631575,
+        "modelBias": 2.9508771929824555,
+        "marketBias": 3.0964912280701755,
+        "avgDisagreement": -0.14561403508771922
+      },
+      {
+        "label": "8pt+ disagreement",
+        "n": 27,
+        "atsW": 7,
+        "atsL": 20,
+        "atsPush": 0,
+        "atsPct": 25.925925925925924,
+        "modelBias": 1.3777777777777784,
+        "marketBias": 1.6481481481481481,
+        "avgDisagreement": -0.2703703703703702
+      }
+    ],
+    "directional": [
+      {
+        "label": "Model > Market (more home)",
+        "n": 349,
+        "atsW": 166,
+        "atsL": 183,
+        "atsPush": 0,
+        "atsPct": 47.56446991404012,
+        "modelBias": 2.6272206303724945,
+        "marketBias": -0.3997134670487106,
+        "avgDisagreement": 3.0269340974212042
+      },
+      {
+        "label": "Model < Market (less home)",
+        "n": 309,
+        "atsW": 160,
+        "atsL": 149,
+        "atsPush": 0,
+        "atsPct": 51.7799352750809,
+        "modelBias": -1.5624595469255667,
+        "marketBias": 1.7362459546925566,
+        "avgDisagreement": -3.298705501618122
+      }
+    ]
+  },
+  "nrMomentum": {
+    "pickDirection": [
+      {
+        "label": "Pick trending UP (NR+3)",
+        "n": 253,
+        "atsW": 116,
+        "atsL": 137,
+        "atsPush": 0,
+        "atsPct": 45.8498023715415,
+        "modelBias": 0.7225296442687746,
+        "marketBias": 0.27865612648221344,
+        "avgDisagreement": 0.4438735177865609
+      },
+      {
+        "label": "Pick flat (-3 to +3)",
+        "n": 207,
+        "atsW": 108,
+        "atsL": 99,
+        "atsPush": 0,
+        "atsPct": 52.17391304347826,
+        "modelBias": -0.01594202898550747,
+        "marketBias": 0.2584541062801932,
+        "avgDisagreement": -0.2743961352657003
+      },
+      {
+        "label": "Pick trending DOWN (NR-3)",
+        "n": 204,
+        "atsW": 102,
+        "atsL": 102,
+        "atsPush": 0,
+        "atsPct": 50,
+        "modelBias": 1.3166666666666662,
+        "marketBias": 1.4068627450980393,
+        "avgDisagreement": -0.09019607843137263
+      }
+    ],
+    "convergence": [
+      {
+        "label": "Pick UP + Fade DOWN",
+        "n": 97,
+        "atsW": 45,
+        "atsL": 52,
+        "atsPush": 0,
+        "atsPct": 46.391752577319586,
+        "modelBias": 1.1577319587628865,
+        "marketBias": 0.37628865979381443,
+        "avgDisagreement": 0.7814432989690718
+      },
+      {
+        "label": "Pick DOWN + Fade UP",
+        "n": 52,
+        "atsW": 26,
+        "atsL": 26,
+        "atsPush": 0,
+        "atsPct": 50,
+        "modelBias": 1.880769230769231,
+        "marketBias": 1.3653846153846154,
+        "avgDisagreement": 0.5153846153846154
+      }
+    ]
+  },
+  "matchupType": [
+    {
+      "label": "other_matchups",
+      "n": 109,
+      "atsW": 62,
+      "atsL": 47,
+      "atsPush": 0,
+      "atsPct": 56.88073394495413,
+      "modelBias": 2.5137614678899096,
+      "marketBias": 2.646788990825688,
+      "avgDisagreement": -0.13302752293577977
+    },
+    {
+      "label": "elite_vs_weak",
+      "n": 91,
+      "atsW": 39,
+      "atsL": 52,
+      "atsPush": 0,
+      "atsPct": 42.857142857142854,
+      "modelBias": -0.35494505494505507,
+      "marketBias": -0.04945054945054945,
+      "avgDisagreement": -0.3054945054945055
+    },
+    {
+      "label": "weak_vs_weak",
+      "n": 85,
+      "atsW": 36,
+      "atsL": 49,
+      "atsPush": 0,
+      "atsPct": 42.35294117647059,
+      "modelBias": -1.4294117647058824,
+      "marketBias": -1.6764705882352942,
+      "avgDisagreement": 0.24705882352941178
+    },
+    {
+      "label": "mid_vs_mid",
+      "n": 70,
+      "atsW": 37,
+      "atsL": 33,
+      "atsPush": 0,
+      "atsPct": 52.85714285714286,
+      "modelBias": 1.8357142857142856,
+      "marketBias": 1.6285714285714286,
+      "avgDisagreement": 0.20714285714285716
+    },
+    {
+      "label": "weak_vs_mid",
+      "n": 66,
+      "atsW": 33,
+      "atsL": 33,
+      "atsPush": 0,
+      "atsPct": 50,
+      "modelBias": 0.38030303030303,
+      "marketBias": 0.16666666666666666,
+      "avgDisagreement": 0.2136363636363636
+    },
+    {
+      "label": "mid_vs_weak",
+      "n": 58,
+      "atsW": 26,
+      "atsL": 32,
+      "atsPush": 0,
+      "atsPct": 44.827586206896555,
+      "modelBias": -1.012068965517241,
+      "marketBias": -0.5344827586206896,
+      "avgDisagreement": -0.4775862068965518
+    },
+    {
+      "label": "mid_vs_elite",
+      "n": 46,
+      "atsW": 19,
+      "atsL": 27,
+      "atsPush": 0,
+      "atsPct": 41.30434782608695,
+      "modelBias": 0.8913043478260869,
+      "marketBias": 0.34782608695652173,
+      "avgDisagreement": 0.5434782608695652
+    },
+    {
+      "label": "weak_vs_strong",
+      "n": 37,
+      "atsW": 27,
+      "atsL": 10,
+      "atsPush": 0,
+      "atsPct": 72.97297297297297,
+      "modelBias": -0.7162162162162167,
+      "marketBias": -1.0945945945945945,
+      "avgDisagreement": 0.37837837837837834
+    },
+    {
+      "label": "elite_vs_mid",
+      "n": 36,
+      "atsW": 14,
+      "atsL": 22,
+      "atsPush": 0,
+      "atsPct": 38.88888888888889,
+      "modelBias": 0.14166666666666675,
+      "marketBias": -0.8611111111111112,
+      "avgDisagreement": 1.002777777777778
+    },
+    {
+      "label": "strong_vs_weak",
+      "n": 35,
+      "atsW": 18,
+      "atsL": 17,
+      "atsPush": 0,
+      "atsPct": 51.42857142857142,
+      "modelBias": 1.0114285714285716,
+      "marketBias": 0.7,
+      "avgDisagreement": 0.31142857142857167
+    },
+    {
+      "label": "mid_vs_strong",
+      "n": 31,
+      "atsW": 15,
+      "atsL": 16,
+      "atsPush": 0,
+      "atsPct": 48.38709677419355,
+      "modelBias": 5.741935483870967,
+      "marketBias": 6.661290322580645,
+      "avgDisagreement": -0.9193548387096775
+    }
+  ],
+  "seasonTiming": [
+    {
+      "label": "2025-11",
+      "n": 132,
+      "atsW": 76,
+      "atsL": 56,
+      "atsPush": 0,
+      "atsPct": 57.57575757575758,
+      "modelBias": 1.3325757575757573,
+      "marketBias": 1.0681818181818181,
+      "avgDisagreement": 0.26439393939393935
+    },
+    {
+      "label": "2025-12",
+      "n": 177,
+      "atsW": 89,
+      "atsL": 88,
+      "atsPush": 0,
+      "atsPct": 50.282485875706215,
+      "modelBias": -0.3163841807909605,
+      "marketBias": -0.2514124293785311,
+      "avgDisagreement": -0.06497175141242942
+    },
+    {
+      "label": "2026-01",
+      "n": 206,
+      "atsW": 96,
+      "atsL": 110,
+      "atsPush": 0,
+      "atsPct": 46.601941747572816,
+      "modelBias": -0.08932038834951425,
+      "marketBias": -0.10679611650485436,
+      "avgDisagreement": 0.01747572815533981
+    },
+    {
+      "label": "2026-02",
+      "n": 149,
+      "atsW": 65,
+      "atsL": 84,
+      "atsPush": 0,
+      "atsPct": 43.624161073825505,
+      "modelBias": 2.3261744966442954,
+      "marketBias": 2.2583892617449663,
+      "avgDisagreement": 0.06778523489932892
+    }
+  ],
+  "paceDifferential": [
+    {
+      "label": "Low pace (<197)",
+      "n": 129,
+      "atsW": 58,
+      "atsL": 71,
+      "atsPush": 0,
+      "atsPct": 44.96124031007752,
+      "modelBias": 0.433333333333333,
+      "marketBias": -0.09689922480620156,
+      "avgDisagreement": 0.530232558139535
+    },
+    {
+      "label": "Mid pace (±4 of median)",
+      "n": 459,
+      "atsW": 229,
+      "atsL": 230,
+      "atsPush": 0,
+      "atsPct": 49.89106753812636,
+      "modelBias": 0.36819172113289744,
+      "marketBias": 0.545751633986928,
+      "avgDisagreement": -0.17755991285403064
+    },
+    {
+      "label": "High pace (>205)",
+      "n": 76,
+      "atsW": 39,
+      "atsL": 37,
+      "atsPush": 0,
+      "atsPct": 51.31578947368421,
+      "modelBias": 2.936842105263157,
+      "marketBias": 2.276315789473684,
+      "avgDisagreement": 0.6605263157894737
+    }
+  ],
+  "crossTabDisagreementB2B": [
+    {
+      "label": "No B2B + Small dis (<4)",
+      "n": 323,
+      "atsW": 164,
+      "atsL": 159,
+      "atsPush": 0,
+      "atsPct": 50.77399380804953,
+      "modelBias": -0.8105263157894738,
+      "marketBias": -0.8931888544891641,
+      "avgDisagreement": 0.08266253869969048
+    },
+    {
+      "label": "No B2B + Large dis (4+)",
+      "n": 140,
+      "atsW": 75,
+      "atsL": 65,
+      "atsPush": 0,
+      "atsPct": 53.57142857142857,
+      "modelBias": 2.948571428571428,
+      "marketBias": 2.4571428571428573,
+      "avgDisagreement": 0.4914285714285714
+    },
+    {
+      "label": "B2B + Small dis (<4)",
+      "n": 132,
+      "atsW": 60,
+      "atsL": 72,
+      "atsPush": 0,
+      "atsPct": 45.45454545454545,
+      "modelBias": 2.040151515151514,
+      "marketBias": 1.7803030303030303,
+      "avgDisagreement": 0.25984848484848494
+    },
+    {
+      "label": "B2B + Large dis (4+)",
+      "n": 69,
+      "atsW": 27,
+      "atsL": 42,
+      "atsPush": 0,
+      "atsPct": 39.130434782608695,
+      "modelBias": 0.4028985507246377,
+      "marketBias": 1.7463768115942029,
+      "avgDisagreement": -1.343478260869565
+    }
+  ],
+  "combinedFilters": [
+    {
+      "label": "All games",
+      "n": 664,
+      "atsW": 326,
+      "atsL": 338,
+      "atsPush": 0,
+      "atsPct": 49.096385542168676,
+      "modelBias": 0.6748493975903613,
+      "marketBias": 0.6189759036144579,
+      "avgDisagreement": 0.055873493975903604
+    },
+    {
+      "label": "No B2B (either team)",
+      "n": 463,
+      "atsW": 239,
+      "atsL": 224,
+      "atsPush": 0,
+      "atsPct": 51.61987041036718,
+      "modelBias": 0.32613390928725716,
+      "marketBias": 0.11987041036717062,
+      "avgDisagreement": 0.20626349892008655
+    },
+    {
+      "label": "Disagree < 4pt",
+      "n": 455,
+      "atsW": 224,
+      "atsL": 231,
+      "atsPush": 0,
+      "atsPct": 49.23076923076923,
+      "modelBias": 0.016483516483516415,
+      "marketBias": -0.11758241758241758,
+      "avgDisagreement": 0.13406593406593434
+    },
+    {
+      "label": "Disagree < 6pt",
+      "n": 580,
+      "atsW": 292,
+      "atsL": 288,
+      "atsPush": 0,
+      "atsPct": 50.3448275862069,
+      "modelBias": 0.41844827586206906,
+      "marketBias": 0.3275862068965517,
+      "avgDisagreement": 0.09086206896551732
+    },
+    {
+      "label": "No B2B + Disagree < 4pt",
+      "n": 323,
+      "atsW": 164,
+      "atsL": 159,
+      "atsPush": 0,
+      "atsPct": 50.77399380804953,
+      "modelBias": -0.8105263157894738,
+      "marketBias": -0.8931888544891641,
+      "avgDisagreement": 0.08266253869969048
+    },
+    {
+      "label": "No B2B + Disagree < 6pt",
+      "n": 410,
+      "atsW": 218,
+      "atsL": 192,
+      "atsPush": 0,
+      "atsPct": 53.170731707317074,
+      "modelBias": -0.16512195121951226,
+      "marketBias": -0.25365853658536586,
+      "avgDisagreement": 0.08853658536585386
+    },
+    {
+      "label": "No home B2B",
+      "n": 552,
+      "atsW": 278,
+      "atsL": 274,
+      "atsPush": 0,
+      "atsPct": 50.36231884057971,
+      "modelBias": 0.6623188405797104,
+      "marketBias": 0.7246376811594203,
+      "avgDisagreement": -0.06231884057971009
+    },
+    {
+      "label": "No home B2B + Disagree < 4pt",
+      "n": 384,
+      "atsW": 189,
+      "atsL": 195,
+      "atsPush": 0,
+      "atsPct": 49.21875,
+      "modelBias": 0.026041666666666324,
+      "marketBias": 0.015625,
+      "avgDisagreement": 0.010416666666666565
+    },
+    {
+      "label": "Pick trending UP (NR +3)",
+      "n": 253,
+      "atsW": 116,
+      "atsL": 137,
+      "atsPush": 0,
+      "atsPct": 45.8498023715415,
+      "modelBias": 0.7225296442687746,
+      "marketBias": 0.27865612648221344,
+      "avgDisagreement": 0.4438735177865609
+    },
+    {
+      "label": "Pick UP + No B2B",
+      "n": 175,
+      "atsW": 88,
+      "atsL": 87,
+      "atsPush": 0,
+      "atsPct": 50.28571428571429,
+      "modelBias": -0.16628571428571454,
+      "marketBias": -0.6371428571428571,
+      "avgDisagreement": 0.4708571428571423
+    },
+    {
+      "label": "Pick UP + Disagree < 4pt",
+      "n": 158,
+      "atsW": 77,
+      "atsL": 81,
+      "atsPush": 0,
+      "atsPct": 48.734177215189874,
+      "modelBias": -0.43860759493670903,
+      "marketBias": -0.5253164556962026,
+      "avgDisagreement": 0.08670886075949366
+    },
+    {
+      "label": "Not (home B2B + large dis)",
+      "n": 623,
+      "atsW": 313,
+      "atsL": 310,
+      "atsPush": 0,
+      "atsPct": 50.24077046548957,
+      "modelBias": 0.582825040128411,
+      "marketBias": 0.5465489566613162,
+      "avgDisagreement": 0.03627608346709475
+    },
+    {
+      "label": "Away-only B2B (fade home B2B)",
+      "n": 89,
+      "atsW": 39,
+      "atsL": 50,
+      "atsPush": 0,
+      "atsPct": 43.82022471910113,
+      "modelBias": 2.4112359550561795,
+      "marketBias": 3.8707865168539324,
+      "avgDisagreement": -1.4595505617977529
+    },
+    {
+      "label": "Best combo: noB2B+dis<4+momUp",
+      "n": 111,
+      "atsW": 58,
+      "atsL": 53,
+      "atsPush": 0,
+      "atsPct": 52.25225225225225,
+      "modelBias": -1.9072072072072073,
+      "marketBias": -1.9684684684684686,
+      "avgDisagreement": 0.061261261261261205
+    }
+  ],
+  "splitHalfValidation": {
+    "All": {
+      "firstHalf": {
+        "label": "All",
+        "n": 515,
+        "atsW": 261,
+        "atsL": 254,
+        "atsPush": 0,
+        "atsPct": 50.679611650485434,
+        "modelBias": 0.1970873786407765,
+        "marketBias": 0.14466019417475728,
+        "avgDisagreement": 0.052427184466019405
+      },
+      "secondHalf": {
+        "label": "All",
+        "n": 149,
+        "atsW": 65,
+        "atsL": 84,
+        "atsPush": 0,
+        "atsPct": 43.624161073825505,
+        "modelBias": 2.3261744966442954,
+        "marketBias": 2.2583892617449663,
+        "avgDisagreement": 0.06778523489932892
+      },
+      "stable": false
+    },
+    "No B2B": {
+      "firstHalf": {
+        "label": "No B2B",
+        "n": 359,
+        "atsW": 194,
+        "atsL": 165,
+        "atsPush": 0,
+        "atsPct": 54.038997214484674,
+        "modelBias": 0.07130919220055726,
+        "marketBias": -0.12116991643454039,
+        "avgDisagreement": 0.19247910863509776
+      },
+      "secondHalf": {
+        "label": "No B2B",
+        "n": 104,
+        "atsW": 45,
+        "atsL": 59,
+        "atsPush": 0,
+        "atsPct": 43.269230769230774,
+        "modelBias": 1.2057692307692305,
+        "marketBias": 0.9519230769230769,
+        "avgDisagreement": 0.25384615384615383
+      },
+      "stable": false
+    },
+    "Disagree < 4pt": {
+      "firstHalf": {
+        "label": "Disagree < 4pt",
+        "n": 358,
+        "atsW": 181,
+        "atsL": 177,
+        "atsPush": 0,
+        "atsPct": 50.5586592178771,
+        "modelBias": -0.5175977653631284,
+        "marketBias": -0.6759776536312849,
+        "avgDisagreement": 0.1583798882681567
+      },
+      "secondHalf": {
+        "label": "Disagree < 4pt",
+        "n": 97,
+        "atsW": 43,
+        "atsL": 54,
+        "atsPush": 0,
+        "atsPct": 44.329896907216494,
+        "modelBias": 1.9876288659793813,
+        "marketBias": 1.943298969072165,
+        "avgDisagreement": 0.04432989690721652
+      },
+      "stable": false
+    },
+    "Home B2B only": {
+      "firstHalf": {
+        "label": "Home B2B only",
+        "n": 55,
+        "atsW": 27,
+        "atsL": 28,
+        "atsPush": 0,
+        "atsPct": 49.09090909090909,
+        "modelBias": 2.0727272727272723,
+        "marketBias": 0.7727272727272727,
+        "avgDisagreement": 1.2999999999999998
+      },
+      "secondHalf": {
+        "label": "Home B2B only",
+        "n": 16,
+        "atsW": 6,
+        "atsL": 10,
+        "atsPush": 0,
+        "atsPct": 37.5,
+        "modelBias": 3.5437500000000006,
+        "marketBias": 1.4375,
+        "avgDisagreement": 2.1062500000000006
+      },
+      "stable": true
+    },
+    "Disagree 4+ pt": {
+      "firstHalf": {
+        "label": "Disagree 4+ pt",
+        "n": 157,
+        "atsW": 80,
+        "atsL": 77,
+        "atsPush": 0,
+        "atsPct": 50.955414012738856,
+        "modelBias": 1.8267515923566877,
+        "marketBias": 2.015923566878981,
+        "avgDisagreement": -0.18917197452229298
+      },
+      "secondHalf": {
+        "label": "Disagree 4+ pt",
+        "n": 52,
+        "atsW": 22,
+        "atsL": 30,
+        "atsPush": 0,
+        "atsPct": 42.30769230769231,
+        "modelBias": 2.9576923076923074,
+        "marketBias": 2.8461538461538463,
+        "avgDisagreement": 0.11153846153846138
+      },
+      "stable": false
+    },
+    "No B2B + Dis<4": {
+      "firstHalf": {
+        "label": "No B2B + Dis<4",
+        "n": 255,
+        "atsW": 135,
+        "atsL": 120,
+        "atsPush": 0,
+        "atsPct": 52.94117647058824,
+        "modelBias": -1.1294117647058826,
+        "marketBias": -1.2058823529411764,
+        "avgDisagreement": 0.0764705882352941
+      },
+      "secondHalf": {
+        "label": "No B2B + Dis<4",
+        "n": 68,
+        "atsW": 29,
+        "atsL": 39,
+        "atsPush": 0,
+        "atsPct": 42.64705882352941,
+        "modelBias": 0.38529411764705884,
+        "marketBias": 0.27941176470588236,
+        "avgDisagreement": 0.10588235294117646
+      },
+      "stable": false
+    },
+    "Pick trending UP": {
+      "firstHalf": {
+        "label": "Pick trending UP",
+        "n": 194,
+        "atsW": 91,
+        "atsL": 103,
+        "atsPush": 0,
+        "atsPct": 46.90721649484536,
+        "modelBias": 0.3221649484536083,
+        "marketBias": -0.16494845360824742,
+        "avgDisagreement": 0.48711340206185544
+      },
+      "secondHalf": {
+        "label": "Pick trending UP",
+        "n": 59,
+        "atsW": 25,
+        "atsL": 34,
+        "atsPush": 0,
+        "atsPct": 42.3728813559322,
+        "modelBias": 2.0389830508474565,
+        "marketBias": 1.7372881355932204,
+        "avgDisagreement": 0.3016949152542374
+      },
+      "stable": true
+    }
+  }
+}

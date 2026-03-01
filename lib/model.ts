@@ -247,6 +247,7 @@ export interface ConvictionBreakdown {
     modeConsensus: number;   // 0-15: all modes agree on cover direction
     componentConsensus: number; // 0-10: Elo and NR both point same way vs spread
     opponentInjuryEdge: number; // 0-10: unmodeled opponent injuries = free edge
+    marketDisagreementPenalty: number; // 0 to -10: large model-market disagreement penalty
   };
   total: number; // 0-100
 }
@@ -260,6 +261,7 @@ function calculateConviction(
   eloComponent: number,
   netRatingComponent: number,
   spread: number | null,
+  predictedMargin: number,
   injuryReport?: { hornetsCore5Status: string; spreadAdjustment?: number }
 ): { conviction: number; breakdown: ConvictionBreakdown } {
   // === Bucket 1: Game Chaos (0-30) ===
@@ -328,17 +330,30 @@ function calculateConviction(
     }
   }
 
+  // marketDisagreementPenalty (0 to -10): When model disagrees with market by 7+ pts,
+  // conviction drops. Per ATS edge analysis: 8pt+ disagreement = 25.9% ATS (n=27),
+  // 6-8pt = 47.4% (n=57). The market wins big disagreements.
+  let marketDisagreementPenalty = 0;
+  if (spread !== null) {
+    const disagreement = Math.abs(predictedMargin + spread);
+    if (disagreement >= 10) {
+      marketDisagreementPenalty = -10;
+    } else if (disagreement >= 7) {
+      marketDisagreementPenalty = -5;
+    }
+  }
+
   // modeConsensus starts at 0 — filled in by applyAlignmentBonus()
   const modeConsensus = 0;
 
-  const alignmentScore = Math.max(0, Math.min(35, modeConsensus + componentConsensus + opponentInjuryEdge));
+  const alignmentScore = Math.max(0, Math.min(35, modeConsensus + componentConsensus + opponentInjuryEdge + marketDisagreementPenalty));
 
   const total = Math.min(100, Math.max(0, chaosScore + edgeScore + alignmentScore));
 
   const breakdown: ConvictionBreakdown = {
     chaos: { score: chaosScore, sigmaPenalty, paceScore },
     edge: { score: edgeScore, core5Freshness, restScore, hornetsHealthScore },
-    alignment: { score: alignmentScore, modeConsensus, componentConsensus, opponentInjuryEdge },
+    alignment: { score: alignmentScore, modeConsensus, componentConsensus, opponentInjuryEdge, marketDisagreementPenalty },
     total,
   };
 
@@ -1291,6 +1306,7 @@ export function predictSpread(
     eloPrediction,
     nrPrediction,
     upcomingGame.spread,
+    cappedMargin,
     upcomingGame.injuryReport ? {
       hornetsCore5Status: upcomingGame.injuryReport.hornetsCore5Status,
       spreadAdjustment: upcomingGame.injuryReport.spreadAdjustment,
@@ -1363,7 +1379,7 @@ export function applyAlignmentBonus(
   // Rebuild alignment bucket with mode consensus
   const bd = prediction.convictionBreakdown;
   const newAlignmentScore = Math.max(0, Math.min(35,
-    modeConsensus + bd.alignment.componentConsensus + bd.alignment.opponentInjuryEdge
+    modeConsensus + bd.alignment.componentConsensus + bd.alignment.opponentInjuryEdge + bd.alignment.marketDisagreementPenalty
   ));
 
   const newTotal = Math.min(100, Math.max(0,
@@ -1378,6 +1394,7 @@ export function applyAlignmentBonus(
       modeConsensus,
       componentConsensus: bd.alignment.componentConsensus,
       opponentInjuryEdge: bd.alignment.opponentInjuryEdge,
+      marketDisagreementPenalty: bd.alignment.marketDisagreementPenalty,
     },
     total: newTotal,
   };

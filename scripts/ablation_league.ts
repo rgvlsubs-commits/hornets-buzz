@@ -3,7 +3,7 @@
  *
  * Tests which model components earn their keep on 690 non-Hornets games.
  * Each ablation toggles one component off (or swaps a variant) and measures
- * the impact on MAE, RMSE, bias, and SU accuracy.
+ * the impact on MAE, RMSE, bias, SU accuracy, and ATS performance.
  *
  * Usage: npx tsx scripts/ablation_league.ts
  */
@@ -45,6 +45,7 @@ interface WalkforwardGame {
   homeSnapshot: TeamSnapshot;
   awaySnapshot: TeamSnapshot;
   isHornetsGame: boolean;
+  closingSpread?: number;
 }
 
 interface WalkforwardData {
@@ -58,6 +59,11 @@ interface Metrics {
   bias: number;
   suPct: number;
   total: number;
+  atsW: number;
+  atsL: number;
+  atsPush: number;
+  atsPct: number;
+  atsTotal: number;
 }
 
 // === Configurable prediction ===
@@ -73,22 +79,25 @@ interface ModelConfig {
   fatigueAwayB2B: number;
   midVsMidAdj: number;
   marginCap: number;
-  elitePenalty: number;       // extra penalty when one team is elite
+  elitePenalty: number;
   eliteThreshold: number;
+  shrinkageAlpha?: number;     // blend prediction toward market when disagreement is large
+  shrinkageThreshold?: number; // |disagreement| must exceed this to trigger shrinkage
 }
 
+// Updated to match current production model.ts constants
 const BASELINE: ModelConfig = {
   name: 'CURRENT (baseline)',
-  eloWeight: 0.55,
-  nrWeight: 0.45,
-  windowWeights: { last4: 0.30, last7: 0.25, last10: 0.25, season: 0.20 },
+  eloWeight: 0.60,
+  nrWeight: 0.40,
+  windowWeights: { last4: 0.20, last7: 0.20, last10: 0.25, season: 0.35 },
   nrHomeAdvantage: 1.5,
   eloHomeAdvantage: 70,
   fatigueHomeB2B: 3.0,
   fatigueAwayB2B: 1.0,
-  midVsMidAdj: -1.0,
+  midVsMidAdj: 0,     // disabled per ablation
   marginCap: 15,
-  elitePenalty: 0,        // not used in league backtest currently
+  elitePenalty: 0,
   eliteThreshold: 6.0,
 };
 
@@ -96,7 +105,7 @@ function weightedNR(nr: RollingNR, w: ModelConfig['windowWeights']): number {
   return nr.last4 * w.last4 + nr.last7 * w.last7 + nr.last10 * w.last10 + nr.season * w.season;
 }
 
-function predict(home: TeamSnapshot, away: TeamSnapshot, cfg: ModelConfig): number {
+function predict(home: TeamSnapshot, away: TeamSnapshot, cfg: ModelConfig, closingSpread?: number): number {
   // Elo component
   const homeElo = estimateElo(home.wins, home.losses, home.totalPointDiff, home.gamesPlayed);
   const awayElo = estimateElo(away.wins, away.losses, away.totalPointDiff, away.gamesPlayed);
@@ -118,43 +127,75 @@ function predict(home: TeamSnapshot, away: TeamSnapshot, cfg: ModelConfig): numb
     nrPred += nrPred > 0 ? cfg.midVsMidAdj : -cfg.midVsMidAdj;
   }
 
-  // Elite penalty (applied to NR prediction when one team is elite and other isn't)
+  // Elite penalty
   if (cfg.elitePenalty !== 0) {
     const homeElite = homeWNR >= cfg.eliteThreshold;
     const awayElite = awayWNR >= cfg.eliteThreshold;
-    if (homeElite && !awayElite) nrPred += cfg.elitePenalty; // shrink home margin
-    if (awayElite && !homeElite) nrPred -= cfg.elitePenalty; // shrink away margin (toward 0)
+    if (homeElite && !awayElite) nrPred += cfg.elitePenalty;
+    if (awayElite && !homeElite) nrPred -= cfg.elitePenalty;
   }
 
   // Blend
-  const raw = eloPred * cfg.eloWeight + nrPred * cfg.nrWeight;
+  let raw = eloPred * cfg.eloWeight + nrPred * cfg.nrWeight;
 
   // Cap
   if (cfg.marginCap > 0) {
-    return Math.round(Math.max(-cfg.marginCap, Math.min(cfg.marginCap, raw)) * 10) / 10;
+    raw = Math.max(-cfg.marginCap, Math.min(cfg.marginCap, raw));
   }
-  return Math.round(raw * 10) / 10;
+
+  let pred = Math.round(raw * 10) / 10;
+
+  // Market shrinkage: when |disagreement| > threshold, blend toward market
+  if (cfg.shrinkageAlpha !== undefined && cfg.shrinkageThreshold !== undefined && closingSpread !== undefined) {
+    const marketImplied = -closingSpread;
+    const disagreement = Math.abs(pred - marketImplied);
+    if (disagreement > cfg.shrinkageThreshold) {
+      pred = Math.round((pred * cfg.shrinkageAlpha + marketImplied * (1 - cfg.shrinkageAlpha)) * 10) / 10;
+    }
+  }
+
+  return pred;
 }
 
 function computeMetrics(games: WalkforwardGame[], cfg: ModelConfig): Metrics {
   let sumAbsErr = 0, sumSqErr = 0, sumErr = 0, suCorrect = 0, n = 0;
+  let atsW = 0, atsL = 0, atsPush = 0;
 
   for (const g of games) {
-    const pred = predict(g.homeSnapshot, g.awaySnapshot, cfg);
+    const pred = predict(g.homeSnapshot, g.awaySnapshot, cfg, g.closingSpread);
     const err = pred - g.actualMargin;
     sumAbsErr += Math.abs(err);
     sumSqErr += err * err;
     sumErr += err;
     if ((pred > 0 && g.actualMargin > 0) || (pred < 0 && g.actualMargin < 0)) suCorrect++;
     n++;
+
+    // ATS: did our predicted margin beat the closing spread?
+    if (g.closingSpread !== undefined) {
+      const actualCover = g.actualMargin + g.closingSpread;
+      const predictedCover = pred + g.closingSpread;
+      if (actualCover === 0) {
+        atsPush++;
+      } else if ((predictedCover > 0 && actualCover > 0) || (predictedCover < 0 && actualCover < 0)) {
+        atsW++;
+      } else {
+        atsL++;
+      }
+    }
   }
 
+  const atsTotal = atsW + atsL;
   return {
     mae: n > 0 ? sumAbsErr / n : 0,
     rmse: n > 0 ? Math.sqrt(sumSqErr / n) : 0,
     bias: n > 0 ? sumErr / n : 0,
     suPct: n > 0 ? (suCorrect / n) * 100 : 0,
     total: n,
+    atsW,
+    atsL,
+    atsPush,
+    atsPct: atsTotal > 0 ? (atsW / atsTotal) * 100 : 0,
+    atsTotal,
   };
 }
 
@@ -177,7 +218,7 @@ function buildAblations(): ModelConfig[] {
 
     // --- Blend weight variants ---
     { ...BASELINE, name: 'Blend 50/50', eloWeight: 0.50, nrWeight: 0.50 },
-    { ...BASELINE, name: 'Blend 60/40 Elo-heavy', eloWeight: 0.60, nrWeight: 0.40 },
+    { ...BASELINE, name: 'Blend 55/45 (old)', eloWeight: 0.55, nrWeight: 0.45 },
     { ...BASELINE, name: 'Blend 40/60 NR-heavy', eloWeight: 0.40, nrWeight: 0.60 },
     { ...BASELINE, name: 'Elo only', eloWeight: 1.0, nrWeight: 0.0 },
     { ...BASELINE, name: 'NR only', eloWeight: 0.0, nrWeight: 1.0 },
@@ -185,15 +226,28 @@ function buildAblations(): ModelConfig[] {
     // --- Window weight variants ---
     { ...BASELINE, name: 'Windows 40/30/20/10 (recency)', windowWeights: { last4: 0.40, last7: 0.30, last10: 0.20, season: 0.10 } },
     { ...BASELINE, name: 'Windows 25/25/25/25 (equal)', windowWeights: { last4: 0.25, last7: 0.25, last10: 0.25, season: 0.25 } },
-    { ...BASELINE, name: 'Windows 20/20/25/35 (stable)', windowWeights: { last4: 0.20, last7: 0.20, last10: 0.25, season: 0.35 } },
+    { ...BASELINE, name: 'Windows 30/25/25/20 (old)', windowWeights: { last4: 0.30, last7: 0.25, last10: 0.25, season: 0.20 } },
 
     // --- Home advantage variants ---
     { ...BASELINE, name: 'Home NR=2.0 (old)', nrHomeAdvantage: 2.0 },
     { ...BASELINE, name: 'Home NR=1.0', nrHomeAdvantage: 1.0 },
+    { ...BASELINE, name: 'Home NR=0.5', nrHomeAdvantage: 0.5 },
 
     // --- Stronger mid-vs-mid ---
+    { ...BASELINE, name: 'Mid-vs-mid -1.0', midVsMidAdj: -1.0 },
     { ...BASELINE, name: 'Mid-vs-mid -1.5', midVsMidAdj: -1.5 },
     { ...BASELINE, name: 'Mid-vs-mid -2.0', midVsMidAdj: -2.0 },
+
+    // --- B2B penalty exploration (ATS-driven) ---
+    { ...BASELINE, name: 'B2B Home=4.0/Away=1.0', fatigueHomeB2B: 4.0, fatigueAwayB2B: 1.0 },
+    { ...BASELINE, name: 'B2B Home=5.0/Away=1.0', fatigueHomeB2B: 5.0, fatigueAwayB2B: 1.0 },
+    { ...BASELINE, name: 'B2B Home=3.0/Away=2.0', fatigueHomeB2B: 3.0, fatigueAwayB2B: 2.0 },
+    { ...BASELINE, name: 'B2B Home=4.0/Away=2.0', fatigueHomeB2B: 4.0, fatigueAwayB2B: 2.0 },
+
+    // --- Market shrinkage (post-prediction transform) ---
+    { ...BASELINE, name: 'Shrink a=0.8 t=5', shrinkageAlpha: 0.8, shrinkageThreshold: 5 },
+    { ...BASELINE, name: 'Shrink a=0.7 t=5', shrinkageAlpha: 0.7, shrinkageThreshold: 5 },
+    { ...BASELINE, name: 'Shrink a=0.8 t=7', shrinkageAlpha: 0.8, shrinkageThreshold: 7 },
   ];
 
   return configs;
@@ -215,10 +269,11 @@ function main() {
 
   const data: WalkforwardData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
   const nonHornets = data.games.filter(g => !g.isHornetsGame);
+  const withSpreads = nonHornets.filter(g => g.closingSpread !== undefined);
 
   console.log('');
   console.log('=== ABLATION TESTING — LEAGUE-WIDE (non-Hornets) ===');
-  console.log(`Games: ${nonHornets.length}`);
+  console.log(`Games: ${nonHornets.length} | With closing spreads: ${withSpreads.length}`);
   console.log('');
 
   const configs = buildAblations();
@@ -231,15 +286,18 @@ function main() {
     padL('RMSE', 6) + ' | ' +
     padL('Bias', 6) + ' | ' +
     padL('SU%', 6) + ' | ' +
+    padL('ATS%', 6) + ' | ' +
     padL('dMAE', 6) + ' | ' +
-    padL('dSU%', 6)
+    padL('dSU%', 6) + ' | ' +
+    padL('dATS', 6)
   );
-  console.log('-'.repeat(86));
+  console.log('-'.repeat(104));
 
   for (const cfg of configs) {
     const m = computeMetrics(nonHornets, cfg);
     const dMAE = m.mae - baselineMetrics.mae;
     const dSU = m.suPct - baselineMetrics.suPct;
+    const dATS = m.atsPct - baselineMetrics.atsPct;
 
     const isBaseline = cfg.name === BASELINE.name;
     const marker = isBaseline ? ' <--' : '';
@@ -250,15 +308,17 @@ function main() {
       padL(fmt(m.rmse), 6) + ' | ' +
       padL(fmtSign(m.bias), 6) + ' | ' +
       padL(fmt(m.suPct), 6) + ' | ' +
+      padL(fmt(m.atsPct), 6) + ' | ' +
       padL(isBaseline ? '  ---' : fmtSign(dMAE, 2), 6) + ' | ' +
-      padL(isBaseline ? '  ---' : fmtSign(dSU, 1), 6) +
+      padL(isBaseline ? '  ---' : fmtSign(dSU, 1), 6) + ' | ' +
+      padL(isBaseline ? '  ---' : fmtSign(dATS, 1), 6) +
       marker
     );
   }
 
   // Sub-bucket ablations for key configs
   console.log('');
-  console.log('=== KEY ABLATION DETAIL (mid-vs-mid games only, n=68) ===');
+  console.log('=== KEY ABLATION DETAIL (mid-vs-mid games only) ===');
   const midGames = nonHornets.filter(g => {
     const hw = weightedNR(g.homeSnapshot.rollingNR, BASELINE.windowWeights);
     const aw = weightedNR(g.awaySnapshot.rollingNR, BASELINE.windowWeights);
@@ -266,7 +326,7 @@ function main() {
   });
 
   const midConfigs = configs.filter(c =>
-    c.name.includes('CURRENT') || c.name.includes('mid-vs-mid') || c.name.includes('No mid')
+    c.name.includes('CURRENT') || c.name.includes('mid-vs-mid') || c.name.includes('No mid') || c.name.includes('Mid-vs-mid')
   );
 
   console.log(
@@ -274,9 +334,10 @@ function main() {
     padL('MAE', 6) + ' | ' +
     padL('Bias', 6) + ' | ' +
     padL('SU%', 6) + ' | ' +
+    padL('ATS%', 6) + ' | ' +
     padL('n', 4)
   );
-  console.log('-'.repeat(60));
+  console.log('-'.repeat(68));
 
   for (const cfg of midConfigs) {
     const m = computeMetrics(midGames, cfg);
@@ -285,13 +346,14 @@ function main() {
       padL(fmt(m.mae), 6) + ' | ' +
       padL(fmtSign(m.bias), 6) + ' | ' +
       padL(fmt(m.suPct), 6) + ' | ' +
+      padL(m.atsTotal > 0 ? fmt(m.atsPct) : ' ---', 6) + ' | ' +
       padL(String(m.total), 4)
     );
   }
 
   // B2B detail
   console.log('');
-  console.log('=== KEY ABLATION DETAIL (B2B games only, n=~200) ===');
+  console.log('=== KEY ABLATION DETAIL (B2B games only) ===');
   const b2bGames = nonHornets.filter(g =>
     g.homeSnapshot.isBackToBack || g.awaySnapshot.isBackToBack
   );
@@ -305,9 +367,11 @@ function main() {
     padL('MAE', 6) + ' | ' +
     padL('Bias', 6) + ' | ' +
     padL('SU%', 6) + ' | ' +
+    padL('ATS%', 6) + ' | ' +
+    padL('W-L', 7) + ' | ' +
     padL('n', 4)
   );
-  console.log('-'.repeat(60));
+  console.log('-'.repeat(78));
 
   for (const cfg of b2bConfigs) {
     const m = computeMetrics(b2bGames, cfg);
@@ -316,6 +380,39 @@ function main() {
       padL(fmt(m.mae), 6) + ' | ' +
       padL(fmtSign(m.bias), 6) + ' | ' +
       padL(fmt(m.suPct), 6) + ' | ' +
+      padL(m.atsTotal > 0 ? fmt(m.atsPct) : ' ---', 6) + ' | ' +
+      padL(m.atsTotal > 0 ? `${m.atsW}-${m.atsL}` : '---', 7) + ' | ' +
+      padL(String(m.total), 4)
+    );
+  }
+
+  // Market shrinkage detail
+  console.log('');
+  console.log('=== MARKET SHRINKAGE DETAIL ===');
+  const shrinkConfigs = configs.filter(c =>
+    c.name.includes('CURRENT') || c.name.includes('Shrink')
+  );
+
+  console.log(
+    pad('Configuration', 32) + '| ' +
+    padL('MAE', 6) + ' | ' +
+    padL('Bias', 6) + ' | ' +
+    padL('SU%', 6) + ' | ' +
+    padL('ATS%', 6) + ' | ' +
+    padL('W-L', 7) + ' | ' +
+    padL('n', 4)
+  );
+  console.log('-'.repeat(78));
+
+  for (const cfg of shrinkConfigs) {
+    const m = computeMetrics(withSpreads, cfg);
+    console.log(
+      pad(cfg.name, 32) + '| ' +
+      padL(fmt(m.mae), 6) + ' | ' +
+      padL(fmtSign(m.bias), 6) + ' | ' +
+      padL(fmt(m.suPct), 6) + ' | ' +
+      padL(m.atsTotal > 0 ? fmt(m.atsPct) : ' ---', 6) + ' | ' +
+      padL(m.atsTotal > 0 ? `${m.atsW}-${m.atsL}` : '---', 7) + ' | ' +
       padL(String(m.total), 4)
     );
   }
