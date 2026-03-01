@@ -37,17 +37,17 @@ const NR_FATIGUE_AWAY_B2B = 1.0; // Away team on B2B (was flat 1.5)
 const ESTIMATED_OVERROUND = 1.045;
 
 // === Blend Weights (optimized from backtest) ===
-const ELO_WEIGHT = 0.55; // Increased from 0.40 based on backtest
-const NR_WEIGHT = 0.45; // Decreased from 0.60
+const ELO_WEIGHT = 0.60; // Increased from 0.55 per league ablation (+0.7% SU on 690 games)
+const NR_WEIGHT = 0.40; // Decreased from 0.45
 
 // Rolling window weights for net rating
-// Flattened from 40/30/20/10 to reduce MAE (less recency bias = more stable predictions)
-// Original weights optimized for ATS edge; flatter weights improve prediction accuracy
+// Shifted toward stability per league ablation: 20/20/25/35 beat 30/25/25/20 (-0.06 MAE, +0.4% SU)
+// Season data is more predictive than recency at league scale
 const WINDOW_WEIGHTS = {
-  last4: 0.30,
-  last7: 0.25,
+  last4: 0.20,
+  last7: 0.20,
   last10: 0.25,
-  season: 0.20,
+  season: 0.35,
 };
 
 // Buzzing mode: window weights when using only healthy games
@@ -71,12 +71,11 @@ const ELITE_OPPONENT_PENALTY = -1.0;   // Additional penalty vs elite teams (was
 
 // === RISK ADJUSTMENTS (Per ChatGPT/Gemini Review) ===
 
-// Mid vs Mid adjustment
-// League backtest showed +2.2 overpredict bias when both teams are mid-tier
-// Apply -1.0 pt adjustment when opponent is mid-tier
+// Mid vs Mid adjustment — DISABLED per league ablation (zero effect on 690 games)
+// Was -1.0 when opponent NR between -3.0 and 3.0
 const MID_TIER_THRESHOLD_LOW = -3.0;
 const MID_TIER_THRESHOLD_HIGH = 3.0;
-const MID_VS_MID_ADJUSTMENT = -1.0;
+const MID_VS_MID_ADJUSTMENT = 0;
 
 // Predicted margin cap - extreme predictions are usually wrong
 // Most NBA games land within ±15 points; capping reduces MAE from outliers

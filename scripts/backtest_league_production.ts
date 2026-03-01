@@ -21,20 +21,20 @@ import { estimateElo, eloToSpread } from '../lib/model';
 
 // === Constants (matching production model.ts) ===
 const ELO_HOME_ADVANTAGE = 70;     // Elo points
-const ELO_WEIGHT = 0.55;
-const NR_WEIGHT = 0.45;
+const ELO_WEIGHT = 0.60;
+const NR_WEIGHT = 0.40;
 
 const WINDOW_WEIGHTS = {
-  last4: 0.30,
-  last7: 0.25,
+  last4: 0.20,
+  last7: 0.20,
   last10: 0.25,
-  season: 0.20,
+  season: 0.35,
 };
 
 const NR_HOME_ADVANTAGE = 1.5;     // Points (was 2.0)
 const NR_FATIGUE_HOME_B2B = 3.0;   // Home team on B2B (fatigue erodes crowd/energy edge)
 const NR_FATIGUE_AWAY_B2B = 1.0;   // Away team on B2B (less impact, already traveling)
-const MID_VS_MID_ADJUSTMENT = -1.0;
+const MID_VS_MID_ADJUSTMENT = 0; // Disabled per ablation
 const PREDICTED_MARGIN_CAP = 15;
 
 const MID_TIER_LOW = -3.0;
