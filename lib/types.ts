@@ -30,6 +30,7 @@ export interface Game {
   impliedWinPct?: number;   // Vegas implied win probability
   coveredSpread?: boolean;  // Did they cover?
   clv?: number;             // Closing Line Value (closing - opening, positive = got better number)
+  hasRealClosingLine?: boolean;  // True if spread is from actual sportsbook data
   // Opponent & rest data
   opponentNetRating?: number;  // Opponent's net rating
   opponentPace?: number;       // Opponent's pace (possessions per game)

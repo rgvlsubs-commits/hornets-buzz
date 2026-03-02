@@ -1423,9 +1423,9 @@ export function getHistoricalSpreads(games: Game[]): Map<string, number> {
   const spreads = new Map<string, number>();
 
   for (const game of games) {
-    // Estimate based on home/away
-    const estimatedSpread = game.isHome ? -3 : 3;
-    spreads.set(game.gameId, estimatedSpread);
+    // Use actual spread data: prefer closingSpread, then spread, then estimate
+    const spread = game.closingSpread ?? game.spread ?? (game.isHome ? -3 : 3);
+    spreads.set(game.gameId, spread);
   }
 
   return spreads;

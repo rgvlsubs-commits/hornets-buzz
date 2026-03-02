@@ -300,6 +300,162 @@ def fetch_betting_odds(api_key: Optional[str] = None):
         return None
 
 
+# NBA team abbreviation to full name (for Odds API matching)
+ABBREV_TO_FULL = {
+    "ATL": "Atlanta Hawks", "BOS": "Boston Celtics", "BKN": "Brooklyn Nets",
+    "CHA": "Charlotte Hornets", "CHI": "Chicago Bulls", "CLE": "Cleveland Cavaliers",
+    "DAL": "Dallas Mavericks", "DEN": "Denver Nuggets", "DET": "Detroit Pistons",
+    "GSW": "Golden State Warriors", "HOU": "Houston Rockets", "IND": "Indiana Pacers",
+    "LAC": "Los Angeles Clippers", "LAL": "Los Angeles Lakers", "MEM": "Memphis Grizzlies",
+    "MIA": "Miami Heat", "MIL": "Milwaukee Bucks", "MIN": "Minnesota Timberwolves",
+    "NOP": "New Orleans Pelicans", "NYK": "New York Knicks", "OKC": "Oklahoma City Thunder",
+    "ORL": "Orlando Magic", "PHI": "Philadelphia 76ers", "PHX": "Phoenix Suns",
+    "POR": "Portland Trail Blazers", "SAC": "Sacramento Kings", "SAS": "San Antonio Spurs",
+    "TOR": "Toronto Raptors", "UTA": "Utah Jazz", "WAS": "Washington Wizards",
+}
+
+
+def _extract_best_spread(bookmakers, home_team):
+    """Extract home team spread from best available bookmaker."""
+    preferred = ["draftkings", "fanduel", "betmgm", "pointsbetus", "bovada"]
+    bm_by_key = {bm["key"]: bm for bm in bookmakers}
+
+    for pref in preferred:
+        if pref in bm_by_key:
+            for market in bm_by_key[pref].get("markets", []):
+                if market.get("key") != "spreads":
+                    continue
+                for outcome in market.get("outcomes", []):
+                    if outcome.get("name") == home_team:
+                        return outcome.get("point")
+
+    # Fallback: first bookmaker with spread data
+    for bm in bookmakers:
+        for market in bm.get("markets", []):
+            if market.get("key") != "spreads":
+                continue
+            for outcome in market.get("outcomes", []):
+                if outcome.get("name") == home_team:
+                    return outcome.get("point")
+
+    return None
+
+
+def fetch_hornets_historical_closing_lines(games, api_key=None):
+    """
+    Fetch historical closing lines for past Hornets games from The Odds API.
+    Returns a dict of gameId -> {spread, impliedWinPct} with real closing data.
+
+    Only fetches for games that don't already have real closing lines.
+    Costs ~10 credits per unique game date.
+    """
+    load_env_file()
+    if not api_key:
+        api_key = os.environ.get("ODDS_API_KEY")
+
+    if not api_key or api_key == "your_api_key_here":
+        print("  Skipping historical odds (no API key)")
+        return {}
+
+    # Group games by date, only for games without real closing lines
+    games_by_date = {}
+    for g in games:
+        if g.get("hasRealClosingLine"):
+            continue  # Already have real data
+        date = g["date"]
+        games_by_date.setdefault(date, []).append(g)
+
+    if not games_by_date:
+        print("  All games already have real closing lines")
+        return {}
+
+    dates = sorted(games_by_date.keys())
+    print(f"\nFetching historical closing lines for {len(dates)} game dates...")
+    print(f"  Estimated cost: ~{len(dates) * 10} credits")
+
+    results = {}
+    for i, date in enumerate(dates):
+        time.sleep(0.5)  # Rate limit courtesy
+
+        # Request snapshot at 11pm UTC (6pm ET) — near tip-off
+        iso_date = f"{date}T23:00:00Z"
+
+        try:
+            response = requests.get(
+                f"{ODDS_API_BASE_URL}/historical/sports/{ODDS_API_SPORT}/odds",
+                params={
+                    "apiKey": api_key,
+                    "regions": "us",
+                    "markets": "spreads",
+                    "oddsFormat": "american",
+                    "date": iso_date,
+                },
+                timeout=15,
+            )
+
+            remaining = response.headers.get("x-requests-remaining", "?")
+
+            if response.status_code == 422:
+                print(f"  [{i+1}/{len(dates)}] {date}: no data available")
+                continue
+            if response.status_code == 401:
+                print("  ERROR: API key lacks historical access (need 20K+ plan)")
+                break
+            response.raise_for_status()
+
+            data = response.json()
+            api_games = data.get("data", [])
+
+            # Find Hornets games in the odds data
+            for api_game in api_games:
+                home_team = api_game.get("home_team", "")
+                away_team = api_game.get("away_team", "")
+
+                # Check if Hornets are in this game
+                hornets_full = ABBREV_TO_FULL["CHA"]
+                if home_team != hornets_full and away_team != hornets_full:
+                    continue
+
+                is_hornets_home = home_team == hornets_full
+                home_spread = _extract_best_spread(api_game.get("bookmakers", []), home_team)
+
+                if home_spread is not None:
+                    # Convert to Hornets spread
+                    hornets_spread = home_spread if is_hornets_home else -home_spread
+
+                    # Match to our game data
+                    for g in games_by_date.get(date, []):
+                        game_is_home = g.get("isHome", False)
+                        if game_is_home == is_hornets_home:
+                            # Convert spread to implied win probability
+                            implied = 0.5 - (hornets_spread / 28)
+                            implied = max(0.1, min(0.9, implied))
+
+                            results[g["gameId"]] = {
+                                "spread": hornets_spread,
+                                "impliedWinPct": round(implied, 3),
+                                "hasRealClosingLine": True,
+                            }
+                            print(f"  [{i+1}/{len(dates)}] {date}: CHA spread {hornets_spread:+.1f} (remaining: {remaining})")
+                            break
+
+            # If we didn't find Hornets in this date's data
+            date_game_ids = {g["gameId"] for g in games_by_date.get(date, [])}
+            if not any(gid in results for gid in date_game_ids):
+                print(f"  [{i+1}/{len(dates)}] {date}: no Hornets match found (remaining: {remaining})")
+
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 429:
+                print("  Rate limited - stopping historical fetch")
+                break
+            print(f"  [{i+1}/{len(dates)}] {date}: error {e}")
+        except Exception as e:
+            print(f"  [{i+1}/{len(dates)}] {date}: error {e}")
+
+    print(f"  Found real closing lines for {len(results)}/{sum(len(v) for v in games_by_date.values())} games")
+    return results
+
+
 def parse_game_date(date_str: str) -> datetime:
     """Parse date from various formats."""
     # NBA API format: "DEC 15, 2024"
@@ -678,6 +834,38 @@ def main(odds_api_key: Optional[str] = None):
     # Calculate rest days for each game
     games = calculate_rest_days(games)
 
+    # --- Overlay real closing lines ---
+    # Step 1: Preserve any real closing lines from previous data runs
+    preserved = 0
+    for g in games:
+        existing = existing_games.get(g["gameId"])
+        if existing and existing.get("hasRealClosingLine"):
+            g["spread"] = existing["spread"]
+            g["impliedWinPct"] = existing["impliedWinPct"]
+            g["hasRealClosingLine"] = True
+            margin = g["hornetsScore"] - g["opponentScore"]
+            g["coveredSpread"] = margin > -g["spread"]
+            preserved += 1
+
+    if preserved > 0:
+        print(f"\nPreserved {preserved} real closing lines from previous data")
+
+    # Step 2: Fetch historical closing lines from The Odds API for remaining games
+    historical_lines = fetch_hornets_historical_closing_lines(games, odds_api_key)
+    if historical_lines:
+        for g in games:
+            if g["gameId"] in historical_lines:
+                line_data = historical_lines[g["gameId"]]
+                g["spread"] = line_data["spread"]
+                g["impliedWinPct"] = line_data["impliedWinPct"]
+                g["hasRealClosingLine"] = True
+                # Recalculate coveredSpread with real line
+                margin = g["hornetsScore"] - g["opponentScore"]
+                g["coveredSpread"] = margin > -g["spread"]
+
+        # Also update qualified_games (they share references with games)
+        qualified_games = [g for g in games if g["isQualified"]]
+
     # Calculate aggregate metrics for qualified games
     print("\nCalculating aggregate metrics...")
 
@@ -720,7 +908,6 @@ def main(odds_api_key: Optional[str] = None):
     try:
         from nba_api.stats.endpoints import scheduleleaguev2
         from nba_api.stats.static import teams as nba_teams
-        import time
 
         time.sleep(0.6)
         schedule = scheduleleaguev2.ScheduleLeagueV2(season="2025-26", league_id="00")
